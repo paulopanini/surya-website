@@ -25,8 +25,8 @@ const PORTFOLIO_CATS = [
 // and set `image: 'images/portfolio/<filename>'` on the matching entry.
 // If `image` is omitted, a warm palette placeholder is shown instead.
 const PORTFOLIO = [
-  { id: 'p1', title: 'Curly girl · portrait', cat: 'illustration', palette: ['#6a8fa3', '#d9a36b', '#e9c4a0'], year: 2024, client: 'Personal', image: null },
-  { id: 'p2', title: 'Os 3 Desejos de Melz', cat: 'books', palette: ['#3c4b5e', '#e9b347', '#d67b5a'], year: 2023, client: 'Independent', image: null },
+  { id: 'p1', title: 'Curly girl · portrait', cat: 'illustration', palette: ['#6a8fa3', '#d9a36b', '#e9c4a0'], year: 2024, client: 'Personal', image: 'images/portfolio/meiz.jpg' },
+  { id: 'p2', title: 'Os 3 Desejos de Meiz', cat: 'books', palette: ['#3c4b5e', '#e9b347', '#d67b5a'], year: 2023, client: 'Independent', image: 'images/portfolio/meiz.jpg' },
   { id: 'p3', title: 'Girl with glasses', cat: 'illustration', palette: ['#5d4d7a', '#c77970', '#f0d4b8'], year: 2024, client: 'Personal', image: null },
   { id: 'p4', title: 'Dreaming something new', cat: 'illustration', palette: ['#f4f1ea', '#8a7e6a', '#c8a878'], year: 2023, client: 'Comic', image: null },
   { id: 'p5', title: 'Bla Bla Bla', cat: 'books', palette: ['#8c2e20', '#e9c84a', '#e8d8bc'], year: 2022, client: 'Illustrated story', image: null },

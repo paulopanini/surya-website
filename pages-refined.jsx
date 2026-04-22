@@ -82,10 +82,10 @@ function RHome({ onNav, t }) {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gridAutoRows: '1fr', gap: 16, aspectRatio: '3/1.6' }} className="r-work-grid">
           <div style={{ gridRow: 'span 2' }}>
-            <PaletteTile palette={PORTFOLIO[1].palette} label={PORTFOLIO[1].title} sub={PORTFOLIO[1].client} style={{ height: '100%' }} radius={4} />
+            <PaletteTile palette={PORTFOLIO[1].palette} image={PORTFOLIO[1].image} label={PORTFOLIO[1].title} sub={PORTFOLIO[1].client} style={{ height: '100%' }} radius={4} />
           </div>
           {[0, 2, 4, 5].map((i) => (
-            <PaletteTile key={PORTFOLIO[i].id} palette={PORTFOLIO[i].palette} label={PORTFOLIO[i].title} sub={PORTFOLIO[i].client} style={{ height: '100%' }} radius={4} compact />
+            <PaletteTile key={PORTFOLIO[i].id} palette={PORTFOLIO[i].palette} image={PORTFOLIO[i].image} label={PORTFOLIO[i].title} sub={PORTFOLIO[i].client} style={{ height: '100%' }} radius={4} compact />
           ))}
         </div>
         <style>{`@media (max-width: 820px){.r-work-grid{grid-template-columns: 1fr 1fr !important; aspect-ratio: auto !important; grid-auto-rows: 200px !important}}`}</style>
@@ -121,7 +121,7 @@ function RPortfolio({ onOpen, t }) {
       <section style={{ padding: '60px 48px 40px', background: `color-mix(in oklch, ${RP.terracotta} 14%, ${RP.paper})`, borderBottom: `1px solid color-mix(in oklch, ${RP.terracotta} 30%, ${RP.paper})` }}>
         <RSectionHeader kicker={t.portfolioKicker} title={t.portfolioTitle} titleItalic={t.portfolioTitleItalic} accent={RP.terracottaDeep} subtitle={t.portfolioSubtitle} />
       </section>
-      <section style={{ padding: '0 48px 40px' }}>
+      <section style={{ padding: '32px 48px 40px' }}>
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', borderBottom: `1px solid ${RP.line}`, paddingBottom: 16 }}>
           {PORTFOLIO_CATS.map(c => (
             <button key={c.id} onClick={() => setCat(c.id)} style={{
@@ -143,7 +143,7 @@ function RPortfolio({ onOpen, t }) {
                 onMouseLeave={(e) => { const img = e.currentTarget.querySelector('.r-port-img'); if (img) img.style.transform = ''; }}>
                 <div style={{ overflow: 'hidden', borderRadius: 4 }}>
                   <div className="r-port-img" style={{ transition: 'transform .5s cubic-bezier(.2,.7,.2,1)' }}>
-                    <PaletteTile palette={p.palette} style={{ aspectRatio: '4/5' }} radius={4} />
+                    <PaletteTile palette={p.palette} image={p.image} alt={p.title} style={{ aspectRatio: '1/1' }} radius={4} />
                   </div>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginTop: 14, gap: 10 }}>
