@@ -102,66 +102,6 @@ const NAV_ITEMS = [
   { id: 'shop', label: 'shop' },
 ];
 
-// ─── Translations (EN / PT / SV) ────────────────────────────────────
-// Only key hero / CTA strings translate — the rest stays EN to keep the
-// mockup manageable. Real build would use an i18n system.
-const T = {
-  en: {
-    tagline: 'Brazilian-born, Gothenburg-based.',
-    heroRole: 'Author, illustrator, and singer-songwriter',
-    heroClose: 'crafting worlds between words, colour, and sound.',
-    exploreWork: 'explore work',
-    listenNow: 'listen now',
-    contact: 'contact',
-    contactUs: 'contact',
-    pressInquiries: 'press inquiries',
-    email: 'email',
-    connect: 'connect',
-    requestMediaKit: 'Request media kit',
-    subscribe: 'subscribe',
-    newsletterBlurb: 'New work, upcoming shows, and the occasional stray thought — about once a month.',
-    shopSoon: 'the shop is opening soon',
-    shopBlurb: 'Signed books, prints, zines, and limited releases \u2014 delivered worldwide.',
-    notify: 'notify me when it opens',
-  },
-  pt: {
-    tagline: 'Brasileira, baseada em Gotemburgo.',
-    heroRole: 'Autora, ilustradora e cantautora',
-    heroClose: 'criando mundos entre palavras, cores e sons.',
-    exploreWork: 'ver trabalhos',
-    listenNow: 'ouvir agora',
-    contact: 'contato',
-    contactUs: 'contato',
-    pressInquiries: 'imprensa',
-    email: 'e-mail',
-    connect: 'conecte-se',
-    requestMediaKit: 'Pedir kit de imprensa',
-    subscribe: 'assinar',
-    newsletterBlurb: 'Novidades e reflexões ocasionais \u2014 cerca de uma vez por mês.',
-    shopSoon: 'a loja abre em breve',
-    shopBlurb: 'Livros autografados, gravuras, zines e lançamentos limitados \u2014 enviados para todo o mundo.',
-    notify: 'avise-me quando abrir',
-  },
-  sv: {
-    tagline: 'Brasilianskfödd, baserad i Göteborg.',
-    heroRole: 'Författare, illustratör och singer-songwriter',
-    heroClose: 'som skapar världar mellan ord, färg och ljud.',
-    exploreWork: 'se arbeten',
-    listenNow: 'lyssna nu',
-    contact: 'kontakt',
-    contactUs: 'kontakt',
-    pressInquiries: 'press',
-    email: 'e-post',
-    connect: 'kontakt',
-    requestMediaKit: 'Beställ presskit',
-    subscribe: 'prenumerera',
-    newsletterBlurb: 'Nya arbeten och tankar \u2014 ungefär en gång i månaden.',
-    shopSoon: 'butiken öppnar snart',
-    shopBlurb: 'Signerade böcker, tryck, zines och begränsade utgåvor \u2014 levereras över hela världen.',
-    notify: 'meddela mig när den öppnar',
-  },
-};
-
 // ─── Iconography (inline SVG, tiny, warm) ───────────────────────────
 const Icon = ({ name, size = 20, stroke = 1.6 }) => {
   const s = { width: size, height: size, strokeWidth: stroke, stroke: 'currentColor', fill: 'none', strokeLinecap: 'round', strokeLinejoin: 'round' };
@@ -310,6 +250,6 @@ function Reveal({ children, delay = 0, y = 16, style }) {
 // Export to window so sibling Babel scripts can pick these up.
 Object.assign(window, {
   SOCIALS, PORTFOLIO_CATS, PORTFOLIO, UPCOMING_ALBUM, DISCOGRAPHY, SPOTIFY_ARTIST_EMBED,
-  PRESS_ITEMS, SHOP_ITEMS, NAV_ITEMS, T,
+  PRESS_ITEMS, SHOP_ITEMS, NAV_ITEMS,
   Icon, useI18n, PaletteTile, PortraitPlaceholder, Reveal,
 });

@@ -70,13 +70,14 @@ function RButton({ children, variant = 'solid', onClick, href, tone = RP.ink, sm
 }
 
 // ─── Header ─────────────────────────────────────────────────────────
-function RefinedHeader({ page, onNav, lang, setLang }) {
+function RefinedHeader({ page, onNav, lang, setLang, t }) {
   const [open, setOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
   React.useEffect(() => {
     const h = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', h); return () => window.removeEventListener('scroll', h);
   }, []);
+  const navLabel = { home: t.navHome, portfolio: t.navPortfolio, music: t.navMusic, press: t.navPress, about: t.navAbout, shop: t.navShop };
   return (
     <header style={{
       position: 'sticky', top: 0, zIndex: 20,
@@ -102,7 +103,7 @@ function RefinedHeader({ page, onNav, lang, setLang }) {
                 textDecoration: 'none', position: 'relative', cursor: 'pointer', fontFamily: 'Fraunces, Georgia, serif',
                 fontStyle: page === n.id ? 'italic' : 'normal',
               }}>
-                {n.label}
+                {navLabel[n.id]}
                 {page === n.id && <span style={{ position: 'absolute', left: 0, right: 0, bottom: -4, height: 1, background: RP.terracotta }} />}
               </a>
             ))}
@@ -130,7 +131,7 @@ function RefinedHeader({ page, onNav, lang, setLang }) {
           </div>
           <a onClick={(e) => { e.preventDefault(); onNav('contact'); }} href="#contact" style={{
             padding: '8px 18px', borderRadius: 999, border: `1px solid ${RP.ink}`, color: RP.ink, textDecoration: 'none', fontSize: 13, fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic',
-          }}>contact</a>
+          }}>{t.navContact}</a>
         </div>
       </div>
       {open && (
@@ -138,7 +139,7 @@ function RefinedHeader({ page, onNav, lang, setLang }) {
           {NAV_ITEMS.map(n => (
             <a key={n.id} onClick={(e) => { e.preventDefault(); onNav(n.id); setOpen(false); }} href={`#${n.id}`} style={{
               fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 22, color: RP.ink, textDecoration: 'none',
-            }}>{n.label}</a>
+            }}>{navLabel[n.id]}</a>
           ))}
         </div>
       )}
@@ -214,10 +215,10 @@ function RefinedFooter({ onNav, t }) {
           <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 36, lineHeight: 1, marginBottom: 12 }}>surya <span style={{ fontStyle: 'italic', color: RP.ochre }}>amitrano</span></div>
           <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.2em', textTransform: 'uppercase', opacity: .7 }}>Gothenburg · Sverige</div>
         </div>
-        <FooterCol title="explore" items={[{ l: 'portfolio', k: 'portfolio' }, { l: 'music', k: 'music' }, { l: 'about', k: 'about' }]} onNav={onNav} />
-        <FooterCol title="connect" items={[{ l: 'press', k: 'press' }, { l: 'contact', k: 'contact' }, { l: 'shop', k: 'shop' }]} onNav={onNav} />
+        <FooterCol title={t.footerExplore} items={[{ l: t.navPortfolio, k: 'portfolio' }, { l: t.navMusic, k: 'music' }, { l: t.navAbout, k: 'about' }]} onNav={onNav} />
+        <FooterCol title={t.footerConnect} items={[{ l: t.navPress, k: 'press' }, { l: t.navContact, k: 'contact' }, { l: t.navShop, k: 'shop' }]} onNav={onNav} />
         <div>
-          <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.22em', textTransform: 'uppercase', opacity: .7, marginBottom: 14 }}>elsewhere</div>
+          <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.22em', textTransform: 'uppercase', opacity: .7, marginBottom: 14 }}>{t.footerElsewhere}</div>
           <div style={{ display: 'flex', gap: 14 }}>
             <a href={SOCIALS.instagram} target="_blank" rel="noreferrer" style={{ color: 'inherit' }}><Icon name="instagram" size={20} /></a>
             <a href={SOCIALS.youtube} target="_blank" rel="noreferrer" style={{ color: 'inherit' }}><Icon name="youtube" size={20} /></a>

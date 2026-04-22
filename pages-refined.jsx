@@ -51,12 +51,12 @@ function RHome({ onNav, t }) {
 
       {/* Three worlds */}
       <section style={{ padding: '100px 48px 60px', background: `color-mix(in oklch, ${RP.sage} 14%, ${RP.paper})`, borderTop: `1px solid color-mix(in oklch, ${RP.sage} 30%, ${RP.paper})`, borderBottom: `1px solid color-mix(in oklch, ${RP.sage} 30%, ${RP.paper})` }}>
-        <RSectionHeader kicker="three worlds" title="one" titleItalic="voice" accent={RP.sage} subtitle="Picture books, illustration work, and songs — different shapes for the same impulse." />
+        <RSectionHeader kicker={t.threeWorldsKicker} title={t.threeWorldsTitle} titleItalic={t.threeWorldsTitleItalic} accent={RP.sage} subtitle={t.threeWorldsSubtitle} />
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, marginTop: 48, background: RP.line }} className="r-pillars">
           {[
-            { k: 'words', n: '01', title: 'Words', copy: 'Children\u2019s books, spanning Portuguese, English, and Swedish.', accent: RP.terracotta, go: 'portfolio' },
-            { k: 'colour', n: '02', title: 'Colour', copy: 'Illustration, book design, brand identity, commissioned art.', accent: RP.ochre, go: 'portfolio' },
-            { k: 'sound', n: '03', title: 'Sound', copy: 'Five albums and a sixth EP, recorded in Rome. Out September.', accent: RP.sage, go: 'music' },
+            { k: 'words', n: '01', title: t.pillars1Title, copy: t.pillars1Copy, accent: RP.terracotta, go: 'portfolio' },
+            { k: 'colour', n: '02', title: t.pillars2Title, copy: t.pillars2Copy, accent: RP.ochre, go: 'portfolio' },
+            { k: 'sound', n: '03', title: t.pillars3Title, copy: t.pillars3Copy, accent: RP.sage, go: 'music' },
           ].map(p => (
             <div key={p.k} onClick={() => onNav(p.go)} style={{
               background: RP.paper, padding: '40px 32px 44px', cursor: 'pointer',
@@ -77,8 +77,8 @@ function RHome({ onNav, t }) {
       {/* Recent work */}
       <section style={{ padding: '60px 48px', background: `color-mix(in oklch, ${RP.marigold} 16%, ${RP.paper})`, borderBottom: `1px solid color-mix(in oklch, ${RP.marigold} 32%, ${RP.paper})` }}>
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 32, flexWrap: 'wrap', gap: 16 }}>
-          <RSectionHeader kicker="recent" title="selected" titleItalic="works" accent={RP.terracottaDeep} />
-          <a onClick={(e) => { e.preventDefault(); onNav('portfolio'); }} href="#portfolio" style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 16, color: RP.terracottaDeep, textDecoration: 'none' }}>view all portfolio →</a>
+          <RSectionHeader kicker={t.recentKicker} title={t.recentTitle} titleItalic={t.recentTitleItalic} accent={RP.terracottaDeep} />
+          <a onClick={(e) => { e.preventDefault(); onNav('portfolio'); }} href="#portfolio" style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 16, color: RP.terracottaDeep, textDecoration: 'none' }}>{t.viewAllPortfolio}</a>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gridAutoRows: '1fr', gap: 16, aspectRatio: '3/1.6' }} className="r-work-grid">
           <div style={{ gridRow: 'span 2' }}>
@@ -95,14 +95,14 @@ function RHome({ onNav, t }) {
       <section style={{ padding: '100px 48px' }}>
         <Reveal>
           <div style={{ borderTop: `1px solid ${RP.line}`, borderBottom: `1px solid ${RP.line}`, padding: '48px 0', display: 'grid', gridTemplateColumns: 'auto 1fr auto', gap: 40, alignItems: 'center' }} className="r-upcoming">
-            <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 11, letterSpacing: '.22em', color: RP.terracotta, textTransform: 'uppercase', writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>new · sep 2026</div>
+            <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 11, letterSpacing: '.22em', color: RP.terracotta, textTransform: 'uppercase', writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>{t.upcomingLabel}</div>
             <div>
               <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 64, color: RP.ink, letterSpacing: '-.02em', lineHeight: 1, marginBottom: 12 }}>
-                <span style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic' }}>Felice</span> — an EP recorded in Rome.
+                <span style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic' }}>Felice</span>{t.upcomingSubtext}
               </div>
               <p style={{ color: RP.inkSoft, fontSize: 16, lineHeight: 1.6, margin: 0, maxWidth: 640 }}>{UPCOMING_ALBUM.blurb}</p>
             </div>
-            <RButton tone={RP.terracotta} onClick={() => onNav('music')}>pre-save</RButton>
+            <RButton tone={RP.terracotta} onClick={() => onNav('music')}>{t.presave}</RButton>
           </div>
         </Reveal>
         <style>{`@media (max-width: 820px){.r-upcoming{grid-template-columns: 1fr !important}}`}</style>
@@ -112,13 +112,14 @@ function RHome({ onNav, t }) {
 }
 
 // ─── PORTFOLIO ──────────────────────────────────────────────────────
-function RPortfolio({ onOpen }) {
+function RPortfolio({ onOpen, t }) {
   const [cat, setCat] = React.useState('all');
+  const catTKey = { all: 'catAll', books: 'catBooks', brand: 'catBrand', illustration: 'catIllustration', music: 'catMusic' };
   const items = cat === 'all' ? PORTFOLIO : PORTFOLIO.filter(p => p.cat === cat);
   return (
     <>
       <section style={{ padding: '60px 48px 40px', background: `color-mix(in oklch, ${RP.terracotta} 14%, ${RP.paper})`, borderBottom: `1px solid color-mix(in oklch, ${RP.terracotta} 30%, ${RP.paper})` }}>
-        <RSectionHeader kicker="selected works · 2018–2026" title="portfolio" titleItalic="& illustration" accent={RP.terracottaDeep} subtitle="Digital illustration, book design, brand identity, and commissioned art — created in Procreate and Adobe Creative Cloud." />
+        <RSectionHeader kicker={t.portfolioKicker} title={t.portfolioTitle} titleItalic={t.portfolioTitleItalic} accent={RP.terracottaDeep} subtitle={t.portfolioSubtitle} />
       </section>
       <section style={{ padding: '0 48px 40px' }}>
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', borderBottom: `1px solid ${RP.line}`, paddingBottom: 16 }}>
@@ -129,7 +130,7 @@ function RPortfolio({ onOpen }) {
               border: `1px solid ${cat === c.id ? RP.ink : RP.line}`, borderRadius: 999,
               padding: '8px 16px', fontFamily: 'Fraunces, Georgia, serif', fontSize: 14, fontStyle: cat === c.id ? 'italic' : 'normal',
               cursor: 'pointer', transition: 'all .15s',
-            }}>{c.label}</button>
+            }}>{t[catTKey[c.id]] || c.label}</button>
           ))}
         </div>
       </section>
@@ -150,7 +151,7 @@ function RPortfolio({ onOpen }) {
                     <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 19, color: RP.ink, lineHeight: 1.25 }}>{p.title}</div>
                     <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, color: RP.inkSoft, letterSpacing: '.15em', textTransform: 'uppercase', marginTop: 4 }}>{p.client} · {p.year}</div>
                   </div>
-                  <span style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 13, color: RP.terracotta }}>view →</span>
+                  <span style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 13, color: RP.terracotta }}>{t.viewItem}</span>
                 </div>
               </div>
             </Reveal>
@@ -163,12 +164,12 @@ function RPortfolio({ onOpen }) {
 }
 
 // ─── MUSIC ──────────────────────────────────────────────────────────
-function RMusic() {
+function RMusic({ t }) {
   const [expanded, setExpanded] = React.useState(null);
   return (
     <>
       <section style={{ padding: '60px 48px 40px', background: `color-mix(in oklch, ${RP.blue} 16%, ${RP.paper})`, borderBottom: `1px solid color-mix(in oklch, ${RP.blue} 32%, ${RP.paper})` }}>
-        <RSectionHeader kicker="discography · 2018–2026" title="original" titleItalic="music" accent={RP.blue} subtitle="Five albums on streaming platforms in Portuguese and English. Rooted in Brazil, growing in Scandinavia." />
+        <RSectionHeader kicker={t.musicKicker} title={t.musicTitle} titleItalic={t.musicTitleItalic} accent={RP.blue} subtitle={t.musicSubtitle} />
       </section>
 
       {/* Upcoming EP feature — real Spotify embed */}
@@ -185,10 +186,10 @@ function RMusic() {
               <div style={{ border: `1px solid ${RP.line}`, borderRadius: 4, padding: 16, background: RP.paperSoft }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 14, alignItems: 'center', marginBottom: 14 }}>
                   <div>
-                    <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 18, color: RP.ink, lineHeight: 1.2 }}>Tracklist preview</div>
+                    <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 18, color: RP.ink, lineHeight: 1.2 }}>{t.tracklist}</div>
                     <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 9, color: RP.inkSoft, letterSpacing: '.15em', textTransform: 'uppercase', marginTop: 2 }}>full album drops {UPCOMING_ALBUM.release}</div>
                   </div>
-                  <RButton tone={RP.terracotta} href={SOCIALS.spotify} small>Pre-save</RButton>
+                  <RButton tone={RP.terracotta} href={SOCIALS.spotify} small>{t.presave}</RButton>
                 </div>
                 {UPCOMING_ALBUM.tracks.map((tr, i) => (
                   <div key={i} style={{ display: 'grid', gridTemplateColumns: 'auto 1fr auto auto', gap: 14, alignItems: 'center', padding: '10px 0', borderTop: i === 0 ? 'none' : `1px solid ${RP.line}` }}>
@@ -216,7 +217,7 @@ function RMusic() {
                 />
               </div>
               <div style={{ marginTop: 14, fontFamily: 'ui-monospace, monospace', fontSize: 10, color: RP.inkSofter, letterSpacing: '.18em', textTransform: 'uppercase', textAlign: 'center' }}>
-                ← listen to the full catalogue on spotify
+                {t.listenCatalogue}
               </div>
             </div>
           </div>
@@ -226,7 +227,7 @@ function RMusic() {
 
       {/* Discography list — click to expand the Spotify embed */}
       <section style={{ padding: '60px 48px 100px', background: `color-mix(in oklch, ${RP.marigold} 14%, ${RP.paper})`, borderTop: `1px solid color-mix(in oklch, ${RP.marigold} 30%, ${RP.paper})` }}>
-        <RSectionHeader kicker="full discography" title="five" titleItalic="albums" accent={RP.ochre} />
+        <RSectionHeader kicker={t.discKicker} title={t.discTitle} titleItalic={t.discTitleItalic} accent={RP.ochre} />
         <div style={{ marginTop: 36 }}>
           {DISCOGRAPHY.map((d, i) => {
             const isOpen = expanded === d.n;
@@ -251,7 +252,7 @@ function RMusic() {
                       fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.18em', textTransform: 'uppercase',
                       color: isOpen ? RP.terracotta : RP.inkSofter,
                       border: `1px solid ${isOpen ? RP.terracotta : RP.line}`, padding: '6px 10px', borderRadius: 3,
-                    }}>{isOpen ? 'close' : 'listen'}</span>
+                    }}>{isOpen ? t.closeBtn : t.listenBtn}</span>
                     <span style={{
                       display: 'inline-flex', width: 28, height: 28, alignItems: 'center', justifyContent: 'center',
                       transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform .2s', color: RP.ink,
@@ -329,37 +330,37 @@ function RPress({ t }) {
 }
 
 // ─── ABOUT ──────────────────────────────────────────────────────────
-function RAbout() {
+function RAbout({ t }) {
   return (
     <>
       <section style={{ padding: '60px 48px 60px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1.5fr', gap: 60, alignItems: 'start' }} className="r-about-grid">
           <Reveal>
             <PortraitPlaceholder caption="portrait · drop real photo" tone={RP.sage} style={{ aspectRatio: '4/5', borderRadius: 4 }} />
-            <div style={{ marginTop: 18, fontFamily: 'ui-monospace, monospace', fontSize: 10, color: RP.inkSoft, letterSpacing: '.2em', textTransform: 'uppercase' }}>Surya in her studio · Gothenburg, 2026</div>
+            <div style={{ marginTop: 18, fontFamily: 'ui-monospace, monospace', fontSize: 10, color: RP.inkSoft, letterSpacing: '.2em', textTransform: 'uppercase' }}>{t.studioCaption}</div>
           </Reveal>
           <Reveal delay={120}>
             <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 11, letterSpacing: '.22em', color: RP.terracotta, textTransform: 'uppercase', marginBottom: 20 }}>
               <span style={{ width: 28, height: 1, background: RP.terracotta, display: 'inline-block', marginRight: 10, verticalAlign: 'middle' }} />
-              about
+              {t.aboutKicker}
             </div>
             <h1 style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 'clamp(48px, 6vw, 88px)', margin: '0 0 32px', fontWeight: 400, color: RP.ink, letterSpacing: '-.02em', lineHeight: .98 }}>
               hi, i'm <span style={{ fontFamily: 'Fraunces', fontStyle: 'italic', color: RP.terracotta }}>surya</span>.
             </h1>
             <p style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 24, lineHeight: 1.5, color: RP.ink, marginBottom: 26 }}>
-              I make picture books, brand identities, and songs. The through-line is story — character, rhythm, the quiet between lines.
+              {t.aboutIntro}
             </p>
             <p style={{ fontSize: 17, lineHeight: 1.75, color: RP.inkSoft, marginBottom: 18 }}>
-              Born in Brazil, I moved to Sweden in 2019 and have been based in Gothenburg since. My first book was published in Portuguese in 2021; since then I've written and illustrated four more, and been commissioned for brand identity and editorial work for clients across Europe and South America.
+              {t.aboutBody1}
             </p>
             <p style={{ fontSize: 17, lineHeight: 1.75, color: RP.inkSoft, marginBottom: 32 }}>
-              In parallel I've released five albums as a singer-songwriter in Portuguese and English. A sixth EP, <em>Felice</em>, was recorded in Rome after I was selected from 3,000+ applicants to the Band &amp; Breakfast open call.
+              {t.aboutBody2}
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, borderTop: `1px solid ${RP.line}`, paddingTop: 28 }}>
               {[
-                { k: 'Five', v: 'albums released · 2018-2024' },
-                { k: 'Four', v: 'books authored & illustrated' },
-                { k: 'Three', v: 'languages · EN / PT / SV' },
+                { k: t.statAlbumsNum, v: t.statAlbumsLabel },
+                { k: t.statBooksNum, v: t.statBooksLabel },
+                { k: t.statLangNum, v: t.statLangLabel },
               ].map(s => (
                 <div key={s.k}>
                   <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 38, color: RP.terracotta, fontStyle: 'italic', fontFamily: 'Fraunces', letterSpacing: '-.01em' }}>{s.k}</div>
@@ -383,9 +384,9 @@ function RContact({ t }) {
   const submit = (e) => {
     e.preventDefault();
     const err = {};
-    if (!form.name.trim()) err.name = 'please add your name';
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) err.email = 'that email looks off';
-    if (form.message.trim().length < 10) err.message = 'a few more words, please';
+    if (!form.name.trim()) err.name = t.errName;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) err.email = t.errEmail;
+    if (form.message.trim().length < 10) err.message = t.errMessage;
     setErrors(err);
     if (Object.keys(err).length === 0) setSent(true);
   };
@@ -424,30 +425,30 @@ function RContact({ t }) {
           <Reveal delay={120}>
             {sent ? (
               <div style={{ padding: '60px 40px', textAlign: 'center', borderTop: `2px solid ${RP.terracotta}`, borderBottom: `2px solid ${RP.terracotta}` }}>
-                <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 48, color: RP.ink, marginBottom: 12, fontWeight: 400 }}>thank you, <span style={{ fontFamily: 'Fraunces', fontStyle: 'italic', color: RP.terracotta }}>{form.name || 'friend'}</span></div>
-                <p style={{ color: RP.inkSoft, lineHeight: 1.6 }}>your message is on its way. I'll reply within a few days.</p>
+                <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 48, color: RP.ink, marginBottom: 12, fontWeight: 400 }}>{t.thankYouPrefix}<span style={{ fontFamily: 'Fraunces', fontStyle: 'italic', color: RP.terracotta }}>{form.name || t.thankYouFallback}</span></div>
+                <p style={{ color: RP.inkSoft, lineHeight: 1.6 }}>{t.thankYouMsg}</p>
               </div>
             ) : (
               <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
-                <RFieldLine label="your name" error={errors.name}>
+                <RFieldLine label={t.nameLabel} error={errors.name}>
                   <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} style={input} />
                 </RFieldLine>
-                <RFieldLine label="email" error={errors.email}>
+                <RFieldLine label={t.emailLabel} error={errors.email}>
                   <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} style={input} />
                 </RFieldLine>
-                <RFieldLine label="this is about">
+                <RFieldLine label={t.topicLabel}>
                   <select value={form.topic} onChange={(e) => setForm({ ...form, topic: e.target.value })} style={input}>
-                    <option value="general">a general hello</option>
-                    <option value="commission">commission / illustration work</option>
-                    <option value="press">press inquiry</option>
-                    <option value="speaking">speaking / school visit</option>
-                    <option value="music">music collaboration</option>
+                    <option value="general">{t.topicGeneral}</option>
+                    <option value="commission">{t.topicCommission}</option>
+                    <option value="press">{t.topicPress}</option>
+                    <option value="speaking">{t.topicSpeaking}</option>
+                    <option value="music">{t.topicMusic}</option>
                   </select>
                 </RFieldLine>
-                <RFieldLine label="your message" error={errors.message}>
+                <RFieldLine label={t.messageLabel} error={errors.message}>
                   <textarea rows={4} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} style={{ ...input, resize: 'vertical' }} />
                 </RFieldLine>
-                <RButton tone={RP.ink} style={{ alignSelf: 'flex-start', marginTop: 8 }}>send message</RButton>
+                <RButton tone={RP.ink} style={{ alignSelf: 'flex-start', marginTop: 8 }}>{t.sendMessage}</RButton>
               </form>
             )}
           </Reveal>
@@ -468,7 +469,7 @@ function RFieldLine({ label, error, children }) {
 }
 
 // ─── SHOP ───────────────────────────────────────────────────────────
-function RShop() {
+function RShop({ t }) {
   const [cart, setCart] = React.useState([]);
   const [step, setStep] = React.useState('shop');
   const add = (item) => setCart(c => {
@@ -487,14 +488,14 @@ function RShop() {
     <>
       <section style={{ padding: '60px 48px 40px', background: `color-mix(in oklch, ${RP.terracotta} 14%, ${RP.paper})`, borderBottom: `1px solid color-mix(in oklch, ${RP.terracotta} 30%, ${RP.paper})` }}>
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap' }}>
-          <RSectionHeader kicker="shop · opening soon" title="prints, books" titleItalic="& more" accent={RP.terracottaDeep} subtitle="Signed books, limited giclée prints, zines, and music releases. This is a preview of what's coming." />
+          <RSectionHeader kicker={t.shopSoon} title="prints, books" titleItalic="& more" accent={RP.terracottaDeep} subtitle={t.shopBlurb} />
           {step === 'shop' && (
             <button onClick={() => setStep('cart')} style={{
               display: 'flex', alignItems: 'center', gap: 8,
               background: 'transparent', color: RP.ink, border: `1px solid ${RP.ink}`, borderRadius: 999,
               padding: '10px 18px', fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 14, cursor: 'pointer',
             }}>
-              <Icon name="cart" size={16} /> cart ({cart.reduce((s, x) => s + x.qty, 0)})
+              <Icon name="cart" size={16} /> {t.cartLabel} ({cart.reduce((s, x) => s + x.qty, 0)})
             </button>
           )}
         </div>
@@ -509,7 +510,7 @@ function RShop() {
                   <div style={{ overflow: 'hidden', borderRadius: 4, position: 'relative' }}>
                     <PaletteTile palette={s.palette} style={{ aspectRatio: '4/5' }} radius={4} />
                     {s.stock === 'sold out' && (
-                      <div style={{ position: 'absolute', inset: 0, background: 'rgba(34,32,28,.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: RP.paper, fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 28 }}>sold out</div>
+                      <div style={{ position: 'absolute', inset: 0, background: 'rgba(34,32,28,.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: RP.paper, fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 28 }}>{t.soldOut}</div>
                     )}
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginTop: 16, gap: 16 }}>
@@ -525,7 +526,7 @@ function RShop() {
                       background: 'transparent', color: s.stock === 'sold out' ? RP.inkSofter : RP.ink,
                       border: 'none', fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 14,
                       cursor: s.stock === 'sold out' ? 'not-allowed' : 'pointer', padding: 0,
-                    }}>{s.stock === 'sold out' ? 'notify me' : 'add to cart →'}</button>
+                    }}>{s.stock === 'sold out' ? t.notifyMe : t.addToCart}</button>
                   </div>
                 </div>
               </Reveal>
@@ -538,7 +539,7 @@ function RShop() {
       {step === 'cart' && (
         <section style={{ padding: '40px 48px 100px', maxWidth: 800, margin: '0 auto' }}>
           {cart.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '80px 0', fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 28, color: RP.inkSofter }}>your cart is empty</div>
+            <div style={{ textAlign: 'center', padding: '80px 0', fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 28, color: RP.inkSofter }}>{t.cartEmpty}</div>
           ) : (
             <>
               {cart.map((c, i) => (
@@ -553,10 +554,10 @@ function RShop() {
                 </div>
               ))}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 28 }}>
-                <button onClick={() => setStep('shop')} style={{ background: 'none', border: 'none', color: RP.inkSoft, cursor: 'pointer', fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 15 }}>← keep browsing</button>
+                <button onClick={() => setStep('shop')} style={{ background: 'none', border: 'none', color: RP.inkSoft, cursor: 'pointer', fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 15 }}>{t.keepBrowsing}</button>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-                  <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 28, color: RP.ink }}>total €{total}</div>
-                  <RButton tone={RP.ink} onClick={() => setStep('checkout')}>checkout</RButton>
+                  <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 28, color: RP.ink }}>{t.total} €{total}</div>
+                  <RButton tone={RP.ink} onClick={() => setStep('checkout')}>{t.checkout}</RButton>
                 </div>
               </div>
             </>
@@ -567,26 +568,26 @@ function RShop() {
       {step === 'checkout' && (
         <section style={{ padding: '40px 48px 100px', maxWidth: 560, margin: '0 auto' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-            <RFieldLine label="full name"><input style={input} /></RFieldLine>
-            <RFieldLine label="email"><input type="email" style={input} /></RFieldLine>
-            <RFieldLine label="shipping address"><input style={input} /></RFieldLine>
-            <RFieldLine label="country"><input style={input} defaultValue="Sweden" /></RFieldLine>
+            <RFieldLine label={t.fullName}><input style={input} /></RFieldLine>
+            <RFieldLine label={t.emailLabel}><input type="email" style={input} /></RFieldLine>
+            <RFieldLine label={t.shippingAddress}><input style={input} /></RFieldLine>
+            <RFieldLine label={t.country}><input style={input} defaultValue="Sweden" /></RFieldLine>
             <div style={{ borderTop: `1px solid ${RP.line}`, paddingTop: 18, marginTop: 14 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, color: RP.inkSoft, marginBottom: 6 }}><span>subtotal</span><span>€{total}</span></div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, color: RP.inkSoft, marginBottom: 6 }}><span>shipping</span><span>€6</span></div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 24, color: RP.ink, marginTop: 10 }}><span>total</span><span>€{total + 6}</span></div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, color: RP.inkSoft, marginBottom: 6 }}><span>{t.subtotal}</span><span>€{total}</span></div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, color: RP.inkSoft, marginBottom: 6 }}><span>{t.shipping}</span><span>€6</span></div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 24, color: RP.ink, marginTop: 10 }}><span>{t.total}</span><span>€{total + 6}</span></div>
             </div>
-            <RButton tone={RP.ink} onClick={() => setStep('done')} style={{ justifyContent: 'center' }}>place order</RButton>
-            <div style={{ textAlign: 'center', fontFamily: 'ui-monospace, monospace', fontSize: 10, color: RP.inkSofter, letterSpacing: '.18em', textTransform: 'uppercase' }}>preview · payment not live yet</div>
+            <RButton tone={RP.ink} onClick={() => setStep('done')} style={{ justifyContent: 'center' }}>{t.placeOrder}</RButton>
+            <div style={{ textAlign: 'center', fontFamily: 'ui-monospace, monospace', fontSize: 10, color: RP.inkSofter, letterSpacing: '.18em', textTransform: 'uppercase' }}>{t.previewNotice}</div>
           </div>
         </section>
       )}
 
       {step === 'done' && (
         <section style={{ padding: '60px 48px 160px', textAlign: 'center' }}>
-          <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 56, color: RP.ink, margin: '0 0 14px', fontWeight: 400 }}>order <span style={{ fontFamily: 'Fraunces', fontStyle: 'italic', color: RP.terracotta }}>placed</span></div>
-          <p style={{ color: RP.inkSoft, maxWidth: 460, margin: '0 auto 28px', lineHeight: 1.6 }}>this is a placeholder — the shop opens soon. thank you for previewing it!</p>
-          <RButton tone={RP.ink} onClick={() => { setCart([]); setStep('shop'); }}>back to shop</RButton>
+          <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 56, color: RP.ink, margin: '0 0 14px', fontWeight: 400 }}>{t.orderPlaced} <span style={{ fontFamily: 'Fraunces', fontStyle: 'italic', color: RP.terracotta }}>{t.orderPlacedItalic}</span></div>
+          <p style={{ color: RP.inkSoft, maxWidth: 460, margin: '0 auto 28px', lineHeight: 1.6 }}>{t.orderDoneMsg}</p>
+          <RButton tone={RP.ink} onClick={() => { setCart([]); setStep('shop'); }}>{t.backToShop}</RButton>
         </section>
       )}
     </>
