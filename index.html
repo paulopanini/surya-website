@@ -18,29 +18,10 @@
   }
   * { box-sizing: border-box; }
   button { font-family: inherit; }
-  .dir-switch {
-    position: fixed; bottom: 16px; right: 16px; z-index: 200;
-    display: flex; gap: 6px; padding: 6px;
-    background: rgba(255,255,255,.9); backdrop-filter: blur(8px);
-    border: 1px solid rgba(47,42,34,.14); border-radius: 999px;
-    font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
-    box-shadow: 0 6px 20px -8px rgba(0,0,0,.2);
-  }
-  .dir-switch a {
-    padding: 8px 14px; border-radius: 999px; text-decoration: none; color: #564d3f;
-    transition: all .15s;
-  }
-  .dir-switch a.active { background: #2f2a22; color: #f9e6c6; }
-  .dir-switch a:hover:not(.active) { color: #2f2a22; }
 </style>
 </head>
 <body>
 <div id="root"></div>
-<nav class="dir-switch" aria-label="Switch direction">
-  <a href="faithful.html">A · Faithful</a>
-  <a href="refined.html" class="active">B · Refined</a>
-  <a href="index.html">side-by-side</a>
-</nav>
 
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
