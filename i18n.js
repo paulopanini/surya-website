@@ -1,9 +1,10 @@
 // All UI text strings — English, Portuguese, and Swedish.
-// Loaded first so every other script can reference T via window.T.
-// To add a new language: duplicate one of the locale blocks, change the key,
-// and add the new locale code to the language switcher in refined.jsx.
+// Plain .js file (no JSX) so it can be loaded as a regular synchronous
+// <script> tag, which guarantees window.T is set before any Babel script runs.
+// To add a language: duplicate a locale block, change the key, and add the
+// new locale code to the language switcher in refined.jsx.
 
-const T = {
+window.T = {
 
   // ─────────────────────────────────────────────────────────────────
   en: {
@@ -18,7 +19,7 @@ const T = {
     threeWorldsKicker: 'three worlds',
     threeWorldsTitle: 'one',
     threeWorldsTitleItalic: 'voice',
-    threeWorldsSubtitle: 'Picture books, illustration work, and songs — different shapes for the same impulse.',
+    threeWorldsSubtitle: 'Picture books, illustration work, and songs \u2014 different shapes for the same impulse.',
     pillars1Title: 'Words',
     pillars1Copy: 'Children\u2019s books, spanning Portuguese, English, and Swedish.',
     pillars2Title: 'Colour',
@@ -84,7 +85,7 @@ const T = {
     aboutKicker: 'about',
     aboutIntro: 'I make picture books, brand identities, and songs. The through-line is story \u2014 character, rhythm, the quiet between lines.',
     aboutBody1: 'Born in Brazil, I moved to Sweden in 2019 and have been based in Gothenburg since. My first book was published in Portuguese in 2021; since then I\u2019ve written and illustrated four more, and been commissioned for brand identity and editorial work for clients across Europe and South America.',
-    aboutBody2: 'In parallel I\u2019ve released five albums as a singer-songwriter in Portuguese and English. A sixth EP, \u2060Felice\u2060, was recorded in Rome after I was selected from 3,000+ applicants to the Band & Breakfast open call.',
+    aboutBody2: 'In parallel I\u2019ve released five albums as a singer-songwriter in Portuguese and English. A sixth EP, Felice, was recorded in Rome after I was selected from 3,000+ applicants to the Band & Breakfast open call.',
     statAlbumsNum: 'Five',
     statAlbumsLabel: 'albums released \u00b7 2018\u20132024',
     statBooksNum: 'Four',
@@ -151,7 +152,7 @@ const T = {
     exploreWork: 'ver trabalhos',
     listenNow: 'ouvir agora',
 
-    threeWorldsKicker: 'três mundos',
+    threeWorldsKicker: 'tr\u00eas mundos',
     threeWorldsTitle: 'uma',
     threeWorldsTitleItalic: 'voz',
     threeWorldsSubtitle: 'Livros ilustrados, ilustra\u00e7\u00f5es e m\u00fasicas \u2014 formas diferentes para o mesmo impulso.',
@@ -410,5 +411,3 @@ const T = {
     backToShop: 'tillbaka till butiken',
   },
 };
-
-Object.assign(window, { T });

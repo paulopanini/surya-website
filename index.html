@@ -89,16 +89,16 @@ function RefinedSite() {
   const lbIdx = lb ? PORTFOLIO.findIndex(x => x.id === lb.id) : -1;
   const pageMap = {
     home: <RHome onNav={goTo} t={t} />,
-    portfolio: <RPortfolio onOpen={openLb} />,
-    music: <RMusic />,
+    portfolio: <RPortfolio onOpen={openLb} t={t} />,
+    music: <RMusic t={t} />,
     press: <RPress t={t} />,
-    about: <RAbout />,
+    about: <RAbout t={t} />,
     contact: <RContact t={t} />,
-    shop: <RShop />,
+    shop: <RShop t={t} />,
   };
   return (
     <div style={{ background: RP.paper, minHeight: '100vh', color: RP.ink, fontFamily: 'Fraunces, Georgia, serif' }}>
-      <RefinedHeader page={page} onNav={goTo} lang={lang} setLang={setLang} />
+      <RefinedHeader page={page} onNav={goTo} lang={lang} setLang={setLang} t={t} />
       <main key={page} style={{ animation: 'pageIn .45s ease' }}>
         <style>{`@keyframes pageIn { from { opacity: 0; transform: translateY(6px) } to { opacity: 1; transform: none } }`}</style>
         {pageMap[page]}
