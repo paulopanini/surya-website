@@ -32,7 +32,7 @@ function RHome({ onNav, t }) {
           </div>
           <Reveal y={30} delay={200}>
             <div style={{ position: 'relative' }}>
-              <PortraitPlaceholder caption="portrait · real photo goes here" tone={RP.sage} style={{ aspectRatio: '4/5', borderRadius: 4 }} />
+              <img src="images/self/susu.jpg" alt="Surya" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover', borderRadius: 4, display: 'block' }} />
               <div style={{
                 position: 'absolute', bottom: -18, left: -18,
                 background: RP.paper, border: `1px solid ${RP.line}`,
@@ -333,7 +333,7 @@ function RAbout({ t }) {
       <section style={{ padding: '60px 48px 60px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1.5fr', gap: 60, alignItems: 'start' }} className="r-about-grid">
           <Reveal>
-            <PortraitPlaceholder caption="portrait · drop real photo" tone={RP.sage} style={{ aspectRatio: '4/5', borderRadius: 4 }} />
+            <img src="images/self/susu.jpg" alt="Surya" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover', borderRadius: 4, display: 'block' }} />
             <div style={{ marginTop: 18, fontFamily: 'ui-monospace, monospace', fontSize: 10, color: RP.inkSoft, letterSpacing: '.2em', textTransform: 'uppercase' }}>{t.studioCaption}</div>
           </Reveal>
           <Reveal delay={120}>

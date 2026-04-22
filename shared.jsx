@@ -97,7 +97,6 @@ const NAV_ITEMS = [
   { id: 'music', label: 'music' },
   { id: 'press', label: 'press' },
   { id: 'about', label: 'about' },
-  { id: 'shop', label: 'shop' },
 ];
 
 // ─── Iconography (inline SVG, tiny, warm) ───────────────────────────
@@ -218,7 +217,7 @@ const T = {
     requestMediaKit: 'Request media kit',
     aboutKicker: 'about',
     aboutIntro: 'I make picture books, brand identities, and songs. The through-line is story \u2014 character, rhythm, the quiet between lines.',
-    aboutBody1: 'Born in Brazil, I moved to Sweden in 2019 and have been based in Gothenburg since. My first book was published in Portuguese in 2021; since then I\u2019ve written and illustrated four more, and been commissioned for brand identity and editorial work for clients across Europe and South America.',
+    aboutBody1: 'Born in Brazil, I moved to Sweden in 2023 and have been based in Gothenburg since. My first book was published in Portuguese in 2021; since then I\u2019ve written and illustrated four more, and been commissioned for brand identity and editorial work for clients across Europe and South America.',
     aboutBody2: 'In parallel I\u2019ve released five albums as a singer-songwriter in Portuguese and English. A sixth EP, Felice, was recorded in Rome after I was selected from 3,000+ applicants to the Band & Breakfast open call.',
     statAlbumsNum: 'Five',
     statAlbumsLabel: 'albums released \u00b7 2018\u20132024',
@@ -330,7 +329,7 @@ const T = {
     requestMediaKit: 'Pedir kit de imprensa',
     aboutKicker: 'sobre',
     aboutIntro: 'Fa\u00e7o livros ilustrados, identidades de marca e m\u00fasicas. O fio condutor \u00e9 a hist\u00f3ria \u2014 personagem, ritmo, o sil\u00eancio entre as linhas.',
-    aboutBody1: 'Nascida no Brasil, mudei-me para a Su\u00e9cia em 2019 e estou baseada em Gotemburgo desde ent\u00e3o. Meu primeiro livro foi publicado em portugu\u00eas em 2021; desde ent\u00e3o escrevi e ilustrei mais quatro, e fui contratada para identidade de marca e projetos editoriais para clientes na Europa e na Am\u00e9rica do Sul.',
+    aboutBody1: 'Nascida no Brasil, mudei-me para a Su\u00e9cia em 2023 e estou baseada em Gotemburgo desde ent\u00e3o. Meu primeiro livro foi publicado em portugu\u00eas em 2021; desde ent\u00e3o escrevi e ilustrei mais quatro, e fui contratada para identidade de marca e projetos editoriais para clientes na Europa e na Am\u00e9rica do Sul.',
     aboutBody2: 'Paralelamente, lancei cinco \u00e1lbuns como cantautora em portugu\u00eas e ingl\u00eas. Um sexto EP, Felice, foi gravado em Roma depois de ser selecionada entre mais de 3.000 candidatos para o Band & Breakfast.',
     statAlbumsNum: 'Cinco',
     statAlbumsLabel: '\u00e1lbuns lan\u00e7ados \u00b7 2018\u20132024',
@@ -442,7 +441,7 @@ const T = {
     requestMediaKit: 'Best\u00e4ll presskit',
     aboutKicker: 'om',
     aboutIntro: 'Jag skapar bilderb\u00f6cker, varum\u00e4rkesidentiteter och s\u00e5nger. Den r\u00f6da tr\u00e5den \u00e4r ber\u00e4ttelse \u2014 karakt\u00e4r, rytm, tystnaden mellan raderna.',
-    aboutBody1: 'F\u00f6dd i Brasilien, flyttade jag till Sverige 2019 och har varit baserad i G\u00f6teborg sedan dess. Min f\u00f6rsta bok publicerades p\u00e5 portugisiska 2021; sedan dess har jag skrivit och illustrerat fyra till, och f\u00e5tt uppdrag f\u00f6r varum\u00e4rkesidentitet och redaktionellt arbete f\u00f6r kunder i Europa och Sydamerika.',
+    aboutBody1: 'F\u00f6dd i Brasilien, flyttade jag till Sverige 2023 och har varit baserad i G\u00f6teborg sedan dess. Min f\u00f6rsta bok publicerades p\u00e5 portugisiska 2021; sedan dess har jag skrivit och illustrerat fyra till, och f\u00e5tt uppdrag f\u00f6r varum\u00e4rkesidentitet och redaktionellt arbete f\u00f6r kunder i Europa och Sydamerika.',
     aboutBody2: 'Parallellt har jag sl\u00e4ppt fem album som singer-songwriter p\u00e5 portugisiska och engelska. En sj\u00e4tte EP, Felice, spelades in i Rom efter att jag valdes ut bland fler \u00e4n 3\u2009000 s\u00f6kande till Band & Breakfast.',
     statAlbumsNum: 'Fem',
     statAlbumsLabel: 'album utgivna \u00b7 2018\u20132024',

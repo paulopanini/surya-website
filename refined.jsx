@@ -216,7 +216,7 @@ function RefinedFooter({ onNav, t }) {
           <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.2em', textTransform: 'uppercase', opacity: .7 }}>Gothenburg · Sverige</div>
         </div>
         <FooterCol title={t.footerExplore} items={[{ l: t.navPortfolio, k: 'portfolio' }, { l: t.navMusic, k: 'music' }, { l: t.navAbout, k: 'about' }]} onNav={onNav} />
-        <FooterCol title={t.footerConnect} items={[{ l: t.navPress, k: 'press' }, { l: t.navContact, k: 'contact' }, { l: t.navShop, k: 'shop' }]} onNav={onNav} />
+        <FooterCol title={t.footerConnect} items={[{ l: t.navPress, k: 'press' }, { l: t.navContact, k: 'contact' }]} onNav={onNav} />
         <div>
           <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.22em', textTransform: 'uppercase', opacity: .7, marginBottom: 14 }}>{t.footerElsewhere}</div>
           <div style={{ display: 'flex', gap: 14 }}>
