@@ -242,7 +242,7 @@ function FooterCol({ title, items, onNav }) {
       {items.map(it => (
         <a key={it.k} onClick={(e) => { e.preventDefault(); onNav(it.k); }} href={`#${it.k}`} style={{ display: 'block', color: 'inherit', textDecoration: 'none', fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 18, marginBottom: 8, transition: 'color .15s' }}
           onMouseEnter={(e) => e.currentTarget.style.color = RP.ochre}
-          onMouseLeave={(e) => e.currentTarget.style.color = ''}>{it.l}</a>
+          onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>{it.l}</a>
       ))}
     </div>
   );
