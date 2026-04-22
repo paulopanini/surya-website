@@ -10,17 +10,17 @@ function RHome({ onNav, t }) {
           <div>
             <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 11, letterSpacing: '.22em', color: RP.terracotta, textTransform: 'uppercase', marginBottom: 28, display: 'flex', alignItems: 'center', gap: 10 }}>
               <span style={{ width: 28, height: 1, background: RP.terracotta, display: 'inline-block' }} />
-              brazil → sweden · 2026
+              {t.heroBadgeGeo}
             </div>
             <h1 style={{
               fontFamily: '"DM Serif Display", Georgia, serif',
               fontSize: 'clamp(56px, 9vw, 144px)', lineHeight: .92, fontWeight: 400,
               margin: '0 0 30px', color: RP.ink, letterSpacing: '-.025em',
             }}>
-              worlds<br />
-              <span style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', color: RP.terracotta }}>between</span><br />
-              words, colour,<br />
-              &amp; sound.
+              {t.heroH1Line1}<br />
+              <span style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', color: RP.terracotta }}>{t.heroH1Line2}</span><br />
+              {t.heroH1Line3}<br />
+              {t.heroH1Line4}
             </h1>
             <p style={{ fontSize: 19, lineHeight: 1.6, color: RP.inkSoft, maxWidth: 480, marginBottom: 30 }}>
               {t.tagline} <strong style={{ color: RP.ink, fontWeight: 600 }}>{t.heroRole}</strong> {t.heroClose}
@@ -37,7 +37,7 @@ function RHome({ onNav, t }) {
                 position: 'absolute', bottom: -18, left: -18,
                 background: RP.paper, border: `1px solid ${RP.line}`,
                 padding: '10px 16px', fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.18em', textTransform: 'uppercase', color: RP.inkSoft,
-              }}>est. 2018 · gbg</div>
+              }}>{t.heroBadgeEst}</div>
             </div>
           </Reveal>
         </div>
@@ -67,7 +67,7 @@ function RHome({ onNav, t }) {
               <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.22em', color: p.accent, textTransform: 'uppercase', marginBottom: 24 }}>{p.n} / 03</div>
               <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 48, color: RP.ink, fontWeight: 400, marginBottom: 12, letterSpacing: '-.01em' }}>{p.title}</div>
               <div style={{ fontSize: 15, lineHeight: 1.55, color: RP.inkSoft, marginBottom: 24 }}>{p.copy}</div>
-              <div style={{ fontFamily: 'Fraunces, Georgia, serif', fontSize: 14, fontStyle: 'italic', color: p.accent }}>explore →</div>
+              <div style={{ fontFamily: 'Fraunces, Georgia, serif', fontSize: 14, fontStyle: 'italic', color: p.accent }}>{t.exploreArrow}</div>
             </div>
           ))}
         </div>
@@ -100,7 +100,7 @@ function RHome({ onNav, t }) {
               <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 64, color: RP.ink, letterSpacing: '-.02em', lineHeight: 1, marginBottom: 12 }}>
                 <span style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic' }}>Felice</span>{t.upcomingSubtext}
               </div>
-              <p style={{ color: RP.inkSoft, fontSize: 16, lineHeight: 1.6, margin: 0, maxWidth: 640 }}>{UPCOMING_ALBUM.blurb}</p>
+              <p style={{ color: RP.inkSoft, fontSize: 16, lineHeight: 1.6, margin: 0, maxWidth: 640 }}>{t.upcomingBlurb}</p>
             </div>
             <RButton tone={RP.terracotta} onClick={() => onNav('music')}>{t.presave}</RButton>
           </div>
@@ -177,17 +177,17 @@ function RMusic({ t }) {
         <Reveal>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: 48, alignItems: 'start', borderTop: `1px solid ${RP.line}`, paddingTop: 40 }} className="r-music-top">
             <div>
-              <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 11, letterSpacing: '.22em', color: RP.terracotta, textTransform: 'uppercase', marginBottom: 14 }}>UPCOMING · {UPCOMING_ALBUM.release}</div>
+              <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 11, letterSpacing: '.22em', color: RP.terracotta, textTransform: 'uppercase', marginBottom: 14 }}>{t.upcomingPrefix}{UPCOMING_ALBUM.release}</div>
               <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 72, color: RP.ink, fontWeight: 400, letterSpacing: '-.02em', lineHeight: 1, marginBottom: 14 }}>
                 <span style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic' }}>felice</span>
               </div>
               <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.15em', color: RP.inkSoft, marginBottom: 18, textTransform: 'uppercase' }}>{UPCOMING_ALBUM.tag}</div>
-              <p style={{ color: RP.inkSoft, lineHeight: 1.65, fontSize: 15, marginBottom: 26 }}>{UPCOMING_ALBUM.blurb}</p>
+              <p style={{ color: RP.inkSoft, lineHeight: 1.65, fontSize: 15, marginBottom: 26 }}>{t.upcomingBlurb}</p>
               <div style={{ border: `1px solid ${RP.line}`, borderRadius: 4, padding: 16, background: RP.paperSoft }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 14, alignItems: 'center', marginBottom: 14 }}>
                   <div>
                     <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 18, color: RP.ink, lineHeight: 1.2 }}>{t.tracklist}</div>
-                    <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 9, color: RP.inkSoft, letterSpacing: '.15em', textTransform: 'uppercase', marginTop: 2 }}>full album drops {UPCOMING_ALBUM.release}</div>
+                    <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 9, color: RP.inkSoft, letterSpacing: '.15em', textTransform: 'uppercase', marginTop: 2 }}>{t.fullAlbumDrops}{UPCOMING_ALBUM.release}</div>
                   </div>
                   <RButton tone={RP.terracotta} href={SOCIALS.spotify} small>{t.presave}</RButton>
                 </div>
@@ -291,7 +291,7 @@ function RPress({ t }) {
   return (
     <>
       <section style={{ padding: '60px 48px 40px', background: `color-mix(in oklch, ${RP.brown} 13%, ${RP.paper})`, borderBottom: `1px solid color-mix(in oklch, ${RP.brown} 28%, ${RP.paper})` }}>
-        <RSectionHeader kicker="media & coverage" title="press" titleItalic="& media" accent={RP.brown} subtitle="Coverage, interviews, and mentions. For press inquiries or to download the media kit, get in touch." />
+        <RSectionHeader kicker={t.pressKicker} title={t.pressTitle} titleItalic={t.pressTitleItalic} accent={RP.brown} subtitle={t.pressSubtitle} />
       </section>
       <section style={{ padding: '20px 48px 40px' }}>
         {PRESS_ITEMS.map((p, i) => (
@@ -313,9 +313,9 @@ function RPress({ t }) {
         <Reveal>
           <div style={{ background: RP.ink, color: RP.paper, borderRadius: 4, padding: '56px 48px', display: 'grid', gridTemplateColumns: '1fr auto', gap: 36, alignItems: 'center' }} className="r-mediakit">
             <div>
-              <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 11, letterSpacing: '.22em', color: RP.ochre, textTransform: 'uppercase', marginBottom: 12 }}>press resources</div>
-              <h3 style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 48, margin: 0, fontWeight: 400, letterSpacing: '-.02em' }}>download the <span style={{ fontFamily: 'Fraunces', fontStyle: 'italic', color: RP.ochre }}>media kit</span></h3>
-              <p style={{ marginTop: 14, fontSize: 16, lineHeight: 1.55, opacity: .85, maxWidth: 520 }}>Hi-res photos, biography in EN / PT / SV, press releases, and official logos — all in one place.</p>
+              <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 11, letterSpacing: '.22em', color: RP.ochre, textTransform: 'uppercase', marginBottom: 12 }}>{t.pressResourcesLabel}</div>
+              <h3 style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 48, margin: 0, fontWeight: 400, letterSpacing: '-.02em' }}>{t.pressDownloadLabel} <span style={{ fontFamily: 'Fraunces', fontStyle: 'italic', color: RP.ochre }}>{t.pressMediaKitItalic}</span></h3>
+              <p style={{ marginTop: 14, fontSize: 16, lineHeight: 1.55, opacity: .85, maxWidth: 520 }}>{t.pressMediaKitDesc}</p>
             </div>
             <RButton tone={RP.paper} style={{ color: RP.ink, background: RP.paper }} href={`mailto:${SOCIALS.press}?subject=Media kit request`}>{t.requestMediaKit}</RButton>
           </div>
@@ -342,7 +342,7 @@ function RAbout({ t }) {
               {t.aboutKicker}
             </div>
             <h1 style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 'clamp(48px, 6vw, 88px)', margin: '0 0 32px', fontWeight: 400, color: RP.ink, letterSpacing: '-.02em', lineHeight: .98 }}>
-              hi, i'm <span style={{ fontFamily: 'Fraunces', fontStyle: 'italic', color: RP.terracotta }}>surya</span>.
+              {t.aboutHiIm} <span style={{ fontFamily: 'Fraunces', fontStyle: 'italic', color: RP.terracotta }}>surya</span>.
             </h1>
             <p style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 24, lineHeight: 1.5, color: RP.ink, marginBottom: 26 }}>
               {t.aboutIntro}
@@ -398,10 +398,10 @@ function RContact({ t }) {
       if (res.ok) {
         setSent(true);
       } else {
-        setErrors({ submit: 'Something went wrong. Please try again or email directly.' });
+        setErrors({ submit: t.submitError });
       }
     } catch (_) {
-      setErrors({ submit: 'Could not send. Please check your connection and try again.' });
+      setErrors({ submit: t.submitNetworkError });
     } finally {
       setSubmitting(false);
     }
@@ -414,22 +414,22 @@ function RContact({ t }) {
   return (
     <>
       <section style={{ padding: '60px 48px 40px', background: `color-mix(in oklch, ${RP.sage} 14%, ${RP.paper})`, borderBottom: `1px solid color-mix(in oklch, ${RP.sage} 30%, ${RP.paper})` }}>
-        <RSectionHeader kicker="get in touch" title="let's" titleItalic="talk" accent={RP.sage} subtitle="For commissions, press inquiries, speaking engagements, or just to say hi." />
+        <RSectionHeader kicker={t.contactKicker} title={t.contactTitle} titleItalic={t.contactTitleItalic} accent={RP.sage} subtitle={t.contactSubtitle} />
       </section>
       <section style={{ padding: '20px 48px 100px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: 80, alignItems: 'start' }} className="r-contact-grid">
           <Reveal>
-            <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.22em', color: RP.inkSoft, textTransform: 'uppercase', marginBottom: 28 }}>reach out</div>
+            <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.22em', color: RP.inkSoft, textTransform: 'uppercase', marginBottom: 28 }}>{t.contactReachOut}</div>
             <div style={{ marginBottom: 36 }}>
-              <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.18em', color: RP.inkSofter, textTransform: 'uppercase', marginBottom: 6 }}>general</div>
+              <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.18em', color: RP.inkSofter, textTransform: 'uppercase', marginBottom: 6 }}>{t.contactLabelGeneral}</div>
               <a href={`mailto:${SOCIALS.email}`} style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 28, color: RP.ink, textDecoration: 'none' }}>{SOCIALS.email}</a>
             </div>
             <div style={{ marginBottom: 36 }}>
-              <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.18em', color: RP.inkSofter, textTransform: 'uppercase', marginBottom: 6 }}>press</div>
+              <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.18em', color: RP.inkSofter, textTransform: 'uppercase', marginBottom: 6 }}>{t.contactLabelPress}</div>
               <a href={`mailto:${SOCIALS.press}`} style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 28, color: RP.ink, textDecoration: 'none' }}>{SOCIALS.press}</a>
             </div>
             <div>
-              <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.18em', color: RP.inkSofter, textTransform: 'uppercase', marginBottom: 12 }}>elsewhere</div>
+              <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.18em', color: RP.inkSofter, textTransform: 'uppercase', marginBottom: 12 }}>{t.contactLabelElsewhere}</div>
               <div style={{ display: 'flex', gap: 16 }}>
                 <a href={SOCIALS.instagram} target="_blank" rel="noreferrer" style={{ color: RP.ink }}><Icon name="instagram" size={22} /></a>
                 <a href={SOCIALS.youtube} target="_blank" rel="noreferrer" style={{ color: RP.ink }}><Icon name="youtube" size={22} /></a>
