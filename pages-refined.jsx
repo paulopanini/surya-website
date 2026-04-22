@@ -389,6 +389,7 @@ function RContact({ t }) {
     if (Object.keys(err).length > 0) return;
     setSubmitting(true);
     try {
+      console.log('Submitting form', form);
       const res = await fetch('https://formspree.io/f/xwvawpyl', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -464,7 +465,14 @@ function RContact({ t }) {
                   <textarea rows={4} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} style={{ ...input, resize: 'vertical' }} />
                 </RFieldLine>
                 {errors.submit && <div style={{ color: RP.terracotta, fontSize: 13, fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic' }}>{errors.submit}</div>}
-                <RButton tone={RP.ink} style={{ alignSelf: 'flex-start', marginTop: 8 }} disabled={submitting}>{submitting ? '...' : t.sendMessage}</RButton>
+                <button type="submit" disabled={submitting} style={{
+                  alignSelf: 'flex-start', marginTop: 8,
+                  display: 'inline-flex', alignItems: 'center', gap: 10,
+                  padding: '14px 26px', fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 16,
+                  borderRadius: 999, cursor: submitting ? 'not-allowed' : 'pointer',
+                  background: RP.ink, color: RP.paper, border: `1.5px solid ${RP.ink}`,
+                  opacity: submitting ? 0.6 : 1, transition: 'all .25s',
+                }}>{submitting ? '...' : t.sendMessage}</button>
               </form>
             )}
           </Reveal>
