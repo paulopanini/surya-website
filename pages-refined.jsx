@@ -245,7 +245,7 @@ function RMusic({ t }) {
                     onMouseLeave={(e) => e.currentTarget.style.paddingLeft = '0'}
                     onClick={() => setExpanded(isOpen ? null : d.n)}>
                     <span style={{ fontFamily: 'ui-monospace, monospace', fontSize: 12, color: RP.inkSofter, letterSpacing: '.15em' }}>0{d.n}</span>
-                    <PaletteTile palette={d.palette} style={{ aspectRatio: '1/1', width: 60 }} radius={2} />
+                    <PaletteTile palette={d.palette} image={d.image} alt={d.title} style={{ aspectRatio: '1/1', width: 60 }} radius={2} />
                     <span style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 36, color: RP.ink, letterSpacing: '-.01em' }}>{d.title}</span>
                     <span style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 14, color: RP.inkSoft }}>{d.year}</span>
                     <span style={{
@@ -280,9 +280,6 @@ function RMusic({ t }) {
               </Reveal>
             );
           })}
-        </div>
-        <div style={{ marginTop: 32, fontFamily: 'ui-monospace, monospace', fontSize: 10, color: RP.inkSofter, letterSpacing: '.18em', textTransform: 'uppercase' }}>
-          * albums without a direct link open the artist page · add each album's spotifyId in <span style={{ color: RP.terracotta }}>shared.jsx</span> to wire the individual player
         </div>
       </section>
     </>

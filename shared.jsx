@@ -42,19 +42,17 @@ const PORTFOLIO = [
 // ─── Albums ─────────────────────────────────────────────────────────
 const UPCOMING_ALBUM = {
   title: 'FELICE',
-  tag: 'EP · 6 TRACKS · ENGLISH & PORTUGUESE · RECORDED IN ROME',
+  tag: 'EP · 4 TRACKS · ENGLISH & PORTUGUESE · RECORDED IN ROME',
   release: 'SEP 19, 2026',
   blurb: 'Recorded in Rome after winning a Band & Breakfast open call from 3,000+ applicants. Featuring Eva (Sweden), Heron (Brazil), Lucas (France), Arthur (Brazil), Christian (Italy), and Valerio (Italy).',
   // Spotify embed — artist page until release. Swap for album URL once live:
   //   https://open.spotify.com/embed/album/<ALBUM_ID>?utm_source=generator
   spotifyEmbed: 'https://open.spotify.com/embed/artist/2RvtyUzIEop2LcdPELFTym?utm_source=generator',
   tracks: [
-    { n: '01', title: 'Primavera', lang: 'EN', dur: '3:12' },
-    { n: '02', title: 'Small hours', lang: 'EN', dur: '2:58' },
-    { n: '03', title: 'Casa', lang: 'PT', dur: '3:41' },
-    { n: '04', title: 'Meu amor antigo', lang: 'PT', dur: '4:03' },
-    { n: '05', title: 'River song', lang: 'EN', dur: '2:45' },
-    { n: '06', title: 'Felice', lang: 'EN/PT', dur: '3:29' },
+    { n: '01', title: 'TRACK 01', lang: 'EN', dur: '0:00' },
+    { n: '02', title: 'TRACK 02', lang: 'EN', dur: '0:00' },
+    { n: '03', title: 'TRACK 03', lang: 'PT', dur: '0:00' },
+    { n: '04', title: 'TRACK 04', lang: 'PT', dur: '0:00' },
   ],
   palette: ['#c85a9c', '#f2a050', '#7d5ce0'],
 };
@@ -62,12 +60,12 @@ const UPCOMING_ALBUM = {
 // Discography — add `spotifyId` (the ID after /album/ in a Spotify URL)
 // to enable the embed player for that album. Without it we just show art.
 const DISCOGRAPHY = [
-  { n: 1, title: 'MOLETOM', year: 2018, palette: ['#e85d75', '#9b7dd4'], spotifyId: '1R6kzch2CdWsbXNQH4R2qB' },
-  { n: 2, title: 'AMOR I', year: 2020, palette: ['#b08dd9', '#62b8d9'], spotifyId: '5ATbaF5xYSLJcruW2zd2m1' },
-  { n: 3, title: 'AMOR II', year: 2020, palette: ['#9b7dd4', '#d4a5e8'], spotifyId: '3LI9EHLeHeAb5cPRUWdgyQ' },
-  { n: 4, title: 'ASAS', year: 2022, palette: ['#62b8d9', '#b08dd9'], spotifyId: '3Vhgxp96wDtVY5WCWVkl1L' },
-  { n: 5, title: 'TO BE FOUND', year: 2024, palette: ['#7d5ce0', '#e85d75'], spotifyId: '0F55MmVaH3gIUg8PxpdB11' },
-];
+  { n: 1, title: 'MOLETOM', year: 2018, palette: ['#e85d75', '#9b7dd4'], spotifyId: '1R6kzch2CdWsbXNQH4R2qB', image: 'images/moletom.jpg' },
+  { n: 2, title: 'AMOR, L\'AMOUR, LOVE I', year: 2020, palette: ['#b08dd9', '#62b8d9'], spotifyId: '5ATbaF5xYSLJcruW2zd2m1', image: 'images/amor-lamour-love-1.jpg' },
+  { n: 3, title: 'AMOR, L\'AMOUR, LOVE II', year: 2020, palette: ['#9b7dd4', '#d4a5e8'], spotifyId: '3LI9EHLeHeAb5cPRUWdgyQ', image: 'images/amor-lamour-love-2.jpg' },
+  { n: 4, title: 'ASAS', year: 2022, palette: ['#62b8d9', '#b08dd9'], spotifyId: '3Vhgxp96wDtVY5WCWVkl1L', image: 'images/asas.jpg' },
+    { n: 5, title: 'TO BE FOUND', year: 2024, palette: ['#7d5ce0', '#e85d75'], spotifyId: '0F55MmVaH3gIUg8PxpdB11', image: 'images/to-be-found.jpg' },
+  ];
 
 // Spotify artist-page embed for the fallback player.
 const SPOTIFY_ARTIST_EMBED = 'https://open.spotify.com/embed/artist/2RvtyUzIEop2LcdPELFTym?utm_source=generator';
