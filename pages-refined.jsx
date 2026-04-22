@@ -377,15 +377,33 @@ function RAbout({ t }) {
 function RContact({ t }) {
   const [form, setForm] = React.useState({ name: '', email: '', topic: 'general', message: '' });
   const [sent, setSent] = React.useState(false);
+  const [submitting, setSubmitting] = React.useState(false);
   const [errors, setErrors] = React.useState({});
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     const err = {};
     if (!form.name.trim()) err.name = t.errName;
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) err.email = t.errEmail;
     if (form.message.trim().length < 10) err.message = t.errMessage;
     setErrors(err);
-    if (Object.keys(err).length === 0) setSent(true);
+    if (Object.keys(err).length > 0) return;
+    setSubmitting(true);
+    try {
+      const res = await fetch('https://formspree.io/f/xwvawpyl', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ name: form.name, email: form.email, topic: form.topic, message: form.message }),
+      });
+      if (res.ok) {
+        setSent(true);
+      } else {
+        setErrors({ submit: 'Something went wrong. Please try again or email directly.' });
+      }
+    } catch (_) {
+      setErrors({ submit: 'Could not send. Please check your connection and try again.' });
+    } finally {
+      setSubmitting(false);
+    }
   };
   const input = {
     width: '100%', padding: '12px 0', border: 'none', borderBottom: `1px solid ${RP.line}`,
@@ -445,7 +463,8 @@ function RContact({ t }) {
                 <RFieldLine label={t.messageLabel} error={errors.message}>
                   <textarea rows={4} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} style={{ ...input, resize: 'vertical' }} />
                 </RFieldLine>
-                <RButton tone={RP.ink} style={{ alignSelf: 'flex-start', marginTop: 8 }}>{t.sendMessage}</RButton>
+                {errors.submit && <div style={{ color: RP.terracotta, fontSize: 13, fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic' }}>{errors.submit}</div>}
+                <RButton tone={RP.ink} style={{ alignSelf: 'flex-start', marginTop: 8 }} disabled={submitting}>{submitting ? '...' : t.sendMessage}</RButton>
               </form>
             )}
           </Reveal>
