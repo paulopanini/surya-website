@@ -62,11 +62,11 @@ const UPCOMING_ALBUM = {
 // Discography — add `spotifyId` (the ID after /album/ in a Spotify URL)
 // to enable the embed player for that album. Without it we just show art.
 const DISCOGRAPHY = [
-  { n: 1, title: 'MOLETOM', year: 2018, palette: ['#e85d75', '#9b7dd4'], spotifyId: null },
-  { n: 2, title: 'AMOR I', year: 2020, palette: ['#b08dd9', '#62b8d9'], spotifyId: null },
-  { n: 3, title: 'AMOR II', year: 2020, palette: ['#9b7dd4', '#d4a5e8'], spotifyId: null },
-  { n: 4, title: 'ASAS', year: 2022, palette: ['#62b8d9', '#b08dd9'], spotifyId: null },
-  { n: 5, title: 'TO BE FOUND', year: 2024, palette: ['#7d5ce0', '#e85d75'], spotifyId: null },
+  { n: 1, title: 'MOLETOM', year: 2018, palette: ['#e85d75', '#9b7dd4'], spotifyId: '1R6kzch2CdWsbXNQH4R2qB' },
+  { n: 2, title: 'AMOR I', year: 2020, palette: ['#b08dd9', '#62b8d9'], spotifyId: '5ATbaF5xYSLJcruW2zd2m1' },
+  { n: 3, title: 'AMOR II', year: 2020, palette: ['#9b7dd4', '#d4a5e8'], spotifyId: '3LI9EHLeHeAb5cPRUWdgyQ' },
+  { n: 4, title: 'ASAS', year: 2022, palette: ['#62b8d9', '#b08dd9'], spotifyId: '3Vhgxp96wDtVY5WCWVkl1L' },
+  { n: 5, title: 'TO BE FOUND', year: 2024, palette: ['#7d5ce0', '#e85d75'], spotifyId: '0F55MmVaH3gIUg8PxpdB11' },
 ];
 
 // Spotify artist-page embed for the fallback player.
