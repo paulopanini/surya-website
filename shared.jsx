@@ -1,4 +1,4 @@
-// Shared data & small utilities used by both design directions.
+﻿// Shared data & small utilities used by both design directions.
 // Exports everything to window so Babel-transpiled sibling files can import.
 
 // ─── Social & contact ───────────────────────────────────────────────
@@ -72,10 +72,8 @@ const SPOTIFY_ARTIST_EMBED = 'https://open.spotify.com/embed/artist/2RvtyUzIEop2
 
 // ─── Press & media ──────────────────────────────────────────────────
 const PRESS_ITEMS = [
-  { outlet: 'Dagens Nyheter', date: 'Mar 2026', title: 'Three languages, one voice: Surya Amitrano bridges worlds' },
-  { outlet: 'Folha de S.Paulo', date: 'Feb 2026', title: 'Da ilustração ao microfone: o caminho de Surya Amitrano' },
-  { outlet: 'Band & Breakfast', date: 'Nov 2025', title: 'Open call winner records debut EP in Rome' },
-  { outlet: 'GP Göteborg', date: 'Oct 2025', title: 'Gothenburg-based illustrator on storytelling across mediums' },
+  { outlet: 'Portal Banda B', date: 'Lucas Cabaña', title: 'One of the most versatile singers of the current generation of Brazilian music, Surya explores new horizons in her work.' },
+  { outlet: 'Cult Magazine', date: '', title: 'Surya enters this decade as one of the main new artistic references in the country [Brazil]!' },
 ];
 
 // ─── Shop (placeholder) ─────────────────────────────────────────────
@@ -215,7 +213,7 @@ const T = {
     listenBtn: 'listen',
     closeBtn: 'close',
     pressInquiries: 'press inquiries',
-    requestMediaKit: 'Request media kit',
+    requestMediaKit: 'Download media kit',
     aboutKicker: 'about',
     aboutHiIm: 'hi, i\'m',
     aboutIntro: 'I make picture books, brand identities, and songs. The through-line is story \u2014 character, rhythm, the quiet between lines.',
@@ -260,11 +258,11 @@ const T = {
     pressKicker: 'media & coverage',
     pressTitle: 'press',
     pressTitleItalic: '& media',
-    pressSubtitle: 'Coverage, interviews, and mentions. For press inquiries or to download the media kit, get in touch.',
+    pressSubtitle: 'Coverage, interviews, and mentions. Download the media kit below, or reach out for press inquiries.',
     pressResourcesLabel: 'press resources',
     pressDownloadLabel: 'download the',
     pressMediaKitItalic: 'media kit',
-    pressMediaKitDesc: 'Hi-res photos, biography in EN / PT / SV, press releases, and official logos \u2014 all in one place.',
+    pressMediaKitDesc: 'Find more about live settings, prices and upcoming projects.',
     contactKicker: 'get in touch',
     contactTitle: 'let\u2019s',
     contactTitleItalic: 'talk',
@@ -356,7 +354,7 @@ const T = {
     listenBtn: 'ouvir',
     closeBtn: 'fechar',
     pressInquiries: 'imprensa',
-    requestMediaKit: 'Pedir kit de imprensa',
+    requestMediaKit: 'Baixar kit de imprensa',
     aboutKicker: 'sobre',
     aboutHiIm: 'oi, eu sou a',
     aboutIntro: 'Fa\u00e7o livros ilustrados, identidades de marca e m\u00fasicas. O fio condutor \u00e9 a hist\u00f3ria \u2014 personagem, ritmo, o sil\u00eancio entre as linhas.',
@@ -401,11 +399,11 @@ const T = {
     pressKicker: 'm\u00eddia & cobertura',
     pressTitle: 'imprensa',
     pressTitleItalic: '& m\u00eddia',
-    pressSubtitle: 'Cobertura, entrevistas e men\u00e7\u00f5es. Para consultas de imprensa ou para obter o kit de imprensa, entre em contato.',
+    pressSubtitle: 'Cobertura, entrevistas e men\u00e7\u00f5es. Baixe o kit de imprensa abaixo ou entre em contato para consultas de imprensa.',
     pressResourcesLabel: 'recursos de imprensa',
     pressDownloadLabel: 'baixar o',
     pressMediaKitItalic: 'kit de imprensa',
-    pressMediaKitDesc: 'Fotos em alta resolu\u00e7\u00e3o, biografia em EN / PT / SV, comunicados de imprensa e logos oficiais \u2014 tudo num s\u00f3 lugar.',
+    pressMediaKitDesc: 'Saiba mais sobre apresentações ao vivo, cachês e próximos projetos.',
     contactKicker: 'fale comigo',
     contactTitle: 'vamos',
     contactTitleItalic: 'conversar',
@@ -497,7 +495,7 @@ const T = {
     listenBtn: 'lyssna',
     closeBtn: 'st\u00e4ng',
     pressInquiries: 'press',
-    requestMediaKit: 'Best\u00e4ll presskit',
+    requestMediaKit: 'Ladda ner presskit',
     aboutKicker: 'om',
     aboutHiIm: 'hej, jag \u00e4r',
     aboutIntro: 'Jag skapar bilderb\u00f6cker, varum\u00e4rkesidentiteter och s\u00e5nger. Den r\u00f6da tr\u00e5den \u00e4r ber\u00e4ttelse \u2014 karakt\u00e4r, rytm, tystnaden mellan raderna.',
@@ -542,11 +540,11 @@ const T = {
     pressKicker: 'media & t\u00e4ckning',
     pressTitle: 'press',
     pressTitleItalic: '& media',
-    pressSubtitle: 'T\u00e4ckning, intervjuer och omn\u00e4mnanden. F\u00f6r pressf\u00f6rfr\u00e5gningar eller f\u00f6r att ladda ner presspaketet, kontakta oss.',
+    pressSubtitle: 'T\u00e4ckning, intervjuer och omn\u00e4mnanden. Ladda ner presspaketet nedan, eller kontakta oss f\u00f6r pressf\u00f6rfr\u00e5gningar.',
     pressResourcesLabel: 'pressresurser',
     pressDownloadLabel: 'ladda ner',
     pressMediaKitItalic: 'presspaketet',
-    pressMediaKitDesc: 'H\u00f6guppl\u00f6sta foton, biografi p\u00e5 EN / PT / SV, pressmeddelanden och officiella logotyper \u2014 allt p\u00e5 ett st\u00e4lle.',
+    pressMediaKitDesc: 'L\u00e4s mer om livespelningar, priser och kommande projekt.',
     contactKicker: 'h\u00f6r av dig',
     contactTitle: 'l\u00e5t oss',
     contactTitleItalic: 'prata',

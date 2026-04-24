@@ -317,7 +317,7 @@ function RPress({ t }) {
               <h3 style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 48, margin: 0, fontWeight: 400, letterSpacing: '-.02em' }}>{t.pressDownloadLabel} <span style={{ fontFamily: 'Fraunces', fontStyle: 'italic', color: RP.ochre }}>{t.pressMediaKitItalic}</span></h3>
               <p style={{ marginTop: 14, fontSize: 16, lineHeight: 1.55, opacity: .85, maxWidth: 520 }}>{t.pressMediaKitDesc}</p>
             </div>
-            <RButton tone={RP.paper} style={{ color: RP.ink, background: RP.paper }} href={`mailto:${SOCIALS.press}?subject=Media kit request`}>{t.requestMediaKit}</RButton>
+            <RButton tone={RP.paper} style={{ color: RP.ink, background: RP.paper }} href="press/surya-amitrano-media-kit.pdf" download>{t.requestMediaKit}</RButton>
           </div>
         </Reveal>
         <style>{`@media (max-width: 820px){.r-mediakit{grid-template-columns: 1fr !important}}`}</style>

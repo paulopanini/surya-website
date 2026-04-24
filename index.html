@@ -87,6 +87,7 @@ function RefinedSite() {
   const [lb, setLb] = useState(null);
   const { lang, setLang, t } = useI18n();
   useEffect(() => { try { localStorage.setItem('surya-refined-page', page); } catch {} }, [page]);
+  useEffect(() => { document.title = `suryaamitrano - ${page}`; }, [page]);
   const goTo = (p) => { setPage(p); window.scrollTo({ top: 0, behavior: 'smooth' }); };
   const openLb = (item) => setLb(item);
   const lbIdx = lb ? PORTFOLIO.findIndex(x => x.id === lb.id) : -1;
