@@ -33,11 +33,6 @@ function RHome({ onNav, t }) {
           <Reveal y={30} delay={200}>
             <div style={{ position: 'relative' }}>
               <img src="images/self/susu.jpg" alt="Surya" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover', borderRadius: 4, display: 'block' }} />
-              <div style={{
-                position: 'absolute', bottom: -18, left: -18,
-                background: RP.paper, border: `1px solid ${RP.line}`,
-                padding: '10px 16px', fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.18em', textTransform: 'uppercase', color: RP.inkSoft,
-              }}>{t.heroBadgeEst}</div>
             </div>
           </Reveal>
         </div>
