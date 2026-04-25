@@ -424,10 +424,6 @@ function RContact({ t }) {
               <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.18em', color: RP.inkSofter, textTransform: 'uppercase', marginBottom: 6 }}>{t.contactLabelGeneral}</div>
               <a href={`mailto:${SOCIALS.email}`} style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 28, color: RP.ink, textDecoration: 'none' }}>{SOCIALS.email}</a>
             </div>
-            <div style={{ marginBottom: 36 }}>
-              <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.18em', color: RP.inkSofter, textTransform: 'uppercase', marginBottom: 6 }}>{t.contactLabelPress}</div>
-              <a href={`mailto:${SOCIALS.press}`} style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 28, color: RP.ink, textDecoration: 'none' }}>{SOCIALS.press}</a>
-            </div>
             <div>
               <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.18em', color: RP.inkSofter, textTransform: 'uppercase', marginBottom: 12 }}>{t.contactLabelElsewhere}</div>
               <div style={{ display: 'flex', gap: 16 }}>

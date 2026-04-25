@@ -8,7 +8,6 @@ const SOCIALS = {
   spotify: 'https://open.spotify.com/intl-pt/artist/2RvtyUzIEop2LcdPELFTym',
   tiktok: 'https://www.tiktok.com/@suryaamitrano',
   email: 'hello@suryaamitrano.com',
-  press: 'press@suryaamitrano.com',
 };
 
 // ─── Portfolio categories & works ───────────────────────────────────
