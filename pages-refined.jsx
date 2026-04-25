@@ -350,8 +350,20 @@ function RAbout({ t }) {
             <p style={{ fontSize: 17, lineHeight: 1.75, color: RP.inkSoft, marginBottom: 18 }}>
               {t.aboutBody1}
             </p>
-            <p style={{ fontSize: 17, lineHeight: 1.75, color: RP.inkSoft, marginBottom: 32 }}>
+            <p style={{ fontSize: 17, lineHeight: 1.75, color: RP.inkSoft, marginBottom: 18 }}>
               {t.aboutBody2}
+            </p>
+            <p style={{ fontSize: 17, lineHeight: 1.75, color: RP.inkSoft, marginBottom: 18 }}>
+              {t.aboutBody3}
+            </p>
+            <p style={{ fontSize: 17, lineHeight: 1.75, color: RP.inkSoft, marginBottom: 18 }}>
+              {t.aboutBody4}
+            </p>
+            <p style={{ fontSize: 17, lineHeight: 1.75, color: RP.inkSoft, marginBottom: 18 }}>
+              {t.aboutBody5}
+            </p>
+            <p style={{ fontSize: 17, lineHeight: 1.75, color: RP.inkSoft, marginBottom: 32, whiteSpace: 'pre-line' }}>
+              {t.aboutClosing}
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, borderTop: `1px solid ${RP.line}`, paddingTop: 28 }}>
               {[
