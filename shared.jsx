@@ -1,10 +1,12 @@
 ﻿// Shared data & small utilities used by both design directions.
 // Exports everything to window so Babel-transpiled sibling files can import.
 
-// ─── Mailchimp newsletter ──────────────────────────────────────────
-// 1. Log in to Mailchimp → Audience → Signup forms → Embedded forms
-// 2. Copy the form action URL and paste it below.
-const MAILCHIMP_ACTION_URL = 'https://suryaamitrano.us13.list-manage.com/subscribe/post?u=cbd2959746d059c9470382bd9&amp;id=6641dba5a6&amp;f_id=008c04e4f0';
+// ─── MailerLite newsletter ──────────────────────────────────────────
+// 1. Log in to MailerLite → Forms → select your form → Embed → HTML embed
+// 2. In the generated HTML, find the <form action="..."> URL.
+//    It looks like: https://assets.mailerlite.com/jsonp/ACCOUNT_ID/forms/FORM_ID/subscribe
+// 3. Paste that full URL below.
+const MAILERLITE_URL = 'https://assets.mailerlite.com/jsonp/2297081/forms/185926454134966144/subscribe';
 
 // ─── Social & contact ───────────────────────────────────────────────
 const SOCIALS = {
@@ -716,7 +718,7 @@ function Reveal({ children, delay = 0, y = 16, style }) {
 
 // Export to window so sibling Babel scripts can pick these up.
 Object.assign(window, {
-  MAILCHIMP_ACTION_URL,
+  MAILERLITE_URL,
   SOCIALS, PORTFOLIO_CATS, PORTFOLIO, UPCOMING_ALBUM, DISCOGRAPHY, SPOTIFY_ARTIST_EMBED,
   PRESS_ITEMS, SHOP_ITEMS, NAV_ITEMS,
   Icon, useI18n, PaletteTile, PortraitPlaceholder, Reveal,

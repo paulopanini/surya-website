@@ -208,37 +208,38 @@ function RefinedFooter({ onNav, t }) {
   const [nlStatus, setNlStatus] = React.useState('idle'); // idle | loading | success | error
   const [nlErr, setNlErr] = React.useState('');
 
-  const submitNewsletter = (e) => {
+  const submitNewsletter = async (e) => {
     e.preventDefault();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(nlEmail)) {
       setNlStatus('error');
       setNlErr(t.errEmail);
       return;
     }
-    if (!MAILCHIMP_ACTION_URL || MAILCHIMP_ACTION_URL === 'PASTE_YOUR_MAILCHIMP_ACTION_URL_HERE') {
+    if (!MAILERLITE_URL || MAILERLITE_URL === 'PASTE_YOUR_MAILERLITE_SUBSCRIBE_URL_HERE') {
       setNlStatus('error');
-      setNlErr('Mailchimp not configured yet.');
+      setNlErr('MailerLite not configured yet.');
       return;
     }
     setNlStatus('loading');
-    const cbName = '_mc_cb_' + Date.now();
-    const base = MAILCHIMP_ACTION_URL.replace(/&amp;/g, '&').replace('/post?', '/post-json?');
-    const url = base + '&EMAIL=' + encodeURIComponent(nlEmail) + '&c=' + cbName;
-    let script;
-    window[cbName] = (data) => {
-      delete window[cbName];
-      if (script && script.parentNode) script.parentNode.removeChild(script);
-      if (data.result === 'success') {
+    try {
+      const body = new URLSearchParams({ 'fields[email]': nlEmail, ml_submit: '1' });
+      const res = await fetch(MAILERLITE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString(),
+      });
+      const data = await res.json();
+      if (data.success) {
         setNlStatus('success');
       } else {
+        const msg = data.errors && data.errors.email ? data.errors.email[0] : t.submitNetworkError;
         setNlStatus('error');
-        setNlErr(data.msg ? data.msg.replace(/<[^>]+>/g, '') : t.submitNetworkError);
+        setNlErr(msg);
       }
-    };
-    script = document.createElement('script');
-    script.src = url;
-    script.onerror = () => { delete window[cbName]; setNlStatus('error'); setNlErr(t.submitNetworkError); };
-    document.head.appendChild(script);
+    } catch (_) {
+      setNlStatus('error');
+      setNlErr(t.submitNetworkError);
+    }
   };
 
   return (
