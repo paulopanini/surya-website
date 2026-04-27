@@ -1,6 +1,11 @@
 ﻿// Shared data & small utilities used by both design directions.
 // Exports everything to window so Babel-transpiled sibling files can import.
 
+// ─── Mailchimp newsletter ──────────────────────────────────────────
+// 1. Log in to Mailchimp → Audience → Signup forms → Embedded forms
+// 2. Copy the form action URL and paste it below.
+const MAILCHIMP_ACTION_URL = 'https://suryaamitrano.us13.list-manage.com/subscribe/post?u=cbd2959746d059c9470382bd9&amp;id=6641dba5a6&amp;f_id=008c04e4f0';
+
 // ─── Social & contact ───────────────────────────────────────────────
 const SOCIALS = {
   instagram: 'https://www.instagram.com/suryaamitrano/',
@@ -277,6 +282,12 @@ const T = {
     submitError: 'Something went wrong. Please try again or email directly.',
     submitNetworkError: 'Could not send. Please check your connection and try again.',
     subscribe: 'subscribe',
+    newsletterKicker: 'stay in the loop',
+    newsletterTitle: 'the',
+    newsletterTitleItalic: 'newsletter',
+    newsletterPlaceholder: 'your email',
+    newsletterSuccess: 'you\'re in',
+    newsletterSuccessMsg: 'see you in your inbox — about once a month',
     newsletterBlurb: 'New work, upcoming shows, and the occasional stray thought \u2014 about once a month.',
     shopSoon: 'the shop is opening soon',
     shopBlurb: 'Signed books, prints, zines, and limited releases \u2014 delivered worldwide.',
@@ -422,6 +433,12 @@ const T = {
     submitError: 'Algo deu errado. Por favor, tente novamente ou envie um e-mail diretamente.',
     submitNetworkError: 'N\u00e3o foi poss\u00edvel enviar. Por favor, verifique sua conex\u00e3o e tente novamente.',
     subscribe: 'assinar',
+    newsletterKicker: 'fique por dentro',
+    newsletterTitle: 'a',
+    newsletterTitleItalic: 'newsletter',
+    newsletterPlaceholder: 'seu e-mail',
+    newsletterSuccess: 'pronto',
+    newsletterSuccessMsg: 'te vejo na sua caixa de entrada \u2014 cerca de uma vez por m\u00eas',
     newsletterBlurb: 'Novidades e reflex\u00f5es ocasionais \u2014 cerca de uma vez por m\u00eas.',
     shopSoon: 'a loja abre em breve',
     shopBlurb: 'Livros autografados, gravuras, zines e lan\u00e7amentos limitados \u2014 enviados para todo o mundo.',
@@ -567,6 +584,12 @@ const T = {
     submitError: 'N\u00e5got gick fel. F\u00f6rs\u00f6k igen eller skicka e-post direkt.',
     submitNetworkError: 'Kunde inte skicka. Kontrollera din anslutning och f\u00f6rs\u00f6k igen.',
     subscribe: 'prenumerera',
+    newsletterKicker: 'h\u00e5ll dig uppdaterad',
+    newsletterTitle: 'mitt',
+    newsletterTitleItalic: 'nyhetsbrev',
+    newsletterPlaceholder: 'din e-post',
+    newsletterSuccess: 'du \u00e4r med',
+    newsletterSuccessMsg: 'vi ses i din inkorg \u2014 ungef\u00e4r en g\u00e5ng i m\u00e5naden',
     newsletterBlurb: 'Nya arbeten och tankar \u2014 ungef\u00e4r en g\u00e5ng i m\u00e5naden.',
     shopSoon: 'butiken \u00f6ppnar snart',
     shopBlurb: 'Signerade b\u00f6cker, tryck, zines och begr\u00e4nsade utg\u00e5vor \u2014 levereras \u00f6ver hela v\u00e4rlden.',
@@ -693,6 +716,7 @@ function Reveal({ children, delay = 0, y = 16, style }) {
 
 // Export to window so sibling Babel scripts can pick these up.
 Object.assign(window, {
+  MAILCHIMP_ACTION_URL,
   SOCIALS, PORTFOLIO_CATS, PORTFOLIO, UPCOMING_ALBUM, DISCOGRAPHY, SPOTIFY_ARTIST_EMBED,
   PRESS_ITEMS, SHOP_ITEMS, NAV_ITEMS,
   Icon, useI18n, PaletteTile, PortraitPlaceholder, Reveal,

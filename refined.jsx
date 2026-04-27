@@ -204,33 +204,155 @@ function RSectionHeader({ kicker, title, titleItalic, subtitle, align = 'left', 
 
 // ─── Footer ─────────────────────────────────────────────────────────
 function RefinedFooter({ onNav, t }) {
+  const [nlEmail, setNlEmail] = React.useState('');
+  const [nlStatus, setNlStatus] = React.useState('idle'); // idle | loading | success | error
+  const [nlErr, setNlErr] = React.useState('');
+
+  const submitNewsletter = (e) => {
+    e.preventDefault();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(nlEmail)) {
+      setNlStatus('error');
+      setNlErr(t.errEmail);
+      return;
+    }
+    if (!MAILCHIMP_ACTION_URL || MAILCHIMP_ACTION_URL === 'PASTE_YOUR_MAILCHIMP_ACTION_URL_HERE') {
+      setNlStatus('error');
+      setNlErr('Mailchimp not configured yet.');
+      return;
+    }
+    setNlStatus('loading');
+    const cbName = '_mc_cb_' + Date.now();
+    const base = MAILCHIMP_ACTION_URL.replace(/&amp;/g, '&').replace('/post?', '/post-json?');
+    const url = base + '&EMAIL=' + encodeURIComponent(nlEmail) + '&c=' + cbName;
+    let script;
+    window[cbName] = (data) => {
+      delete window[cbName];
+      if (script && script.parentNode) script.parentNode.removeChild(script);
+      if (data.result === 'success') {
+        setNlStatus('success');
+      } else {
+        setNlStatus('error');
+        setNlErr(data.msg ? data.msg.replace(/<[^>]+>/g, '') : t.submitNetworkError);
+      }
+    };
+    script = document.createElement('script');
+    script.src = url;
+    script.onerror = () => { delete window[cbName]; setNlStatus('error'); setNlErr(t.submitNetworkError); };
+    document.head.appendChild(script);
+  };
+
   return (
     <footer style={{ background: RP.ink, color: RP.paper, padding: '80px 48px 40px' }}>
       <div style={{ marginBottom: 60 }}>
         <Marquee items={['Author', 'Illustrator', 'Singer-songwriter', 'Brazil · Sweden', 'Felice · 2026']} speed={60} />
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 32 }} className="r-footer-grid">
-        <div>
-          <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 36, lineHeight: 1, marginBottom: 12 }}>surya <span style={{ fontStyle: 'italic', color: RP.ochre }}>amitrano</span></div>
-          <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.2em', textTransform: 'uppercase', opacity: .7 }}>Gothenburg · Sverige</div>
+
+      {/* ── Main two-column body ── */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, marginBottom: 60, background: 'rgba(245,237,224,.08)' }} className="r-footer-body">
+
+        {/* Left — nav info */}
+        <div style={{ padding: '60px 48px 60px 0', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 48, background: RP.ink }}>
+          <div>
+            <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 36, lineHeight: 1, marginBottom: 12 }}>surya <span style={{ fontStyle: 'italic', color: RP.ochre }}>amitrano</span></div>
+            <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.2em', textTransform: 'uppercase', opacity: .7 }}>Gothenburg · Sverige</div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, auto)', gap: 32, justifyContent: 'start' }}>
+            <FooterCol title={t.footerExplore} items={[{ l: t.navPortfolio, k: 'portfolio' }, { l: t.navMusic, k: 'music' }, { l: t.navAbout, k: 'about' }]} onNav={onNav} />
+            <FooterCol title={t.footerConnect} items={[{ l: t.navPress, k: 'press' }, { l: t.navContact, k: 'contact' }]} onNav={onNav} />
+            <div>
+              <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.22em', textTransform: 'uppercase', opacity: .7, marginBottom: 14 }}>{t.footerElsewhere}</div>
+              <div style={{ display: 'flex', gap: 14 }}>
+                <a href={SOCIALS.instagram} target="_blank" rel="noreferrer" style={{ color: 'inherit' }}><Icon name="instagram" size={20} /></a>
+                <a href={SOCIALS.youtube} target="_blank" rel="noreferrer" style={{ color: 'inherit' }}><Icon name="youtube" size={20} /></a>
+                <a href={SOCIALS.spotify} target="_blank" rel="noreferrer" style={{ color: 'inherit' }}><Icon name="spotify" size={20} /></a>
+                <a href={SOCIALS.tiktok} target="_blank" rel="noreferrer" style={{ color: 'inherit' }}><Icon name="tiktok" size={20} /></a>
+              </div>
+            </div>
+          </div>
         </div>
-        <FooterCol title={t.footerExplore} items={[{ l: t.navPortfolio, k: 'portfolio' }, { l: t.navMusic, k: 'music' }, { l: t.navAbout, k: 'about' }]} onNav={onNav} />
-        <FooterCol title={t.footerConnect} items={[{ l: t.navPress, k: 'press' }, { l: t.navContact, k: 'contact' }]} onNav={onNav} />
-        <div>
-          <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.22em', textTransform: 'uppercase', opacity: .7, marginBottom: 14 }}>{t.footerElsewhere}</div>
-          <div style={{ display: 'flex', gap: 14 }}>
-            <a href={SOCIALS.instagram} target="_blank" rel="noreferrer" style={{ color: 'inherit' }}><Icon name="instagram" size={20} /></a>
-            <a href={SOCIALS.youtube} target="_blank" rel="noreferrer" style={{ color: 'inherit' }}><Icon name="youtube" size={20} /></a>
-            <a href={SOCIALS.spotify} target="_blank" rel="noreferrer" style={{ color: 'inherit' }}><Icon name="spotify" size={20} /></a>
-            <a href={SOCIALS.tiktok} target="_blank" rel="noreferrer" style={{ color: 'inherit' }}><Icon name="tiktok" size={20} /></a>
+
+        {/* Right — newsletter (same centred design as homepage, adapted for dark bg) */}
+        <div style={{
+          padding: '60px 0 60px 48px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          background: RP.ink,
+        }}>
+          <div style={{ width: '100%', maxWidth: 400, textAlign: 'center' }}>
+            <div style={{
+              fontFamily: 'ui-monospace, monospace', fontSize: 11, letterSpacing: '.22em',
+              color: RP.ochre, textTransform: 'uppercase', marginBottom: 18,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12,
+            }}>
+              <span style={{ width: 28, height: 1, background: RP.ochre, display: 'inline-block' }} />
+              {t.newsletterKicker}
+              <span style={{ width: 28, height: 1, background: RP.ochre, display: 'inline-block' }} />
+            </div>
+            <div style={{
+              fontFamily: '"DM Serif Display", Georgia, serif',
+              fontSize: 'clamp(36px, 4vw, 56px)', lineHeight: 1.02,
+              color: RP.paper, letterSpacing: '-.015em', marginBottom: 14,
+            }}>
+              {t.newsletterTitle}{' '}
+              <span style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', color: RP.ochre }}>{t.newsletterTitleItalic}</span>
+            </div>
+            <p style={{ fontSize: 15, lineHeight: 1.6, color: 'rgba(245,237,224,.55)', margin: '0 0 32px' }}>{t.newsletterBlurb}</p>
+            {nlStatus === 'success' ? (
+              <div style={{ padding: '24px 32px', border: `1.5px solid ${RP.ochre}`, borderRadius: 4, display: 'inline-block' }}>
+                <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 32, color: RP.paper, marginBottom: 6 }}>
+                  {t.newsletterSuccess} <span style={{ fontFamily: 'Fraunces', fontStyle: 'italic', color: RP.ochre }}>✓</span>
+                </div>
+                <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.18em', textTransform: 'uppercase', color: 'rgba(245,237,224,.45)' }}>{t.newsletterSuccessMsg}</div>
+              </div>
+            ) : (
+              <>
+                <form onSubmit={submitNewsletter} noValidate style={{
+                  display: 'flex', border: '1.5px solid rgba(245,237,224,.35)', borderRadius: 999, overflow: 'hidden',
+                  transition: 'border-color .2s',
+                }}
+                  onFocus={(e) => e.currentTarget.style.borderColor = 'rgba(245,237,224,.75)'}
+                  onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(245,237,224,.35)'}
+                >
+                  <input
+                    type="email"
+                    value={nlEmail}
+                    onChange={(e) => { setNlEmail(e.target.value); if (nlStatus === 'error') setNlStatus('idle'); }}
+                    placeholder={t.newsletterPlaceholder}
+                    style={{
+                      flex: 1, padding: '13px 20px', border: 'none', background: 'transparent',
+                      fontFamily: 'Fraunces, Georgia, serif', fontSize: 15, color: RP.paper, outline: 'none',
+                    }}
+                  />
+                  <button
+                    type="submit"
+                    disabled={nlStatus === 'loading'}
+                    style={{
+                      padding: '12px 22px', background: RP.ochre, color: RP.ink,
+                      border: 'none', fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 15,
+                      cursor: nlStatus === 'loading' ? 'wait' : 'pointer',
+                      whiteSpace: 'nowrap', transition: 'background .2s', flexShrink: 0,
+                    }}
+                    onMouseEnter={(e) => { if (nlStatus !== 'loading') e.currentTarget.style.background = RP.marigold; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = RP.ochre; }}
+                  >
+                    {nlStatus === 'loading' ? '...' : t.subscribe}
+                  </button>
+                </form>
+                {nlStatus === 'error' && (
+                  <div style={{ marginTop: 8, color: RP.marigold, fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 13 }}>{nlErr}</div>
+                )}
+              </>
+            )}
           </div>
         </div>
       </div>
-      <div style={{ marginTop: 60, paddingTop: 24, borderTop: '1px solid rgba(245,237,224,.15)', display: 'flex', justifyContent: 'space-between', fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.15em', textTransform: 'uppercase', opacity: .6 }}>
+
+      <div style={{ paddingTop: 24, borderTop: '1px solid rgba(245,237,224,.15)', display: 'flex', justifyContent: 'space-between', fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.15em', textTransform: 'uppercase', opacity: .6 }}>
         <span>© 2026 surya amitrano</span>
         <span>suryaamitrano.com</span>
       </div>
-      <style>{`@media (max-width: 820px){.r-footer-grid{grid-template-columns: 1fr 1fr !important}}`}</style>
+      <style>{`
+        @media (max-width: 820px){.r-footer-body{grid-template-columns: 1fr !important}}
+        @media (max-width: 820px){.r-footer-body > div{padding-left: 0 !important; padding-right: 0 !important}}
+      `}</style>
     </footer>
   );
 }

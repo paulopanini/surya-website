@@ -2,6 +2,35 @@
 
 // ─── HOME ───────────────────────────────────────────────────────────
 function RHome({ onNav, t }) {
+  const [nlEmail, setNlEmail] = React.useState('');
+  const [nlStatus, setNlStatus] = React.useState('idle'); // idle | loading | success | error
+  const [nlErr, setNlErr] = React.useState('');
+
+  const submitNewsletter = (e) => {
+    e.preventDefault();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(nlEmail)) {
+      setNlStatus('error'); setNlErr(t.errEmail); return;
+    }
+    if (!MAILCHIMP_ACTION_URL || MAILCHIMP_ACTION_URL === 'PASTE_YOUR_MAILCHIMP_ACTION_URL_HERE') {
+      setNlStatus('error'); setNlErr('Mailchimp not configured yet.'); return;
+    }
+    setNlStatus('loading');
+    const cbName = '_mc_cb_home_' + Date.now();
+    const base = MAILCHIMP_ACTION_URL.replace(/&amp;/g, '&').replace('/post?', '/post-json?');
+    const url = base + '&EMAIL=' + encodeURIComponent(nlEmail) + '&c=' + cbName;
+    let script;
+    window[cbName] = (data) => {
+      delete window[cbName];
+      if (script && script.parentNode) script.parentNode.removeChild(script);
+      if (data.result === 'success') { setNlStatus('success'); }
+      else { setNlStatus('error'); setNlErr(data.msg ? data.msg.replace(/<[^>]+>/g, '') : t.submitNetworkError); }
+    };
+    script = document.createElement('script');
+    script.src = url;
+    script.onerror = () => { delete window[cbName]; setNlStatus('error'); setNlErr(t.submitNetworkError); };
+    document.head.appendChild(script);
+  };
+
   return (
     <>
       {/* Hero — editorial, asymmetric */}
@@ -42,6 +71,72 @@ function RHome({ onNav, t }) {
       {/* Marquee */}
       <section style={{ padding: '40px 0', borderTop: `1px solid ${RP.line}`, borderBottom: `1px solid ${RP.line}` }}>
         <Marquee items={['words', 'colour', 'sound', 'brasil', 'sverige', 'felice 2026']} speed={50} />
+      </section>
+
+      {/* Newsletter strip */}
+      <section style={{
+        background: `color-mix(in oklch, ${RP.terracotta} 13%, ${RP.paper})`,
+        borderTop: `1px solid color-mix(in oklch, ${RP.terracotta} 28%, ${RP.paper})`,
+        borderBottom: `1px solid color-mix(in oklch, ${RP.terracotta} 28%, ${RP.paper})`,
+        padding: '80px 48px',
+      }}>
+        <Reveal>
+          <div style={{ maxWidth: 560, margin: '0 auto', textAlign: 'center' }}>
+            <div style={{
+              fontFamily: 'ui-monospace, monospace', fontSize: 11, letterSpacing: '.22em', color: RP.terracotta,
+              textTransform: 'uppercase', marginBottom: 18,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12,
+            }}>
+              <span style={{ width: 28, height: 1, background: RP.terracotta, display: 'inline-block' }} />
+              {t.newsletterKicker}
+              <span style={{ width: 28, height: 1, background: RP.terracotta, display: 'inline-block' }} />
+            </div>
+            <h2 style={{
+              fontFamily: '"DM Serif Display", Georgia, serif',
+              fontSize: 'clamp(40px, 5vw, 72px)', lineHeight: 1.02,
+              margin: '0 0 16px', fontWeight: 400, color: RP.ink, letterSpacing: '-.015em',
+            }}>
+              {t.newsletterTitle}{' '}
+              <span style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', color: RP.terracotta }}>{t.newsletterTitleItalic}</span>
+            </h2>
+            <p style={{ fontSize: 18, lineHeight: 1.6, color: RP.inkSoft, margin: '0 0 36px' }}>{t.newsletterBlurb}</p>
+            {nlStatus === 'success' ? (
+              <div style={{ padding: '28px 36px', border: `1.5px solid ${RP.terracotta}`, borderRadius: 4, display: 'inline-block' }}>
+                <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 36, color: RP.ink, marginBottom: 8, fontWeight: 400 }}>
+                  {t.newsletterSuccess} <span style={{ fontFamily: 'Fraunces', fontStyle: 'italic', color: RP.terracotta }}>✓</span>
+                </div>
+                <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 11, letterSpacing: '.18em', textTransform: 'uppercase', color: RP.inkSoft }}>{t.newsletterSuccessMsg}</div>
+              </div>
+            ) : (
+              <>
+                <form onSubmit={submitNewsletter} noValidate style={{
+                  display: 'flex', maxWidth: 480, margin: '0 auto',
+                  border: `1.5px solid ${RP.ink}`, borderRadius: 999, overflow: 'hidden',
+                }}>
+                  <input
+                    type="email"
+                    value={nlEmail}
+                    onChange={(e) => { setNlEmail(e.target.value); if (nlStatus === 'error') setNlStatus('idle'); }}
+                    placeholder={t.newsletterPlaceholder}
+                    style={{ flex: 1, padding: '14px 24px', border: 'none', background: 'transparent', fontFamily: 'Fraunces, Georgia, serif', fontSize: 16, color: RP.ink, outline: 'none' }}
+                  />
+                  <button
+                    type="submit"
+                    disabled={nlStatus === 'loading'}
+                    style={{ padding: '14px 28px', background: RP.ink, color: RP.paper, border: 'none', fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 16, cursor: nlStatus === 'loading' ? 'wait' : 'pointer', borderRadius: '0 999px 999px 0', whiteSpace: 'nowrap', transition: 'background .2s' }}
+                    onMouseEnter={(e) => { if (nlStatus !== 'loading') e.currentTarget.style.background = RP.inkSoft; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = RP.ink; }}
+                  >
+                    {nlStatus === 'loading' ? '...' : t.subscribe}
+                  </button>
+                </form>
+                {nlStatus === 'error' && (
+                  <div style={{ marginTop: 10, color: RP.terracotta, fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 14 }}>{nlErr}</div>
+                )}
+              </>
+            )}
+          </div>
+        </Reveal>
       </section>
 
       {/* Three worlds */}
