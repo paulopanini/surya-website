@@ -46,7 +46,7 @@ function Marquee({ items, speed = 40 }) {
 }
 
 // ─── Button ─────────────────────────────────────────────────────────
-function RButton({ children, variant = 'solid', onClick, href, download, tone = RP.ink, small, style }) {
+function RButton({ children, variant = 'solid', onClick, href, download, tone = RP.ink, small, style, type = 'button' }) {
   const base = {
     display: 'inline-flex', alignItems: 'center', gap: 10,
     padding: small ? '10px 18px' : '14px 26px',
@@ -58,7 +58,7 @@ function RButton({ children, variant = 'solid', onClick, href, download, tone = 
   const solid = { ...base, background: tone, color: RP.paper, border: `1.5px solid ${tone}`, ...style };
   const outline = { ...base, background: 'transparent', color: tone, border: `1.5px solid ${tone}`, ...style };
   const Tag = href ? 'a' : 'button';
-  const props = href ? { href, ...(download !== undefined && { download }) } : { onClick, type: 'button' };
+  const props = href ? { href, ...(download !== undefined && { download }) } : { onClick, type };
   return (
     <Tag {...props} style={variant === 'solid' ? solid : outline}
       onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; }}

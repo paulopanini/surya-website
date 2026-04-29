@@ -758,8 +758,7 @@ function getPackages(t) {
   ];
 }
 
-function WorkPackageCard({ pkg, t }) {
-  const mailtoHref = `mailto:${SOCIALS.email}?subject=${encodeURIComponent(pkg.title)}`;
+function WorkPackageCard({ pkg, t, onContact }) {
   return (
     <Reveal style={{ height: '100%' }}>
       <div style={{
@@ -816,7 +815,7 @@ function WorkPackageCard({ pkg, t }) {
           </div>
 
           <div style={{ marginTop: 'auto', paddingTop: 8 }}>
-            <RButton href={mailtoHref} tone={pkg.accent}>{t.workGetInTouch}</RButton>
+            <RButton onClick={() => onContact(pkg)} tone={pkg.accent}>{t.workGetInTouch}</RButton>
           </div>
         </div>
       </div>
@@ -824,9 +823,126 @@ function WorkPackageCard({ pkg, t }) {
   );
 }
 
+function WorkContactModal({ pkg, t, onClose }) {
+  const [form, setForm] = React.useState({ name: '', email: '', message: t.workDefaultMessage });
+  const [status, setStatus] = React.useState('idle'); // idle | loading | success | error
+  const [errors, setErrors] = React.useState({});
+  const [submitErr, setSubmitErr] = React.useState('');
+
+  React.useEffect(() => {
+    const h = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', h);
+    return () => window.removeEventListener('keydown', h);
+  }, [onClose]);
+
+  const submit = async (e) => {
+    e.preventDefault();
+    const err = {};
+    if (!form.name.trim()) err.name = t.errName;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) err.email = t.errEmail;
+    setErrors(err);
+    if (Object.keys(err).length > 0) return;
+    const message = form.message.trim() || t.workDefaultMessage;
+    setStatus('loading');
+    try {
+      const res = await fetch('https://formspree.io/f/xwvawpyl', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ name: form.name, email: form.email, topic: pkg.title, message }),
+      });
+      if (res.ok) { setStatus('success'); } else { setStatus('error'); setSubmitErr(t.submitError); }
+    } catch (_) {
+      setStatus('error'); setSubmitErr(t.submitNetworkError);
+    }
+  };
+
+  const input = {
+    width: '100%', padding: '12px 0', border: 'none', borderBottom: `1px solid ${RP.line}`,
+    background: 'transparent', fontFamily: 'inherit', fontSize: 16, color: RP.ink, outline: 'none',
+    transition: 'border-color .15s',
+  };
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 50,
+        background: 'rgba(47,42,34,.55)', backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px 16px',
+        animation: 'fadeIn .2s ease',
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: RP.paper, borderRadius: 6, width: '100%', maxWidth: 520,
+          maxHeight: '90vh', overflowY: 'auto',
+          boxShadow: '0 32px 80px -20px rgba(47,42,34,.4), 0 0 0 1px ' + RP.line,
+          animation: 'modalIn .25s cubic-bezier(.2,.7,.2,1)',
+        }}
+      >
+        <style>{`
+          @keyframes modalIn { from { opacity: 0; transform: translateY(12px) scale(.98) } to { opacity: 1; transform: none } }
+        `}</style>
+
+        {/* Modal header */}
+        <div style={{
+          padding: '28px 32px 24px',
+          background: `color-mix(in oklch, ${pkg.accent} 14%, ${RP.paper})`,
+          borderBottom: `1px solid color-mix(in oklch, ${pkg.accent} 24%, ${RP.line})`,
+          display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16,
+        }}>
+          <div>
+            <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.22em', color: pkg.accent, textTransform: 'uppercase', marginBottom: 6 }}>{t.workPackageLabel}</div>
+            <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 26, color: RP.ink, lineHeight: 1.1, fontWeight: 400 }}>{pkg.title}</div>
+          </div>
+          <button
+            onClick={onClose}
+            style={{ background: 'none', border: 'none', color: RP.inkSoft, cursor: 'pointer', padding: 4, lineHeight: 1, flexShrink: 0, marginTop: 2 }}
+            aria-label="Close"
+          ><Icon name="close" size={20} /></button>
+        </div>
+
+        {/* Modal body */}
+        <div style={{ padding: '32px' }}>
+          {status === 'success' ? (
+            <div style={{ textAlign: 'center', padding: '24px 0' }}>
+              <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 40, color: RP.ink, marginBottom: 10, fontWeight: 400 }}>
+                {t.thankYouPrefix}<span style={{ fontFamily: 'Fraunces', fontStyle: 'italic', color: pkg.accent }}>{form.name || t.thankYouFallback}</span>
+              </div>
+              <p style={{ color: RP.inkSoft, lineHeight: 1.6, marginBottom: 24 }}>{t.thankYouMsg}</p>
+              <button onClick={onClose} style={{ background: 'none', border: 'none', fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 15, color: pkg.accent, cursor: 'pointer' }}>{t.closeBtn} ✕</button>
+            </div>
+          ) : (
+            <form onSubmit={submit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+              <RFieldLine label={t.nameLabel} error={errors.name}>
+                <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} style={input} />
+              </RFieldLine>
+              <RFieldLine label={t.emailLabel} error={errors.email}>
+                <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} style={input} />
+              </RFieldLine>
+              <RFieldLine label={t.messageLabel} error={errors.message}>
+                <textarea rows={4} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} style={{ ...input, resize: 'vertical' }} />
+              </RFieldLine>
+              {status === 'error' && <div style={{ color: RP.terracotta, fontSize: 13, fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic' }}>{submitErr}</div>}
+              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <RButton type="submit" tone={pkg.accent} style={{ justifyContent: 'center' }}>
+                  {status === 'loading' ? '...' : t.sendMessage}
+                </RButton>
+              </div>
+            </form>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function RWorkWithMe({ t }) {
+  const [activePackage, setActivePackage] = React.useState(null);
   return (
     <>
+      {activePackage && <WorkContactModal pkg={activePackage} t={t} onClose={() => setActivePackage(null)} />}
       <section style={{ padding: '60px 48px 40px', background: `color-mix(in oklch, ${RP.terracotta} 12%, ${RP.paper})`, borderBottom: `1px solid color-mix(in oklch, ${RP.terracotta} 28%, ${RP.paper})` }}>
         <RSectionHeader
           kicker={t.workKicker}
@@ -839,7 +955,7 @@ function RWorkWithMe({ t }) {
 
       <section style={{ padding: '60px 48px 100px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))', gap: 32, maxWidth: 1360, margin: '0 auto' }}>
-          {getPackages(t).map(pkg => <WorkPackageCard key={pkg.id} pkg={pkg} t={t} />)}
+          {getPackages(t).map(pkg => <WorkPackageCard key={pkg.id} pkg={pkg} t={t} onContact={setActivePackage} />)}
         </div>
 
         <Reveal delay={200}>
@@ -850,7 +966,7 @@ function RWorkWithMe({ t }) {
               </div>
               <p style={{ fontSize: 15, color: RP.inkSoft, margin: 0, lineHeight: 1.6 }}>{t.workCtaBody}</p>
             </div>
-            <RButton href={`mailto:${SOCIALS.email}?subject=${encodeURIComponent(t.workEmailSubject)}`} tone={RP.ink} variant="outline">{t.workCtaBtn}</RButton>
+            <RButton onClick={() => setActivePackage({ title: t.workEmailSubject, accent: RP.ink })} tone={RP.ink} variant="outline">{t.workCtaBtn}</RButton>
           </div>
         </Reveal>
       </section>
