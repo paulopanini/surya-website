@@ -722,4 +722,140 @@ function RShop({ t }) {
   );
 }
 
-Object.assign(window, { RHome, RPortfolio, RMusic, RPress, RAbout, RContact, RShop });
+// ─── WORK WITH ME ────────────────────────────────────────────────────
+const PACKAGES_META = [
+  { id: 'editorial-consultation', investment: '5.500 SEK', accent: RP.sage },
+  { id: 'graphic-production', investment: '10.000 SEK', accent: RP.brown },
+  { id: 'manuscript-to-book', investment: '25.000 SEK', accent: RP.plum },
+];
+
+function getPackages(t) {
+  return [
+    {
+      ...PACKAGES_META[0],
+      title: t.pkg2Title,
+      subtitle: t.pkg2Subtitle,
+      description: t.pkg2Description,
+      includes: t.pkg2Includes,
+      timeline: t.pkg2Timeline,
+    },
+    {
+      ...PACKAGES_META[1],
+      title: t.pkg3Title,
+      subtitle: t.pkg3Subtitle,
+      description: t.pkg3Description,
+      includes: t.pkg3Includes,
+      timeline: t.pkg3Timeline,
+    },
+    {
+      ...PACKAGES_META[2],
+      title: t.pkg1Title,
+      subtitle: t.pkg1Subtitle,
+      description: t.pkg1Description,
+      includes: t.pkg1Includes,
+      timeline: t.pkg1Timeline,
+    },
+  ];
+}
+
+function WorkPackageCard({ pkg, t }) {
+  const mailtoHref = `mailto:${SOCIALS.email}?subject=${encodeURIComponent(pkg.title)}`;
+  return (
+    <Reveal style={{ height: '100%' }}>
+      <div style={{
+        border: `1.5px solid color-mix(in oklch, ${pkg.accent} 28%, ${RP.line})`,
+        borderRadius: 4,
+        overflow: 'hidden',
+        background: `color-mix(in oklch, ${pkg.accent} 6%, ${RP.paper})`,
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+      }}>
+        {/* Card header band */}
+        <div style={{
+          background: `color-mix(in oklch, ${pkg.accent} 18%, ${RP.paper})`,
+          borderBottom: `1.5px solid color-mix(in oklch, ${pkg.accent} 28%, ${RP.line})`,
+          padding: '32px 40px 28px',
+        }}>
+          <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.22em', color: pkg.accent, textTransform: 'uppercase', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span style={{ width: 20, height: 1, background: pkg.accent, display: 'inline-block' }} />
+            {t.workPackageLabel}
+          </div>
+          <h3 style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 'clamp(28px, 3.5vw, 44px)', fontWeight: 400, margin: '0 0 8px', color: RP.ink, lineHeight: 1.05, letterSpacing: '-.015em' }}>
+            <span style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', color: pkg.accent }}></span>{pkg.title}<span style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', color: pkg.accent }}></span>
+          </h3>
+          <p style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 17, color: RP.inkSoft, margin: 0 }}>{pkg.subtitle}</p>
+        </div>
+
+        {/* Card body */}
+        <div style={{ padding: '32px 40px', flex: 1, display: 'flex', flexDirection: 'column', gap: 28 }}>
+          <p style={{ fontSize: 16, lineHeight: 1.7, color: RP.inkSoft, margin: 0 }}>{pkg.description}</p>
+
+          <div>
+            <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.22em', color: RP.inkSofter, textTransform: 'uppercase', marginBottom: 14 }}>{t.workIncludedLabel}</div>
+            <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {pkg.includes.map((item, i) => (
+                <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, fontSize: 15, color: RP.inkSoft, lineHeight: 1.5 }}>
+                  <span style={{ color: pkg.accent, marginTop: 3, flexShrink: 0 }}><Icon name="check" size={14} stroke={2.2} /></span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div style={{ display: 'flex', gap: 40, flexWrap: 'wrap', paddingTop: 8, borderTop: `1px solid ${RP.line}` }}>
+            <div>
+              <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.22em', color: RP.inkSofter, textTransform: 'uppercase', marginBottom: 4 }}>{t.workTimelineLabel}</div>
+              <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 18, color: RP.ink }}>{pkg.timeline}</div>
+            </div>
+            <div>
+              <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.22em', color: RP.inkSofter, textTransform: 'uppercase', marginBottom: 4 }}>{t.workInvestmentLabel}</div>
+              <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 18, color: pkg.accent }}>{pkg.investment}</div>
+              <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.12em', color: RP.inkSofter, textTransform: 'uppercase', marginTop: 3 }}>{t.workExclVat}</div>
+            </div>
+          </div>
+
+          <div style={{ marginTop: 'auto', paddingTop: 8 }}>
+            <RButton href={mailtoHref} tone={pkg.accent}>{t.workGetInTouch}</RButton>
+          </div>
+        </div>
+      </div>
+    </Reveal>
+  );
+}
+
+function RWorkWithMe({ t }) {
+  return (
+    <>
+      <section style={{ padding: '60px 48px 40px', background: `color-mix(in oklch, ${RP.terracotta} 12%, ${RP.paper})`, borderBottom: `1px solid color-mix(in oklch, ${RP.terracotta} 28%, ${RP.paper})` }}>
+        <RSectionHeader
+          kicker={t.workKicker}
+          title={t.workTitle}
+          titleItalic={t.workTitleItalic}
+          accent={RP.terracotta}
+          subtitle={t.workSubtitle}
+        />
+      </section>
+
+      <section style={{ padding: '60px 48px 100px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))', gap: 32, maxWidth: 1360, margin: '0 auto' }}>
+          {getPackages(t).map(pkg => <WorkPackageCard key={pkg.id} pkg={pkg} t={t} />)}
+        </div>
+
+        <Reveal delay={200}>
+          <div style={{ marginTop: 72, padding: '40px 48px', border: `1.5px solid ${RP.line}`, borderRadius: 4, display: 'flex', flexWrap: 'wrap', gap: 24, alignItems: 'center', justifyContent: 'space-between', background: `color-mix(in oklch, ${RP.ochre} 8%, ${RP.paper})` }}>
+            <div>
+              <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 28, color: RP.ink, marginBottom: 6, fontWeight: 400 }}>
+                {t.workCtaTitle} <span style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', color: RP.ochre }}>{t.workCtaTitleItalic}</span>
+              </div>
+              <p style={{ fontSize: 15, color: RP.inkSoft, margin: 0, lineHeight: 1.6 }}>{t.workCtaBody}</p>
+            </div>
+            <RButton href={`mailto:${SOCIALS.email}?subject=${encodeURIComponent(t.workEmailSubject)}`} tone={RP.ink} variant="outline">{t.workCtaBtn}</RButton>
+          </div>
+        </Reveal>
+      </section>
+    </>
+  );
+}
+
+Object.assign(window, { RHome, RPortfolio, RMusic, RPress, RAbout, RContact, RShop, RWorkWithMe });

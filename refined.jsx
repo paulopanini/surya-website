@@ -76,7 +76,7 @@ function RefinedHeader({ page, onNav, lang, setLang, t }) {
     const h = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', h); return () => window.removeEventListener('scroll', h);
   }, []);
-  const navLabel = { home: t.navHome, portfolio: t.navPortfolio, music: t.navMusic, press: t.navPress, about: t.navAbout, shop: t.navShop };
+  const navLabel = { home: t.navHome, portfolio: t.navPortfolio, music: t.navMusic, press: t.navPress, about: t.navAbout, shop: t.navShop, work: t.navWork };
   return (
     <header style={{
       position: 'sticky', top: 0, zIndex: 20,
