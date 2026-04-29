@@ -113,20 +113,23 @@ function RHome({ onNav, t }) {
             ) : (
               <>
                 <form onSubmit={submitNewsletter} noValidate style={{
-                  display: 'flex', maxWidth: 480, margin: '0 auto',
-                  border: `1.5px solid ${RP.ink}`, borderRadius: 999, overflow: 'hidden',
-                }}>
+                  display: 'flex', border: `1.5px solid ${RP.ink}`, borderRadius: 999, overflow: 'hidden',
+                  transition: 'border-color .2s',
+                }}
+                  onFocus={(e) => e.currentTarget.style.borderColor = RP.inkSoft}
+                  onBlur={(e) => e.currentTarget.style.borderColor = RP.ink}
+                >
                   <input
                     type="email"
                     value={nlEmail}
                     onChange={(e) => { setNlEmail(e.target.value); if (nlStatus === 'error') setNlStatus('idle'); }}
                     placeholder={t.newsletterPlaceholder}
-                    style={{ flex: 1, padding: '14px 24px', border: 'none', background: 'transparent', fontFamily: 'Fraunces, Georgia, serif', fontSize: 16, color: RP.ink, outline: 'none' }}
+                    style={{ flex: 1, padding: '13px 20px', border: 'none', background: 'transparent', fontFamily: 'Fraunces, Georgia, serif', fontSize: 15, color: RP.ink, outline: 'none', minWidth: 0 }}
                   />
                   <button
                     type="submit"
                     disabled={nlStatus === 'loading'}
-                    style={{ padding: '14px 28px', background: RP.ink, color: RP.paper, border: 'none', fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 16, cursor: nlStatus === 'loading' ? 'wait' : 'pointer', borderRadius: '0 999px 999px 0', whiteSpace: 'nowrap', transition: 'background .2s' }}
+                    style={{ padding: '12px 22px', background: RP.ink, color: RP.paper, border: 'none', fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 15, cursor: nlStatus === 'loading' ? 'wait' : 'pointer', whiteSpace: 'nowrap', transition: 'background .2s', flexShrink: 0 }}
                     onMouseEnter={(e) => { if (nlStatus !== 'loading') e.currentTarget.style.background = RP.inkSoft; }}
                     onMouseLeave={(e) => { e.currentTarget.style.background = RP.ink; }}
                   >
