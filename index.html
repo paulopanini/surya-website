@@ -80,12 +80,62 @@ const navBtn = (inset, right) => ({
   cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
 });
 
+const PAGE_SLUGS = {
+  home: '/',
+  portfolio: '/portfolio',
+  music: '/music',
+  press: '/press',
+  about: '/about',
+  contact: '/contact',
+  shop: '/shop',
+  work: '/work-with-me',
+};
+const SLUG_TO_PAGE = Object.fromEntries(Object.entries(PAGE_SLUGS).map(([k, v]) => [v, k]));
+
+function getInitialPage() {
+  // GitHub Pages 404.html SPA redirect: ?p=/work-with-me
+  const search = window.location.search;
+  if (search) {
+    const match = search.match(/[?&]p=([^&]*)/);
+    if (match) {
+      const decoded = decodeURIComponent(match[1].replace(/~/g, '%'));
+      return SLUG_TO_PAGE[decoded] || 'home';
+    }
+  }
+  const path = window.location.pathname.replace(/\/$/, '') || '/';
+  return SLUG_TO_PAGE[path] || SLUG_TO_PAGE['/' + path.split('/').pop()] || 'home';
+}
+
 function RefinedSite() {
-  const [page, setPage] = useState('home');
+  const [page, setPage] = useState(getInitialPage);
   const [lb, setLb] = useState(null);
   const { lang, setLang, t } = useI18n();
   useEffect(() => { document.title = `suryaamitrano - ${page}`; }, [page]);
-  const goTo = (p) => { setPage(p); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+
+  useEffect(() => {
+    const onPop = () => {
+      const path = window.location.pathname.replace(/\/$/, '') || '/';
+      setPage(SLUG_TO_PAGE[path] || 'home');
+      window.scrollTo({ top: 0 });
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
+  // Replace the redirect query param with clean URL on first load
+  useEffect(() => {
+    if (window.location.search && window.location.search.includes('?p=')) {
+      const slug = PAGE_SLUGS[page] || '/';
+      window.history.replaceState(null, '', slug);
+    }
+  }, []);
+
+  const goTo = (p) => {
+    setPage(p);
+    const slug = PAGE_SLUGS[p] || '/';
+    window.history.pushState(null, '', slug);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   const openLb = (item) => setLb(item);
   const lbIdx = lb ? PORTFOLIO.findIndex(x => x.id === lb.id) : -1;
   const pageMap = {
