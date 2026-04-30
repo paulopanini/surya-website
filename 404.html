@@ -109,16 +109,12 @@
   }
 </style>
 <script>
-  // GitHub Pages SPA redirect: only redirect for known routes.
+  // GitHub Pages SPA redirect: store the intended path in sessionStorage and go to root.
   var KNOWN = ['/', '/portfolio', '/music', '/press', '/about', '/contact', '/shop', '/work-with-me'];
   var path = window.location.pathname.replace(/\/$/, '') || '/';
   if (KNOWN.indexOf(path) !== -1) {
-    var search = window.location.search ? window.location.search + '&p=' : '?p=';
-    var hash = window.location.hash ? '&h=' + window.location.hash.slice(1) : '';
-    window.location.replace(
-      window.location.origin + '/' +
-      search + encodeURIComponent(path.replace(/^\//, '').replace(/%/g, '~')) + hash
-    );
+    sessionStorage.setItem('spa_redirect', path);
+    window.location.replace('/');
   }
 </script>
 </head>

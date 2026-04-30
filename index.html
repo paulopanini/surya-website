@@ -93,18 +93,15 @@ const PAGE_SLUGS = {
 const SLUG_TO_PAGE = Object.fromEntries(Object.entries(PAGE_SLUGS).map(([k, v]) => [v, k]));
 
 function getInitialPage() {
-  // GitHub Pages 404.html SPA redirect: ?p=/work-with-me
-  const search = window.location.search;
-  if (search) {
-    const match = search.match(/[?&]p=([^&]*)/);
-    if (match) {
-      const decoded = decodeURIComponent(match[1].replace(/~/g, '%'));
-      // 404.html strips the leading slash, so try both forms
-      return SLUG_TO_PAGE['/' + decoded] || SLUG_TO_PAGE[decoded] || 'home';
-    }
+  // GitHub Pages 404.html SPA redirect via sessionStorage
+  const redirect = sessionStorage.getItem('spa_redirect');
+  if (redirect) {
+    sessionStorage.removeItem('spa_redirect');
+    window.history.replaceState(null, '', redirect);
+    return SLUG_TO_PAGE[redirect] || 'home';
   }
   const path = window.location.pathname.replace(/\/$/, '') || '/';
-  return SLUG_TO_PAGE[path] || SLUG_TO_PAGE['/' + path.split('/').pop()] || 'home';
+  return SLUG_TO_PAGE[path] || 'home';
 }
 
 function RefinedSite() {
@@ -123,13 +120,7 @@ function RefinedSite() {
     return () => window.removeEventListener('popstate', onPop);
   }, []);
 
-  // Replace the redirect query param with clean URL on first load
-  useEffect(() => {
-    if (window.location.search && window.location.search.includes('?p=')) {
-      const slug = PAGE_SLUGS[page] || '/';
-      window.history.replaceState(null, '', slug);
-    }
-  }, []);
+
 
   const goTo = (p) => {
     setPage(p);
