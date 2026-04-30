@@ -99,7 +99,8 @@ function getInitialPage() {
     const match = search.match(/[?&]p=([^&]*)/);
     if (match) {
       const decoded = decodeURIComponent(match[1].replace(/~/g, '%'));
-      return SLUG_TO_PAGE[decoded] || 'home';
+      // 404.html strips the leading slash, so try both forms
+      return SLUG_TO_PAGE['/' + decoded] || SLUG_TO_PAGE[decoded] || 'home';
     }
   }
   const path = window.location.pathname.replace(/\/$/, '') || '/';
