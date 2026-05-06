@@ -758,6 +758,61 @@ function getPackages(t) {
   ];
 }
 
+const ILLUSTRATION_OFFERINGS_META = [
+  { id: 'save-the-date', accent: RP.plum },
+  { id: 'wedding-invitation', accent: RP.plum },
+  { id: 'digital-suite', accent: RP.plum },
+  { id: 'print-suite', accent: RP.plum },
+  { id: 'premium-wedding', accent: RP.plum },
+];
+
+function getIllustrationOfferings(t) {
+  return [
+    { ...ILLUSTRATION_OFFERINGS_META[0], title: t.illust1Title, description: t.illust1Desc, investment: t.illust1Investment },
+    { ...ILLUSTRATION_OFFERINGS_META[1], title: t.illust2Title, description: t.illust2Desc, investment: t.illust2Investment },
+    { ...ILLUSTRATION_OFFERINGS_META[2], title: t.illust3Title, description: t.illust3Desc, investment: t.illust3Investment },
+    { ...ILLUSTRATION_OFFERINGS_META[3], title: t.illust4Title, description: t.illust4Desc, investment: t.illust4Investment },
+    { ...ILLUSTRATION_OFFERINGS_META[4], title: t.illust5Title, description: t.illust5Desc, investment: t.illust5Investment },
+  ];
+}
+
+function IllustrationOfferingCard({ offering, t, onContact }) {
+  return (
+    <Reveal style={{ height: '100%' }}>
+      <div style={{
+        border: `1.5px solid color-mix(in oklch, ${offering.accent} 28%, ${RP.line})`,
+        borderRadius: 4,
+        overflow: 'hidden',
+        background: `color-mix(in oklch, ${offering.accent} 6%, ${RP.paper})`,
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+      }}>
+        <div style={{
+          background: `color-mix(in oklch, ${offering.accent} 14%, ${RP.paper})`,
+          borderBottom: `1.5px solid color-mix(in oklch, ${offering.accent} 28%, ${RP.line})`,
+          padding: '24px 32px 20px',
+        }}>
+          <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.22em', color: offering.accent, textTransform: 'uppercase', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span style={{ width: 20, height: 1, background: offering.accent, display: 'inline-block' }} />
+            {t.workPackageLabel}
+          </div>
+          <h4 style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 'clamp(20px, 2.5vw, 26px)', fontWeight: 400, margin: '0 0 8px', color: RP.ink, lineHeight: 1.1 }}>{offering.title}</h4>
+          <p style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 15, color: RP.inkSoft, margin: 0, lineHeight: 1.6 }}>{offering.description}</p>
+        </div>
+        <div style={{ padding: '20px 32px 28px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 20 }}>
+          <div style={{ paddingTop: 4 }}>
+            <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.22em', color: RP.inkSofter, textTransform: 'uppercase', marginBottom: 4 }}>{t.illustFromLabel}</div>
+            <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 24, color: offering.accent }}>{offering.investment}</div>
+            <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.12em', color: RP.inkSofter, textTransform: 'uppercase', marginTop: 3 }}>{t.workExclVat}</div>
+          </div>
+          <RButton onClick={() => onContact(offering)} tone={offering.accent}>{t.workGetInTouch}</RButton>
+        </div>
+      </div>
+    </Reveal>
+  );
+}
+
 function WorkPackageCard({ pkg, t, onContact }) {
   return (
     <Reveal style={{ height: '100%' }}>
@@ -953,9 +1008,25 @@ function RWorkWithMe({ t }) {
         />
       </section>
 
-      <section style={{ padding: '60px 48px 100px' }}>
+      <section style={{ padding: '60px 48px 80px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))', gap: 32, maxWidth: 1360, margin: '0 auto' }}>
           {getPackages(t).map(pkg => <WorkPackageCard key={pkg.id} pkg={pkg} t={t} onContact={setActivePackage} />)}
+        </div>
+      </section>
+
+      <section style={{ padding: '60px 48px 40px', background: `color-mix(in oklch, ${RP.plum} 10%, ${RP.paper})`, borderTop: `1px solid color-mix(in oklch, ${RP.plum} 20%, ${RP.paper})`, borderBottom: `1px solid color-mix(in oklch, ${RP.plum} 20%, ${RP.paper})` }}>
+        <RSectionHeader
+          kicker={t.illustSectionKicker}
+          title={t.illustSectionTitle}
+          titleItalic={t.illustSectionTitleItalic}
+          accent={RP.plum}
+          subtitle={t.illustSectionSubtitle}
+        />
+      </section>
+
+      <section style={{ padding: '60px 48px 100px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 24, maxWidth: 1360, margin: '0 auto' }}>
+          {getIllustrationOfferings(t).map(offering => <IllustrationOfferingCard key={offering.id} offering={offering} t={t} onContact={setActivePackage} />)}
         </div>
 
         <Reveal delay={200}>
