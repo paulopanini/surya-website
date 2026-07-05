@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>newsletter — suryaamitrano</title>
+<meta name="description" content="Fique por dentro — novos trabalhos, shows, e um pensamento solto aqui e ali. Cerca de uma vez por mês.">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { height: 100%; }
+  body {
+    font-family: Fraunces, Georgia, serif;
+    background: #f9e6c6;
+    color: #2f2a22;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px 64px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ── Card ── */
+  .card {
+    width: 100%;
+    max-width: 540px;
+    text-align: center;
+  }
+
+  /* ── Name mark ── */
+  .name-mark {
+    display: inline-block;
+    font-family: "DM Serif Display", Georgia, serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: .06em;
+    color: #2f2a22;
+    text-decoration: none;
+    margin-bottom: 48px;
+    opacity: .55;
+    transition: opacity .2s;
+  }
+  .name-mark:hover { opacity: 1; }
+
+  /* ── Kicker ── */
+  .kicker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-family: ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: .22em;
+    color: #e78960;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .kicker-line {
+    width: 28px;
+    height: 1px;
+    background: #e78960;
+    flex-shrink: 0;
+  }
+
+  /* ── Heading ── */
+  h1 {
+    font-family: "DM Serif Display", Georgia, serif;
+    font-size: clamp(52px, 14vw, 96px);
+    line-height: 1;
+    font-weight: 400;
+    letter-spacing: -.025em;
+    color: #2f2a22;
+    margin-bottom: 20px;
+  }
+  h1 em {
+    font-family: Fraunces, Georgia, serif;
+    font-style: italic;
+    color: #e78960;
+  }
+
+  /* ── Blurb ── */
+  .blurb {
+    font-size: 18px;
+    line-height: 1.65;
+    color: #564d3f;
+    margin-bottom: 44px;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ── Form ── */
+  .form-wrap {
+    border: 1.5px solid #2f2a22;
+    border-radius: 999px;
+    display: flex;
+    overflow: hidden;
+    transition: border-color .2s;
+    margin-bottom: 12px;
+  }
+  .form-wrap:focus-within {
+    border-color: #e78960;
+  }
+  input[type="email"] {
+    flex: 1;
+    min-width: 0;
+    padding: 15px 22px;
+    border: none;
+    background: transparent;
+    font-family: Fraunces, Georgia, serif;
+    font-size: 16px;
+    color: #2f2a22;
+    outline: none;
+  }
+  input[type="email"]::placeholder { color: #8a7d6a; }
+  button[type="submit"] {
+    flex-shrink: 0;
+    padding: 14px 26px;
+    background: #2f2a22;
+    color: #f9e6c6;
+    border: none;
+    font-family: "DM Serif Display", Georgia, serif;
+    font-size: 16px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .2s;
+  }
+  button[type="submit"]:hover:not(:disabled) { background: #564d3f; }
+  button[type="submit"]:disabled { cursor: wait; opacity: .7; }
+
+  /* ── Feedback ── */
+  .msg {
+    font-family: Fraunces, Georgia, serif;
+    font-style: italic;
+    font-size: 14px;
+    min-height: 20px;
+  }
+  .msg.error { color: #e78960; }
+  .msg.privacy { color: #8a7d6a; font-style: normal; font-size: 12px; letter-spacing: .02em; }
+
+  /* ── Success state ── */
+  .success-box {
+    padding: 32px 40px;
+    border: 1.5px solid #e78960;
+    border-radius: 4px;
+    display: inline-block;
+  }
+  .success-title {
+    font-family: "DM Serif Display", Georgia, serif;
+    font-size: clamp(32px, 8vw, 48px);
+    font-weight: 400;
+    color: #2f2a22;
+    margin-bottom: 10px;
+  }
+  .success-title em {
+    font-family: Fraunces, Georgia, serif;
+    font-style: italic;
+    color: #e78960;
+  }
+  .success-sub {
+    font-family: ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: #8a7d6a;
+  }
+
+  /* ── Divider + footer ── */
+  .divider {
+    width: 1px;
+    height: 36px;
+    background: rgba(47,42,34,.16);
+    margin: 52px auto 16px;
+  }
+  .footer-note {
+    font-family: ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: #8a7d6a;
+  }
+  .footer-note a {
+    color: #e78960;
+    text-decoration: none;
+  }
+  .footer-note a:hover { text-decoration: underline; }
+
+  @media (max-width: 420px) {
+    .form-wrap { flex-direction: column; border-radius: 12px; }
+    input[type="email"] { padding: 14px 18px; }
+    button[type="submit"] { border-radius: 0 0 10px 10px; padding: 14px 18px; }
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+
+    <a href="/" class="name-mark">suryaamitrano.com</a>
+
+    <div class="kicker">
+      <span class="kicker-line"></span>
+      fique por dentro
+      <span class="kicker-line"></span>
+    </div>
+
+    <h1>a <em>newsletter</em></h1>
+
+    <p class="blurb">
+      Novos trabalhos, shows, bastidores e um pensamento solto aqui e ali.
+      Cerca de uma vez por mês — sem spam.
+    </p>
+
+    <div id="form-area">
+      <div class="form-wrap">
+        <input
+          type="email"
+          id="nl-email"
+          placeholder="seu e-mail"
+          autocomplete="email"
+          autocapitalize="off"
+          spellcheck="false"
+        />
+        <button type="submit" id="nl-btn" onclick="handleSubmit()">assinar</button>
+      </div>
+      <p class="msg" id="nl-msg"></p>
+      <p class="msg privacy" style="margin-top:8px">sem spam · cancelamento a qualquer momento</p>
+    </div>
+
+    <div id="success-area" style="display:none">
+      <div class="success-box">
+        <div class="success-title">pronto <em>✓</em></div>
+        <div class="success-sub">te vejo na sua caixa de entrada</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <p class="footer-note">
+      <a href="/">início</a> &nbsp;·&nbsp;
+      <a href="/#music">música</a> &nbsp;·&nbsp;
+      <a href="/#portfolio">portfolio</a>
+    </p>
+
+  </div>
+
+  <script>
+    var MAILERLITE_URL = 'https://assets.mailerlite.com/jsonp/2297081/forms/185926454134966144/subscribe';
+
+    function handleSubmit() {
+      var emailInput = document.getElementById('nl-email');
+      var btn = document.getElementById('nl-btn');
+      var msg = document.getElementById('nl-msg');
+      var email = emailInput.value.trim();
+
+      msg.className = 'msg';
+      msg.textContent = '';
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        msg.className = 'msg error';
+        msg.textContent = 'por favor insira um e-mail válido';
+        emailInput.focus();
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = '...';
+
+      var body = 'fields[email]=' + encodeURIComponent(email) + '&ml_submit=1';
+
+      fetch(MAILERLITE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body,
+      })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+          if (data.success) {
+            document.getElementById('form-area').style.display = 'none';
+            document.getElementById('success-area').style.display = '';
+          } else {
+            var errMsg = (data.errors && data.errors.email)
+              ? data.errors.email[0]
+              : 'algo deu errado — tente novamente';
+            msg.className = 'msg error';
+            msg.textContent = errMsg;
+            btn.disabled = false;
+            btn.textContent = 'assinar';
+          }
+        })
+        .catch(function() {
+          msg.className = 'msg error';
+          msg.textContent = 'erro de conexão — tente novamente';
+          btn.disabled = false;
+          btn.textContent = 'assinar';
+        });
+    }
+
+    // Allow Enter key inside the input
+    document.getElementById('nl-email').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') handleSubmit();
+    });
+  </script>
+</body>
+</html>
