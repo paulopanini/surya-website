@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>newsletter — suryaamitrano</title>
-<meta name="description" content="Fique por dentro — novos trabalhos, shows, e um pensamento solto aqui e ali. Cerca de uma vez por mês.">
+<meta name="description" content="Stay in the loop — new work, upcoming shows, and the occasional stray thought. About once a month.">
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -205,15 +205,15 @@
 
     <div class="kicker">
       <span class="kicker-line"></span>
-      fique por dentro
+      stay in the loop
       <span class="kicker-line"></span>
     </div>
 
-    <h1>a <em>newsletter</em></h1>
+    <h1>the <em>newsletter</em></h1>
 
     <p class="blurb">
-      Novos trabalhos, shows, bastidores e um pensamento solto aqui e ali.
-      Cerca de uma vez por mês — sem spam.
+      New work, upcoming shows, behind the scenes, and the occasional stray thought.
+      About once a month — no spam.
     </p>
 
     <div id="form-area">
@@ -221,28 +221,28 @@
         <input
           type="email"
           id="nl-email"
-          placeholder="seu e-mail"
+          placeholder="your email"
           autocomplete="email"
           autocapitalize="off"
           spellcheck="false"
         />
-        <button type="submit" id="nl-btn" onclick="handleSubmit()">assinar</button>
+        <button type="submit" id="nl-btn" onclick="handleSubmit()">subscribe</button>
       </div>
       <p class="msg" id="nl-msg"></p>
-      <p class="msg privacy" style="margin-top:8px">sem spam · cancelamento a qualquer momento</p>
+      <p class="msg privacy" style="margin-top:8px">no spam · unsubscribe any time</p>
     </div>
 
     <div id="success-area" style="display:none">
       <div class="success-box">
-        <div class="success-title">pronto <em>✓</em></div>
-        <div class="success-sub">te vejo na sua caixa de entrada</div>
+        <div class="success-title">you're in <em>✓</em></div>
+        <div class="success-sub">see you in your inbox</div>
       </div>
     </div>
 
     <div class="divider"></div>
     <p class="footer-note">
-      <a href="/">início</a> &nbsp;·&nbsp;
-      <a href="/#music">música</a> &nbsp;·&nbsp;
+      <a href="/">home</a> &nbsp;·&nbsp;
+      <a href="/#music">music</a> &nbsp;·&nbsp;
       <a href="/#portfolio">portfolio</a>
     </p>
 
@@ -262,7 +262,7 @@
 
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         msg.className = 'msg error';
-        msg.textContent = 'por favor insira um e-mail válido';
+        msg.textContent = 'please enter a valid email address';
         emailInput.focus();
         return;
       }
@@ -285,18 +285,18 @@
           } else {
             var errMsg = (data.errors && data.errors.email)
               ? data.errors.email[0]
-              : 'algo deu errado — tente novamente';
+              : 'something went wrong — please try again';
             msg.className = 'msg error';
             msg.textContent = errMsg;
             btn.disabled = false;
-            btn.textContent = 'assinar';
+            btn.textContent = 'subscribe';
           }
         })
         .catch(function() {
           msg.className = 'msg error';
-          msg.textContent = 'erro de conexão — tente novamente';
-          btn.disabled = false;
-          btn.textContent = 'assinar';
+          msg.textContent = 'connection error — please try again';
+            btn.disabled = false;
+            btn.textContent = 'subscribe';
         });
     }
 
