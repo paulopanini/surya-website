@@ -110,7 +110,7 @@
 </style>
 <script>
   // GitHub Pages SPA redirect: store the intended path in sessionStorage and go to root.
-  var KNOWN = ['/', '/portfolio', '/music', '/press', '/about', '/contact', '/shop', '/work-with-me'];
+  var KNOWN = ['/', '/portfolio', '/music', '/shows', '/press', '/about', '/contact', '/shop', '/work-with-me'];
   var path = window.location.pathname.replace(/\/$/, '') || '/';
   if (KNOWN.indexOf(path) !== -1) {
     sessionStorage.setItem('spa_redirect', path);
