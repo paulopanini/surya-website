@@ -89,6 +89,7 @@ const PAGE_SLUGS = {
   contact: '/contact',
   shop: '/shop',
   work: '/work-with-me',
+  shows: '/shows',
 };
 const SLUG_TO_PAGE = Object.fromEntries(Object.entries(PAGE_SLUGS).map(([k, v]) => [v, k]));
 
@@ -135,6 +136,7 @@ function RefinedSite() {
     portfolio: <RPortfolio onOpen={openLb} t={t} />,
     music: <RMusic t={t} />,
     press: <RPress t={t} />,
+    shows: <RShows t={t} />,
     about: <RAbout t={t} />,
     contact: <RContact t={t} />,
     shop: <RShop t={t} />,

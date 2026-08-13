@@ -76,6 +76,39 @@ function RHome({ onNav, t }) {
         <Marquee items={['words', 'colour', 'sound', 'brasil', 'sverige', 'felice 2026']} speed={50} />
       </section>
 
+      {/* New single — out now */}
+      <section style={{ padding: '80px 48px', background: `color-mix(in oklch, ${RP.blue} 14%, ${RP.paper})`, borderBottom: `1px solid color-mix(in oklch, ${RP.blue} 30%, ${RP.paper})` }}>
+        <Reveal>
+          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: 48, alignItems: 'center' }} className="r-single-grid">
+            <div>
+              <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 11, letterSpacing: '.22em', color: RP.terracotta, textTransform: 'uppercase', marginBottom: 18, display: 'flex', alignItems: 'center', gap: 10 }}>
+                <span style={{ width: 28, height: 1, background: RP.terracotta, display: 'inline-block' }} />
+                {t.newSingleKicker}
+              </div>
+              <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 'clamp(38px, 5vw, 56px)', color: RP.ink, letterSpacing: '-.02em', lineHeight: 1.05, marginBottom: 16 }}>
+                <span style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic' }}>{UPCOMING_ALBUM.tracks[0].title}</span>{t.newSingleSubtext}
+              </div>
+              <p style={{ color: RP.inkSoft, fontSize: 16, lineHeight: 1.6, margin: '0 0 30px', maxWidth: 520 }}>{t.newSingleBlurb}</p>
+              <RButton tone={RP.terracotta} href={UPCOMING_ALBUM.tracks[0].url}>
+                <Icon name="play" size={13} />&nbsp;{t.newSingleCta}
+              </RButton>
+            </div>
+            <div style={{ borderRadius: 12, overflow: 'hidden', boxShadow: '0 20px 60px -20px rgba(47,42,34,.25), 0 0 0 1px ' + RP.line }}>
+              <iframe
+                src={UPCOMING_ALBUM.spotifyEmbed}
+                width="100%" height="152"
+                frameBorder="0" allowFullScreen
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+                title="Tears of Love on Spotify"
+                style={{ display: 'block', border: 'none' }}
+              />
+            </div>
+          </div>
+        </Reveal>
+        <style>{`@media (max-width: 820px){.r-single-grid{grid-template-columns: 1fr !important}}`}</style>
+      </section>
+
       {/* Newsletter strip */}
       <section style={{
         background: `color-mix(in oklch, ${RP.terracotta} 13%, ${RP.paper})`,
@@ -290,9 +323,15 @@ function RMusic({ t }) {
                 {UPCOMING_ALBUM.tracks.map((tr, i) => (
                   <div key={i} style={{ display: 'grid', gridTemplateColumns: 'auto 1fr auto auto', gap: 14, alignItems: 'center', padding: '10px 0', borderTop: i === 0 ? 'none' : `1px solid ${RP.line}` }}>
                     <span style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, color: RP.inkSofter, letterSpacing: '.12em' }}>{tr.n}</span>
-                    <span style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 17, color: RP.ink }}>{tr.title}</span>
+                    {tr.url ? (
+                      <a href={tr.url} target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 17, color: RP.terracotta, textDecoration: 'none' }}>
+                        <Icon name="play" size={12} />{tr.title}
+                      </a>
+                    ) : (
+                      <span style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 17, color: RP.ink }}>{tr.title}</span>
+                    )}
                     <span style={{ fontFamily: 'ui-monospace, monospace', fontSize: 9, color: RP.inkSoft, letterSpacing: '.1em', textTransform: 'uppercase', border: `1px solid ${RP.line}`, padding: '2px 6px', borderRadius: 3 }}>{tr.lang}</span>
-                    <span style={{ fontFamily: 'ui-monospace, monospace', fontSize: 11, color: RP.inkSoft }}>{tr.dur}</span>
+                    <span style={{ fontFamily: 'ui-monospace, monospace', fontSize: 11, color: tr.url ? RP.terracotta : RP.inkSoft, fontWeight: tr.url ? 600 : 400 }}>{tr.dur}</span>
                   </div>
                 ))}
               </div>
@@ -377,6 +416,35 @@ function RMusic({ t }) {
             );
           })}
         </div>
+      </section>
+    </>
+  );
+}
+
+// ─── SHOWS ──────────────────────────────────────────────────────────
+function RShows({ t }) {
+  return (
+    <>
+      <section style={{ padding: '60px 48px 40px', background: `color-mix(in oklch, ${RP.mist} 22%, ${RP.paper})`, borderBottom: `1px solid color-mix(in oklch, ${RP.mist} 42%, ${RP.paper})` }}>
+        <RSectionHeader kicker={t.showsKicker} title={t.showsTitle} titleItalic={t.showsTitleItalic} accent={RP.plum} subtitle={t.showsSubtitle} />
+      </section>
+      <section style={{ padding: '20px 48px 100px' }}>
+        {SHOWS.map((s, i) => (
+          <Reveal key={i} delay={i * 50}>
+            <div style={{ display: 'grid', gridTemplateColumns: '170px 1fr auto', gap: 28, alignItems: 'center', padding: '28px 0', borderTop: `1px solid ${RP.line}` }} className="r-show-row">
+              <div>
+                <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.18em', color: RP.terracotta, textTransform: 'uppercase' }}>{s.weekday}</div>
+                <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 26, color: RP.ink, marginTop: 2, whiteSpace: 'nowrap' }}>{s.date}</div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: RP.ink }}>
+                <Icon name="pin" size={17} />
+                <span style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 22, lineHeight: 1.3 }}>{s.venue}</span>
+              </div>
+              <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 13, color: RP.inkSoft, textAlign: 'right', whiteSpace: 'nowrap' }}>{s.time}</div>
+            </div>
+          </Reveal>
+        ))}
+        <style>{`@media (max-width: 640px){.r-show-row{grid-template-columns: 1fr !important; row-gap: 8px; text-align: left !important}}`}</style>
       </section>
     </>
   );
@@ -1045,4 +1113,4 @@ function RWorkWithMe({ t }) {
   );
 }
 
-Object.assign(window, { RHome, RPortfolio, RMusic, RPress, RAbout, RContact, RShop, RWorkWithMe });
+Object.assign(window, { RHome, RPortfolio, RMusic, RShows, RPress, RAbout, RContact, RShop, RWorkWithMe });

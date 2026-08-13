@@ -51,11 +51,11 @@ const UPCOMING_ALBUM = {
   tag: 'EP · 4 TRACKS · ENGLISH & PORTUGUESE · RECORDED IN ROME',
   release: 'SEP 19, 2026',
   blurb: 'Recorded in Rome after winning a Band & Breakfast open call from 3,000+ applicants. Featuring Eva (Sweden), Heron (Brazil), Lucas (France), Arthur (Brazil), Christian (Italy), and Valerio (Italy).',
-  // Spotify embed — artist page until release. Swap for album URL once live:
+  // Spotify embed — swap for the full album URL once the whole EP is live:
   //   https://open.spotify.com/embed/album/<ALBUM_ID>?utm_source=generator
-  spotifyEmbed: 'https://open.spotify.com/embed/artist/2RvtyUzIEop2LcdPELFTym?utm_source=generator',
+  spotifyEmbed: 'https://open.spotify.com/embed/album/36ZMLAW2SFWjypDsodPHiC?utm_source=generator',
   tracks: [
-    { n: '01', title: 'TRACK 01', lang: 'EN', dur: '0:00' },
+    { n: '01', title: 'Tears of Love', lang: 'EN', dur: 'OUT NOW', url: 'https://open.spotify.com/album/36ZMLAW2SFWjypDsodPHiC?si=I1-5DOYcQhWM9Utszl-xPw' },
     { n: '02', title: 'TRACK 02', lang: 'EN', dur: '0:00' },
     { n: '03', title: 'TRACK 03', lang: 'PT', dur: '0:00' },
     { n: '04', title: 'TRACK 04', lang: 'PT', dur: '0:00' },
@@ -75,6 +75,15 @@ const DISCOGRAPHY = [
 
 // Spotify artist-page embed for the fallback player.
 const SPOTIFY_ARTIST_EMBED = 'https://open.spotify.com/embed/artist/2RvtyUzIEop2LcdPELFTym?utm_source=generator';
+
+// ─── Upcoming shows / readings ──────────────────────────────────────
+const SHOWS = [
+  { weekday: 'MON', date: 'SEP 7, 2026', time: '18:00', venue: 'G\u00f6tene Kommunbibliotek' },
+  { weekday: 'SAT', date: 'SEP 12, 2026', time: '13:00', venue: 'M\u00f6lnlycke bibliotek' },
+  { weekday: 'WED', date: 'SEP 16, 2026', time: '16:00', venue: 'Kortedala bibliotek' },
+  { weekday: 'THU', date: 'SEP 17, 2026', time: '16:00', venue: 'Hj\u00e4llbo Bibliotek' },
+  { weekday: 'FRI', date: 'NOV 14, 2026', time: '13:00', venue: 'Kyrkby Bibliotek' },
+];
 
 // ─── Press & media ──────────────────────────────────────────────────
 const PRESS_ITEMS = [
@@ -99,6 +108,7 @@ const NAV_ITEMS = [
   { id: 'home', label: 'home' },
   { id: 'portfolio', label: 'portfolio' },
   { id: 'music', label: 'music' },
+  { id: 'shows', label: 'shows' },
   { id: 'press', label: 'press' },
   { id: 'about', label: 'about' },  { id: 'work', label: 'work with me' },];
 
@@ -154,6 +164,9 @@ const Icon = ({ name, size = 20, stroke = 1.6 }) => {
     case 'sparkle': return (
       <svg viewBox="0 0 24 24" style={{ ...s, fill: 'currentColor', stroke: 'none' }}><path d="M12 3l1.6 6.4L20 11l-6.4 1.6L12 19l-1.6-6.4L4 11l6.4-1.6z" /></svg>
     );
+    case 'pin': return (
+      <svg viewBox="0 0 24 24" style={s}><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z" /><circle cx="12" cy="9.5" r="2.4" /></svg>
+    );
     default: return null;
   }
 };
@@ -186,10 +199,15 @@ const T = {
     upcomingSubtext: ' \u2014 an EP recorded in Rome.',
     upcomingBlurb: 'Recorded in Rome after winning a Band \u0026 Breakfast open call from 3,000+ applicants. Featuring Eva (Sweden), Heron (Brazil), Lucas (France), Arthur (Brazil), Christian (Italy), and Valerio (Italy).',
     presave: 'pre-save',
+    newSingleKicker: 'out now',
+    newSingleSubtext: ' \u2014 the first single from Felice.',
+    newSingleBlurb: 'The first taste of the upcoming EP, recorded in Rome \u2014 out now on Spotify and all major platforms.',
+    newSingleCta: 'play on spotify',
     navHome: 'home',
     navPortfolio: 'portfolio',
     navMusic: 'music',
     navPress: 'press',
+    navShows: 'shows',
     navAbout: 'about',
     navShop: 'shop',
     navContact: 'contact',
@@ -333,6 +351,10 @@ const T = {
     exploreArrow: 'explore \u2192',
     upcomingPrefix: 'UPCOMING \u00b7 ',
     fullAlbumDrops: 'full album drops ',
+    showsKicker: 'live dates',
+    showsTitle: 'upcoming',
+    showsTitleItalic: 'shows',
+    showsSubtitle: 'Live music sessions across Swedish libraries this autumn.',
     pressKicker: 'media & coverage',
     pressTitle: 'press',
     pressTitleItalic: '& media',
@@ -406,10 +428,15 @@ const T = {
     upcomingSubtext: ' \u2014 um EP gravado em Roma.',
     upcomingBlurb: 'Gravado em Roma ap\u00f3s vencer uma chamada aberta do Band \u0026 Breakfast entre mais de 3.000 candidatos. Com Eva (Su\u00e9cia), Heron (Brasil), Lucas (Fran\u00e7a), Arthur (Brasil), Christian (It\u00e1lia) e Valerio (It\u00e1lia).',
     presave: 'pr\u00e9-salvar',
+    newSingleKicker: 'j\u00e1 dispon\u00edvel',
+    newSingleSubtext: ' \u2014 o primeiro single do Felice.',
+    newSingleBlurb: 'A primeira amostra do EP que vem por a\u00ed, gravado em Roma \u2014 j\u00e1 dispon\u00edvel no Spotify e nas principais plataformas.',
+    newSingleCta: 'ouvir no spotify',
     navHome: 'in\u00edcio',
     navPortfolio: 'portf\u00f3lio',
     navMusic: 'm\u00fasica',
     navPress: 'imprensa',
+    navShows: 'shows',
     navAbout: 'sobre',
     navShop: 'loja',
     navContact: 'contato',
@@ -553,6 +580,10 @@ const T = {
     exploreArrow: 'explorar \u2192',
     upcomingPrefix: 'EM BREVE \u00b7 ',
     fullAlbumDrops: '\u00e1lbum completo em ',
+    showsKicker: 'datas ao vivo',
+    showsTitle: 'pr\u00f3ximos',
+    showsTitleItalic: 'shows',
+    showsSubtitle: 'Sess\u00f5es de m\u00fasica ao vivo em bibliotecas suecas neste outono.',
     pressKicker: 'm\u00eddia & cobertura',
     pressTitle: 'imprensa',
     pressTitleItalic: '& m\u00eddia',
@@ -626,10 +657,15 @@ const T = {
     upcomingSubtext: ' \u2014 en EP inspelad i Rom.',
     upcomingBlurb: 'Inspelad i Rom efter att ha vunnit ett Band \u0026 Breakfast-utlysning bland fler \u00e4n 3\u2009000 s\u00f6kande. Med Eva (Sverige), Heron (Brasilien), Lucas (Frankrike), Arthur (Brasilien), Christian (Italien) och Valerio (Italien).',
     presave: 'f\u00f6rhandsspara',
+    newSingleKicker: 'ute nu',
+    newSingleSubtext: ' \u2014 den f\u00f6rsta singeln fr\u00e5n Felice.',
+    newSingleBlurb: 'Den f\u00f6rsta smakbiten fr\u00e5n den kommande EP:n, inspelad i Rom \u2014 ute nu p\u00e5 Spotify och alla stora plattformar.',
+    newSingleCta: 'lyssna p\u00e5 spotify',
     navHome: 'hem',
     navPortfolio: 'portfolio',
     navMusic: 'musik',
     navPress: 'press',
+    navShows: 'shows',
     navAbout: 'om',
     navShop: 'butik',
     navContact: 'kontakt',
@@ -773,6 +809,10 @@ const T = {
     exploreArrow: 'utforska \u2192',
     upcomingPrefix: 'KOMMANDE \u00b7 ',
     fullAlbumDrops: 'fullst\u00e4ndigt album sl\u00e4pps ',
+    showsKicker: 'livedatum',
+    showsTitle: 'kommande',
+    showsTitleItalic: 'spelningar',
+    showsSubtitle: 'Livemusik p\u00e5 svenska bibliotek i h\u00f6st.',
     pressKicker: 'media & t\u00e4ckning',
     pressTitle: 'press',
     pressTitleItalic: '& media',
@@ -925,7 +965,7 @@ function Reveal({ children, delay = 0, y = 16, style }) {
 // Export to window so sibling Babel scripts can pick these up.
 Object.assign(window, {
   MAILERLITE_URL,
-  SOCIALS, PORTFOLIO_CATS, PORTFOLIO, UPCOMING_ALBUM, DISCOGRAPHY, SPOTIFY_ARTIST_EMBED,
+  SOCIALS, PORTFOLIO_CATS, PORTFOLIO, UPCOMING_ALBUM, DISCOGRAPHY, SPOTIFY_ARTIST_EMBED, SHOWS,
   PRESS_ITEMS, SHOP_ITEMS, NAV_ITEMS,
   Icon, useI18n, PaletteTile, PortraitPlaceholder, Reveal,
 });
