@@ -77,12 +77,15 @@ const DISCOGRAPHY = [
 const SPOTIFY_ARTIST_EMBED = 'https://open.spotify.com/embed/artist/2RvtyUzIEop2LcdPELFTym?utm_source=generator';
 
 // ─── Upcoming shows / readings ──────────────────────────────────────
+// TO ADD A PHOTO: save the file into images/shows/<filename> and set
+// `image: 'images/shows/<filename>'` on the matching entry below.
+// If `image` is omitted, a warm palette placeholder is shown instead.
 const SHOWS = [
-  { weekday: 'MON', date: 'SEP 7, 2026', time: '18:00', venue: 'G\u00f6tene Kommunbibliotek' },
-  { weekday: 'SAT', date: 'SEP 12, 2026', time: '13:00', venue: 'M\u00f6lnlycke bibliotek' },
-  { weekday: 'WED', date: 'SEP 16, 2026', time: '16:00', venue: 'Kortedala bibliotek' },
-  { weekday: 'THU', date: 'SEP 17, 2026', time: '16:00', venue: 'Hj\u00e4llbo Bibliotek' },
-  { weekday: 'FRI', date: 'NOV 14, 2026', time: '13:00', venue: 'Kyrkby Bibliotek' },
+  { weekday: 'MON', date: 'SEP 7, 2026', time: '18:00', venue: 'G\u00f6tene Kommunbibliotek', image: 'images/shows/gotene.jpg', palette: ['#c85a9c', '#f2a050', '#7d5ce0'] },
+  { weekday: 'SAT', date: 'SEP 12, 2026', time: '13:00', venue: 'M\u00f6lnlycke bibliotek', image: 'images/shows/molnlycke.jpg', palette: ['#62b8d9', '#b08dd9', '#9b7dd4'] },
+  { weekday: 'WED', date: 'SEP 16, 2026', time: '16:00', venue: 'Kortedala bibliotek', image: 'images/shows/kortedala.jpg', palette: ['#e85d75', '#9b7dd4', '#f2a050'] },
+  { weekday: 'THU', date: 'SEP 17, 2026', time: '16:00', venue: 'Hj\u00e4llbo Bibliotek', image: 'images/shows/hjallbo.jpg', palette: ['#7d5ce0', '#62b8d9', '#c85a9c'] },
+  { weekday: 'FRI', date: 'NOV 14, 2026', time: '13:00', venue: 'Kyrkby Bibliotek', image: 'images/shows/kyrkby.jpg', palette: ['#f2a050', '#e85d75', '#7d5ce0'] },
 ];
 
 // ─── Press & media ──────────────────────────────────────────────────

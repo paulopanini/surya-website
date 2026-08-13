@@ -428,23 +428,38 @@ function RShows({ t }) {
       <section style={{ padding: '60px 48px 40px', background: `color-mix(in oklch, ${RP.mist} 22%, ${RP.paper})`, borderBottom: `1px solid color-mix(in oklch, ${RP.mist} 42%, ${RP.paper})` }}>
         <RSectionHeader kicker={t.showsKicker} title={t.showsTitle} titleItalic={t.showsTitleItalic} accent={RP.plum} subtitle={t.showsSubtitle} />
       </section>
-      <section style={{ padding: '20px 48px 100px' }}>
-        {SHOWS.map((s, i) => (
-          <Reveal key={i} delay={i * 50}>
-            <div style={{ display: 'grid', gridTemplateColumns: '170px 1fr auto', gap: 28, alignItems: 'center', padding: '28px 0', borderTop: `1px solid ${RP.line}` }} className="r-show-row">
+      <section style={{ padding: '40px 48px 100px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32 }} className="r-shows-grid">
+          {SHOWS.map((s, i) => (
+            <Reveal key={i} delay={i * 50}>
               <div>
-                <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.18em', color: RP.terracotta, textTransform: 'uppercase' }}>{s.weekday}</div>
-                <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 26, color: RP.ink, marginTop: 2, whiteSpace: 'nowrap' }}>{s.date}</div>
+                <div style={{ position: 'relative' }}>
+                  <PaletteTile palette={s.palette} image={s.image} alt={s.venue} style={{ aspectRatio: '4/3' }} radius={8} />
+                  <div style={{
+                    position: 'absolute', top: 12, left: 12,
+                    background: RP.paper, borderRadius: 6, padding: '6px 10px',
+                    boxShadow: '0 4px 14px rgba(20,16,10,.25)',
+                    textAlign: 'center', minWidth: 54,
+                  }}>
+                    <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 9, letterSpacing: '.14em', color: RP.terracotta, textTransform: 'uppercase' }}>{s.weekday}</div>
+                    <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 15, color: RP.ink, lineHeight: 1.1, marginTop: 1, whiteSpace: 'nowrap' }}>{s.date.split(',')[0]}</div>
+                  </div>
+                </div>
+                <div style={{ marginTop: 16 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: RP.ink }}>
+                    <Icon name="pin" size={15} />
+                    <span style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 19, lineHeight: 1.25 }}>{s.venue}</span>
+                  </div>
+                  <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 11, color: RP.inkSoft, letterSpacing: '.12em', textTransform: 'uppercase', marginTop: 6 }}>{s.date} · {s.time}</div>
+                </div>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: RP.ink }}>
-                <Icon name="pin" size={17} />
-                <span style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 22, lineHeight: 1.3 }}>{s.venue}</span>
-              </div>
-              <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 13, color: RP.inkSoft, textAlign: 'right', whiteSpace: 'nowrap' }}>{s.time}</div>
-            </div>
-          </Reveal>
-        ))}
-        <style>{`@media (max-width: 640px){.r-show-row{grid-template-columns: 1fr !important; row-gap: 8px; text-align: left !important}}`}</style>
+            </Reveal>
+          ))}
+        </div>
+        <style>{`
+          @media (max-width: 900px){.r-shows-grid{grid-template-columns: 1fr 1fr !important}}
+          @media (max-width: 560px){.r-shows-grid{grid-template-columns: 1fr !important}}
+        `}</style>
       </section>
     </>
   );
