@@ -444,6 +444,17 @@ function RShows({ t }) {
                     <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 9, letterSpacing: '.14em', color: RP.terracotta, textTransform: 'uppercase' }}>{s.weekday}</div>
                     <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 15, color: RP.ink, lineHeight: 1.1, marginTop: 1, whiteSpace: 'nowrap' }}>{s.date.split(',')[0]}</div>
                   </div>
+                  {s.free && (
+                    <div style={{
+                      position: 'absolute', top: 12, right: 12,
+                      background: RP.plum, color: RP.paper, borderRadius: 999, padding: '6px 12px',
+                      display: 'flex', alignItems: 'center', gap: 5,
+                      boxShadow: '0 4px 14px rgba(20,16,10,.25)',
+                      fontFamily: 'ui-monospace, monospace', fontSize: 9, letterSpacing: '.12em', textTransform: 'uppercase', whiteSpace: 'nowrap',
+                    }}>
+                      <Icon name="check" size={11} />{t.showsFreeEntry}
+                    </div>
+                  )}
                 </div>
                 <div style={{ marginTop: 16 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: RP.ink }}>

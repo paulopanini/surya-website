@@ -81,11 +81,11 @@ const SPOTIFY_ARTIST_EMBED = 'https://open.spotify.com/embed/artist/2RvtyUzIEop2
 // `image: 'images/shows/<filename>'` on the matching entry below.
 // If `image` is omitted, a warm palette placeholder is shown instead.
 const SHOWS = [
-  { weekday: 'MON', date: 'SEP 7, 2026', time: '18:00', venue: 'G\u00f6tene Kommunbibliotek', image: 'images/shows/gotene.jpg', palette: ['#c85a9c', '#f2a050', '#7d5ce0'] },
-  { weekday: 'SAT', date: 'SEP 12, 2026', time: '13:00', venue: 'M\u00f6lnlycke bibliotek', image: 'images/shows/molnlycke.jpg', palette: ['#62b8d9', '#b08dd9', '#9b7dd4'] },
-  { weekday: 'WED', date: 'SEP 16, 2026', time: '16:00', venue: 'Kortedala bibliotek', image: 'images/shows/kortedala.jpg', palette: ['#e85d75', '#9b7dd4', '#f2a050'] },
-  { weekday: 'THU', date: 'SEP 17, 2026', time: '16:00', venue: 'Hj\u00e4llbo Bibliotek', image: 'images/shows/hjallbo.jpg', palette: ['#7d5ce0', '#62b8d9', '#c85a9c'] },
-  { weekday: 'FRI', date: 'NOV 14, 2026', time: '13:00', venue: 'Kyrkby Bibliotek', image: 'images/shows/kyrkby.jpg', palette: ['#f2a050', '#e85d75', '#7d5ce0'] },
+  { weekday: 'MON', date: 'SEP 7, 2026', time: '18:00', venue: 'G\u00f6tene Kommunbibliotek', free: true, image: 'images/shows/gotene.jpg', palette: ['#c85a9c', '#f2a050', '#7d5ce0'] },
+  { weekday: 'SAT', date: 'SEP 12, 2026', time: '13:00', venue: 'M\u00f6lnlycke bibliotek', free: true, image: 'images/shows/molnlycke.jpg', palette: ['#62b8d9', '#b08dd9', '#9b7dd4'] },
+  { weekday: 'WED', date: 'SEP 16, 2026', time: '16:00', venue: 'Kortedala bibliotek', free: true, image: 'images/shows/kortedala.jpg', palette: ['#e85d75', '#9b7dd4', '#f2a050'] },
+  { weekday: 'THU', date: 'SEP 17, 2026', time: '16:00', venue: 'Hj\u00e4llbo Bibliotek', free: true, image: 'images/shows/hjallbo.jpg', palette: ['#7d5ce0', '#62b8d9', '#c85a9c'] },
+  { weekday: 'FRI', date: 'NOV 14, 2026', time: '13:00', venue: 'Kyrkby Bibliotek', free: true, image: 'images/shows/kyrkby.jpg', palette: ['#f2a050', '#e85d75', '#7d5ce0'] },
 ];
 
 // ─── Press & media ──────────────────────────────────────────────────
@@ -358,6 +358,7 @@ const T = {
     showsTitle: 'upcoming',
     showsTitleItalic: 'shows',
     showsSubtitle: 'Live music sessions across Swedish libraries this autumn.',
+    showsFreeEntry: 'free entry',
     pressKicker: 'media & coverage',
     pressTitle: 'press',
     pressTitleItalic: '& media',
@@ -587,6 +588,7 @@ const T = {
     showsTitle: 'pr\u00f3ximos',
     showsTitleItalic: 'shows',
     showsSubtitle: 'Sess\u00f5es de m\u00fasica ao vivo em bibliotecas suecas neste outono.',
+    showsFreeEntry: 'entrada gratuita',
     pressKicker: 'm\u00eddia & cobertura',
     pressTitle: 'imprensa',
     pressTitleItalic: '& m\u00eddia',
@@ -816,6 +818,7 @@ const T = {
     showsTitle: 'kommande',
     showsTitleItalic: 'spelningar',
     showsSubtitle: 'Livemusik p\u00e5 svenska bibliotek i h\u00f6st.',
+    showsFreeEntry: 'fri entr\u00e9',
     pressKicker: 'media & t\u00e4ckning',
     pressTitle: 'press',
     pressTitleItalic: '& media',
