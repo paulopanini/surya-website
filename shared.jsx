@@ -88,6 +88,22 @@ const SHOWS = [
   { weekday: 'FRI', date: 'NOV 14, 2026', time: '13:00', venue: 'Kyrkby Bibliotek', free: true, image: 'images/shows/kyrkby.jpg', palette: ['#f2a050', '#e85d75', '#7d5ce0'] },
 ];
 
+// A show is considered past once its date + time + 1h (assumed duration) is behind now.
+const SHOW_MONTHS = { JAN: 0, FEB: 1, MAR: 2, APR: 3, MAY: 4, JUN: 5, JUL: 6, AUG: 7, SEP: 8, OCT: 9, NOV: 10, DEC: 11 };
+function getShowEndDate(show) {
+  const m = /([A-Z]{3})\s+(\d+),\s*(\d+)/.exec(show.date);
+  if (!m) return null;
+  const [, mon, day, year] = m;
+  const [hh, mm] = (show.time || '00:00').split(':').map(Number);
+  const end = new Date(Number(year), SHOW_MONTHS[mon] ?? 0, Number(day), hh, mm);
+  end.setHours(end.getHours() + 1);
+  return end;
+}
+function isShowPast(show) {
+  const end = getShowEndDate(show);
+  return end ? end.getTime() < Date.now() : false;
+}
+
 // ─── Press & media ──────────────────────────────────────────────────
 const PRESS_ITEMS = [
   { outlet: 'Portal Banda B', date: 'Lucas Cabaña', title: 'One of the most versatile singers of the current generation of Brazilian music, Surya explores new horizons in her work.' },
@@ -359,6 +375,7 @@ const T = {
     showsTitleItalic: 'shows',
     showsSubtitle: 'Live music sessions across Swedish libraries this autumn.',
     showsFreeEntry: 'free entry',
+    showsPastLabel: 'past event',
     pressKicker: 'media & coverage',
     pressTitle: 'press',
     pressTitleItalic: '& media',
@@ -589,6 +606,7 @@ const T = {
     showsTitleItalic: 'shows',
     showsSubtitle: 'Sess\u00f5es de m\u00fasica ao vivo em bibliotecas suecas neste outono.',
     showsFreeEntry: 'entrada gratuita',
+    showsPastLabel: 'evento encerrado',
     pressKicker: 'm\u00eddia & cobertura',
     pressTitle: 'imprensa',
     pressTitleItalic: '& m\u00eddia',
@@ -819,6 +837,7 @@ const T = {
     showsTitleItalic: 'spelningar',
     showsSubtitle: 'Livemusik p\u00e5 svenska bibliotek i h\u00f6st.',
     showsFreeEntry: 'fri entr\u00e9',
+    showsPastLabel: 'avslutad spelning',
     pressKicker: 'media & t\u00e4ckning',
     pressTitle: 'press',
     pressTitleItalic: '& media',
@@ -973,5 +992,5 @@ Object.assign(window, {
   MAILERLITE_URL,
   SOCIALS, PORTFOLIO_CATS, PORTFOLIO, UPCOMING_ALBUM, DISCOGRAPHY, SPOTIFY_ARTIST_EMBED, SHOWS,
   PRESS_ITEMS, SHOP_ITEMS, NAV_ITEMS,
-  Icon, useI18n, PaletteTile, PortraitPlaceholder, Reveal,
+  Icon, useI18n, PaletteTile, PortraitPlaceholder, Reveal, isShowPast,
 });

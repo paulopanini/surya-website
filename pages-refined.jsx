@@ -430,10 +430,12 @@ function RShows({ t }) {
       </section>
       <section style={{ padding: '40px 48px 100px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32 }} className="r-shows-grid">
-          {SHOWS.map((s, i) => (
+          {SHOWS.map((s, i) => {
+            const past = isShowPast(s);
+            return (
             <Reveal key={i} delay={i * 50}>
-              <div>
-                <div style={{ position: 'relative' }}>
+              <div style={{ opacity: past ? .55 : 1, transition: 'opacity .2s' }}>
+                <div style={{ position: 'relative', filter: past ? 'grayscale(1)' : 'none' }}>
                   <PaletteTile palette={s.palette} image={s.image} alt={s.venue} style={{ aspectRatio: '4/3' }} radius={8} />
                   <div style={{
                     position: 'absolute', top: 12, left: 12,
@@ -444,7 +446,17 @@ function RShows({ t }) {
                     <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 9, letterSpacing: '.14em', color: RP.terracotta, textTransform: 'uppercase' }}>{s.weekday}</div>
                     <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 15, color: RP.ink, lineHeight: 1.1, marginTop: 1, whiteSpace: 'nowrap' }}>{s.date.split(',')[0]}</div>
                   </div>
-                  {s.free && (
+                  {past ? (
+                    <div style={{
+                      position: 'absolute', top: 12, right: 12,
+                      background: RP.ink, color: RP.paper, borderRadius: 999, padding: '6px 12px',
+                      display: 'flex', alignItems: 'center', gap: 5,
+                      boxShadow: '0 4px 14px rgba(20,16,10,.25)',
+                      fontFamily: 'ui-monospace, monospace', fontSize: 9, letterSpacing: '.12em', textTransform: 'uppercase', whiteSpace: 'nowrap',
+                    }}>
+                      <Icon name="check" size={11} />{t.showsPastLabel}
+                    </div>
+                  ) : s.free && (
                     <div style={{
                       position: 'absolute', top: 12, right: 12,
                       background: RP.plum, color: RP.paper, borderRadius: 999, padding: '6px 12px',
@@ -465,7 +477,8 @@ function RShows({ t }) {
                 </div>
               </div>
             </Reveal>
-          ))}
+            );
+          })}
         </div>
         <style>{`
           @media (max-width: 900px){.r-shows-grid{grid-template-columns: 1fr 1fr !important}}
