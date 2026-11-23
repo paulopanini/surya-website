@@ -29,12 +29,12 @@ function RHome({ onNav, t }) {
             </div>
           </div>
           <Reveal y={30} delay={200}>
-            <div style={{ position: 'relative' }}>
-              <img src="images/self/susu-home.jpg" alt="Surya" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover', borderRadius: 4, display: 'block' }} />
+            <div style={{ position: 'relative', maxWidth: 400, marginLeft: 'auto' }} className="r-hero-photo">
+              <img src="images/self/susu-home-warm.jpg" alt="Surya" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover', borderRadius: 4, display: 'block' }} />
             </div>
           </Reveal>
         </div>
-        <style>{`@media (max-width: 820px){.r-hero-grid{grid-template-columns: 1fr !important}}`}</style>
+        <style>{`@media (max-width: 820px){.r-hero-grid{grid-template-columns: 1fr !important}.r-hero-photo{max-width: none !important}}`}</style>
       </section>
 
       {/* Marquee */}
