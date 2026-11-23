@@ -2,38 +2,6 @@
 
 // ─── HOME ───────────────────────────────────────────────────────────
 function RHome({ onNav, t }) {
-  const [nlEmail, setNlEmail] = React.useState('');
-  const [nlStatus, setNlStatus] = React.useState('idle'); // idle | loading | success | error
-  const [nlErr, setNlErr] = React.useState('');
-
-  const submitNewsletter = async (e) => {
-    e.preventDefault();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(nlEmail)) {
-      setNlStatus('error'); setNlErr(t.errEmail); return;
-    }
-    if (!MAILERLITE_URL || MAILERLITE_URL === 'PASTE_YOUR_MAILERLITE_SUBSCRIBE_URL_HERE') {
-      setNlStatus('error'); setNlErr('MailerLite not configured yet.'); return;
-    }
-    setNlStatus('loading');
-    try {
-      const body = new URLSearchParams({ 'fields[email]': nlEmail, ml_submit: '1' });
-      const res = await fetch(MAILERLITE_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: body.toString(),
-      });
-      const data = await res.json();
-      if (data.success) {
-        setNlStatus('success');
-      } else {
-        const msg = data.errors && data.errors.email ? data.errors.email[0] : t.submitNetworkError;
-        setNlStatus('error'); setNlErr(msg);
-      }
-    } catch (_) {
-      setNlStatus('error'); setNlErr(t.submitNetworkError);
-    }
-  };
-
   return (
     <>
       {/* Hero — editorial, asymmetric */}
@@ -49,10 +17,8 @@ function RHome({ onNav, t }) {
               fontSize: 'clamp(56px, 9vw, 144px)', lineHeight: .92, fontWeight: 400,
               margin: '0 0 30px', color: RP.ink, letterSpacing: '-.025em',
             }}>
-              {t.heroH1Line1}<br />
-              <span style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', color: RP.terracotta }}>{t.heroH1Line2}</span><br />
-              {t.heroH1Line3}<br />
-              {t.heroH1Line4}
+              Surya<br />
+              <span style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', color: RP.terracotta }}>Amitrano</span>
             </h1>
             <p style={{ fontSize: 19, lineHeight: 1.6, color: RP.inkSoft, maxWidth: 480, marginBottom: 30 }}>
               {t.tagline} <strong style={{ color: RP.ink, fontWeight: 600 }}>{t.heroRole}</strong> {t.heroClose}
@@ -64,7 +30,7 @@ function RHome({ onNav, t }) {
           </div>
           <Reveal y={30} delay={200}>
             <div style={{ position: 'relative' }}>
-              <img src="images/self/susu.jpg" alt="Surya" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover', borderRadius: 4, display: 'block' }} />
+              <img src="images/self/susu-home.jpg" alt="Surya" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover', borderRadius: 4, display: 'block' }} />
             </div>
           </Reveal>
         </div>
@@ -86,10 +52,10 @@ function RHome({ onNav, t }) {
                 {t.newSingleKicker}
               </div>
               <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 'clamp(38px, 5vw, 56px)', color: RP.ink, letterSpacing: '-.02em', lineHeight: 1.05, marginBottom: 16 }}>
-                <span style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic' }}>{UPCOMING_ALBUM.tracks[0].title}</span>{t.newSingleSubtext}
+                <span style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic' }}>Felice</span>{t.newSingleSubtext}
               </div>
               <p style={{ color: RP.inkSoft, fontSize: 16, lineHeight: 1.6, margin: '0 0 30px', maxWidth: 520 }}>{t.newSingleBlurb}</p>
-              <RButton tone={RP.terracotta} href={UPCOMING_ALBUM.tracks[0].url}>
+              <RButton tone={RP.terracotta} href={UPCOMING_ALBUM.spotifyUrl}>
                 <Icon name="play" size={13} />&nbsp;{t.newSingleCta}
               </RButton>
             </div>
@@ -107,75 +73,6 @@ function RHome({ onNav, t }) {
           </div>
         </Reveal>
         <style>{`@media (max-width: 820px){.r-single-grid{grid-template-columns: 1fr !important}}`}</style>
-      </section>
-
-      {/* Newsletter strip */}
-      <section style={{
-        background: `color-mix(in oklch, ${RP.terracotta} 13%, ${RP.paper})`,
-        borderTop: `1px solid color-mix(in oklch, ${RP.terracotta} 28%, ${RP.paper})`,
-        borderBottom: `1px solid color-mix(in oklch, ${RP.terracotta} 28%, ${RP.paper})`,
-        padding: '80px 48px',
-      }}>
-        <Reveal>
-          <div style={{ maxWidth: 560, margin: '0 auto', textAlign: 'center' }}>
-            <div style={{
-              fontFamily: 'ui-monospace, monospace', fontSize: 11, letterSpacing: '.22em', color: RP.terracotta,
-              textTransform: 'uppercase', marginBottom: 18,
-              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12,
-            }}>
-              <span style={{ width: 28, height: 1, background: RP.terracotta, display: 'inline-block' }} />
-              {t.newsletterKicker}
-              <span style={{ width: 28, height: 1, background: RP.terracotta, display: 'inline-block' }} />
-            </div>
-            <h2 style={{
-              fontFamily: '"DM Serif Display", Georgia, serif',
-              fontSize: 'clamp(40px, 5vw, 72px)', lineHeight: 1.02,
-              margin: '0 0 16px', fontWeight: 400, color: RP.ink, letterSpacing: '-.015em',
-            }}>
-              {t.newsletterTitle}{' '}
-              <span style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', color: RP.terracotta }}>{t.newsletterTitleItalic}</span>
-            </h2>
-            <p style={{ fontSize: 18, lineHeight: 1.6, color: RP.inkSoft, margin: '0 0 36px' }}>{t.newsletterBlurb}</p>
-            {nlStatus === 'success' ? (
-              <div style={{ padding: '28px 36px', border: `1.5px solid ${RP.terracotta}`, borderRadius: 4, display: 'inline-block' }}>
-                <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 36, color: RP.ink, marginBottom: 8, fontWeight: 400 }}>
-                  {t.newsletterSuccess} <span style={{ fontFamily: 'Fraunces', fontStyle: 'italic', color: RP.terracotta }}>✓</span>
-                </div>
-                <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 11, letterSpacing: '.18em', textTransform: 'uppercase', color: RP.inkSoft }}>{t.newsletterSuccessMsg}</div>
-              </div>
-            ) : (
-              <>
-                <form onSubmit={submitNewsletter} noValidate style={{
-                  display: 'flex', border: `1.5px solid ${RP.ink}`, borderRadius: 999, overflow: 'hidden',
-                  transition: 'border-color .2s',
-                }}
-                  onFocus={(e) => e.currentTarget.style.borderColor = RP.inkSoft}
-                  onBlur={(e) => e.currentTarget.style.borderColor = RP.ink}
-                >
-                  <input
-                    type="email"
-                    value={nlEmail}
-                    onChange={(e) => { setNlEmail(e.target.value); if (nlStatus === 'error') setNlStatus('idle'); }}
-                    placeholder={t.newsletterPlaceholder}
-                    style={{ flex: 1, padding: '13px 20px', border: 'none', background: 'transparent', fontFamily: 'Fraunces, Georgia, serif', fontSize: 15, color: RP.ink, outline: 'none', minWidth: 0 }}
-                  />
-                  <button
-                    type="submit"
-                    disabled={nlStatus === 'loading'}
-                    style={{ padding: '12px 22px', background: RP.ink, color: RP.paper, border: 'none', fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 15, cursor: nlStatus === 'loading' ? 'wait' : 'pointer', whiteSpace: 'nowrap', transition: 'background .2s', flexShrink: 0 }}
-                    onMouseEnter={(e) => { if (nlStatus !== 'loading') e.currentTarget.style.background = RP.inkSoft; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.background = RP.ink; }}
-                  >
-                    {nlStatus === 'loading' ? '...' : t.subscribe}
-                  </button>
-                </form>
-                {nlStatus === 'error' && (
-                  <div style={{ marginTop: 10, color: RP.terracotta, fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 14 }}>{nlErr}</div>
-                )}
-              </>
-            )}
-          </div>
-        </Reveal>
       </section>
 
       {/* Three worlds */}
@@ -213,7 +110,7 @@ function RHome({ onNav, t }) {
           <div style={{ gridRow: 'span 2' }}>
             <PaletteTile palette={PORTFOLIO[1].palette} image={PORTFOLIO[1].image} label={PORTFOLIO[1].title} sub={PORTFOLIO[1].client} style={{ height: '100%' }} radius={4} />
           </div>
-          {[0, 2, 4, 5].map((i) => (
+          {[0, 2, 3, 4].map((i) => (
             <PaletteTile key={PORTFOLIO[i].id} palette={PORTFOLIO[i].palette} image={PORTFOLIO[i].image} label={PORTFOLIO[i].title} sub={PORTFOLIO[i].client} style={{ height: '100%' }} radius={4} compact />
           ))}
         </div>
@@ -318,7 +215,7 @@ function RMusic({ t }) {
                     <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 18, color: RP.ink, lineHeight: 1.2 }}>{t.tracklist}</div>
                     <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 9, color: RP.inkSoft, letterSpacing: '.15em', textTransform: 'uppercase', marginTop: 2 }}>{t.fullAlbumDrops}{UPCOMING_ALBUM.release}</div>
                   </div>
-                  <RButton tone={RP.terracotta} href={SOCIALS.spotify} small>{t.presave}</RButton>
+                  <RButton tone={RP.terracotta} href={UPCOMING_ALBUM.spotifyUrl} small>{t.presave}</RButton>
                 </div>
                 {UPCOMING_ALBUM.tracks.map((tr, i) => (
                   <div key={i} style={{ display: 'grid', gridTemplateColumns: 'auto 1fr auto auto', gap: 14, alignItems: 'center', padding: '10px 0', borderTop: i === 0 ? 'none' : `1px solid ${RP.line}` }}>
