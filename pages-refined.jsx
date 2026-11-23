@@ -110,7 +110,7 @@ function RHome({ onNav, t }) {
           <div style={{ gridRow: 'span 2' }}>
             <PaletteTile palette={PORTFOLIO[1].palette} image={PORTFOLIO[1].image} label={PORTFOLIO[1].title} sub={PORTFOLIO[1].client} style={{ height: '100%' }} radius={4} />
           </div>
-          {[0, 2, 3, 4].map((i) => (
+          {[0, 2, 4, 5].map((i) => (
             <PaletteTile key={PORTFOLIO[i].id} palette={PORTFOLIO[i].palette} image={PORTFOLIO[i].image} label={PORTFOLIO[i].title} sub={PORTFOLIO[i].client} style={{ height: '100%' }} radius={4} compact />
           ))}
         </div>
@@ -167,10 +167,17 @@ function RPortfolio({ onOpen, t }) {
               <div onClick={() => onOpen(p)} style={{ cursor: 'pointer' }}
                 onMouseEnter={(e) => { const img = e.currentTarget.querySelector('.r-port-img'); if (img) img.style.transform = 'scale(1.03)'; }}
                 onMouseLeave={(e) => { const img = e.currentTarget.querySelector('.r-port-img'); if (img) img.style.transform = ''; }}>
-                <div style={{ overflow: 'hidden', borderRadius: 4 }}>
+                <div style={{ overflow: 'hidden', borderRadius: 4, position: 'relative' }}>
                   <div className="r-port-img" style={{ transition: 'transform .5s cubic-bezier(.2,.7,.2,1)' }}>
                     <PaletteTile palette={p.palette} image={p.image} alt={p.title} style={{ aspectRatio: '1/1' }} radius={4} />
                   </div>
+                  {p.editions && p.editions.length > 1 && (
+                    <span style={{
+                      position: 'absolute', top: 12, left: 12, padding: '5px 10px', borderRadius: 999,
+                      background: RP.paper, color: RP.ink, fontFamily: 'ui-monospace, monospace', fontSize: 10,
+                      letterSpacing: '.15em', textTransform: 'uppercase', boxShadow: '0 1px 4px rgba(0,0,0,.15)',
+                    }}>{p.editions.map(e => e.lang).join(' · ')}</span>
+                  )}
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginTop: 14, gap: 10 }}>
                   <div>

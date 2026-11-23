@@ -30,12 +30,24 @@ const PORTFOLIO_CATS = [
 // TO ADD REAL ARTWORK: save each file into  images/portfolio/<filename>
 // and set `image: 'images/portfolio/<filename>'` on the matching entry.
 // If `image` is omitted, a warm palette placeholder is shown instead.
+// Optional extra fields on any item, shown when it is opened:
+//   images:   ['images/portfolio/x-1.jpg', ...]   extra images after the cover
+//   desc:     { en: '...', pt: '...', sv: '...' } short description per language
+//   link:     { url: 'https://...', label: { en, pt, sv } } button to buy / listen / read more
+//   editions: [{ lang: 'pt', label: 'Português', title, image, images? }, ...]
+//             versions of the same work (e.g. translations), grouped into one tile
 const PORTFOLIO = [
   { id: 'p1', title: 'Os 3 Desejos de Meiz', cat: 'books', palette: ['#6a8fa3', '#d9a36b', '#e9c4a0'], year: 2024, client: 'Independent', image: 'images/portfolio/meiz.jpg' },
-  { id: 'p2', title: 'Será que ele vem?', cat: 'books', palette: ['#3c4b5e', '#e9b347', '#d67b5a'], year: 2023, client: 'Independent', image: 'images/portfolio/sera-que-ele-vem.png' },
-  { id: 'p3', title: 'Meu Amigo Óculos', cat: 'books', palette: ['#5d4d7a', '#c77970', '#f0d4b8'], year: 2024, client: 'Independent', image: 'images/portfolio/meu-amigo-oculos.png' },
+  { id: 'p2', title: 'Será que ele vem?', cat: 'books', palette: ['#3c4b5e', '#e9b347', '#d67b5a'], year: 2023, client: 'Independent', image: 'images/portfolio/sera-que-ele-vem-capa.jpg' },
+  { id: 'p3', title: 'Meu Amigo Óculos', cat: 'books', palette: ['#5d4d7a', '#c77970', '#f0d4b8'], year: 2024, client: 'Independent', image: 'images/portfolio/meu-amigo-oculos.png',
+    editions: [
+      { lang: 'pt', label: 'Português', title: 'Meu Amigo Óculos', image: 'images/portfolio/meu-amigo-oculos.png' },
+      { lang: 'en', label: 'English', title: 'Mr. Glasses, My Friend', image: 'images/portfolio/mr-glasses-my-friend.jpg' },
+    ] },
+  { id: 'p14', title: 'Entre Margens', cat: 'illustration', palette: ['#f2c27a', '#4aa3a8', '#3d6b8a'], year: 2026, client: 'Feira Literária e Cultural Brasileira', image: 'images/portfolio/feira-literaria-cultural-brasileira-2026.jpg' },
   { id: 'p5', title: 'IWC Gothenburg logo', cat: 'brand', palette: ['#8c2e20', '#e9c84a', '#e8d8bc'], year: 2022, client: 'IWC Gothenburg', image: 'images/portfolio/choir-logo.png' },
   { id: 'p6', title: 'Ursa', cat: 'brand', palette: ['#5a6670', '#d9b067', '#3d4a54'], year: 2024, client: 'Personal', image: 'images/portfolio/ursa-logo.png' },
+  { id: 'p15', title: 'Felice', cat: 'music', palette: ['#454e6a', '#f2e6c0', '#7d6fd6'], year: 2026, client: 'Surya Amitrano', image: 'images/portfolio/felice-capa.jpg' },
   { id: 'p7', title: 'Quatro verões', cat: 'music', palette: ['#c85a9c', '#f2a050', '#7d5ce0'], year: 2026, client: 'TBD', image: 'images/portfolio/quatro-veroes-capa-disco.png' },
   { id: 'p8', title: 'Pes TBD', cat: 'music', palette: ['#e85d75', '#9b7dd4', '#62b8d9'], year: 2018, client: 'TBD', image: 'images/portfolio/pes-capa-disco.png' },
   { id: 'p11', title: 'Se deixar eu viro poesia', cat: 'books', palette: ['#c24e4e', '#f0c26c', '#8b5a3c'], year: 2024, client: 'Independent', image: 'images/portfolio/se-deixar-eu-viro-poesia-livro.jpg' },
@@ -308,6 +320,9 @@ const T = {
     catIllustration: 'illustration',
     catMusic: 'music art',
     viewItem: 'view \u2192',
+    projectClose: 'close',
+    projectEditions: 'editions',
+    projectLinkDefault: 'see more',
     musicKicker: 'discography \u00b7 2018\u20132026',
     musicTitle: 'original',
     musicTitleItalic: 'music',
@@ -535,6 +550,9 @@ const T = {
     catIllustration: 'ilustra\u00e7\u00e3o',
     catMusic: 'arte musical',
     viewItem: 'ver \u2192',
+    projectClose: 'fechar',
+    projectEditions: 'edi\u00e7\u00f5es',
+    projectLinkDefault: 'saiba mais',
     musicKicker: 'discografia \u00b7 2018\u20132026',
     musicTitle: 'm\u00fasica',
     musicTitleItalic: 'original',
@@ -762,6 +780,9 @@ const T = {
     catIllustration: 'illustration',
     catMusic: 'musikkonst',
     viewItem: 'visa \u2192',
+    projectClose: 'st\u00e4ng',
+    projectEditions: 'utg\u00e5vor',
+    projectLinkDefault: 'l\u00e4s mer',
     musicKicker: 'diskografi \u00b7 2018\u20132026',
     musicTitle: 'original',
     musicTitleItalic: 'musik',

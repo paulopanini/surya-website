@@ -35,7 +35,22 @@
 <script type="text/babel" data-presets="react">
 const { useState, useEffect } = React;
 
-function Lightbox({ item, onClose, onPrev, onNext }) {
+// Project view: opens when a portfolio item is clicked.
+// Shows editions (e.g. PT / EN versions of a book), an image gallery,
+// a description and an optional link. See the PORTFOLIO notes in shared.jsx.
+const CAT_TKEY = { books: 'catBooks', brand: 'catBrand', illustration: 'catIllustration', music: 'catMusic' };
+
+function ProjectView({ item, onClose, onPrev, onNext, lang, t }) {
+  const editions = (item && item.editions) || null;
+  const pickEdition = () => {
+    if (!editions) return 0;
+    const i = editions.findIndex(e => e.lang === lang);
+    return i >= 0 ? i : 0;
+  };
+  const [ed, setEd] = useState(pickEdition);
+  const [img, setImg] = useState(0);
+  useEffect(() => { setEd(pickEdition()); setImg(0); }, [item && item.id]);
+
   useEffect(() => {
     if (!item) return;
     const h = (e) => {
@@ -44,30 +59,102 @@ function Lightbox({ item, onClose, onPrev, onNext }) {
       if (e.key === 'ArrowRight') onNext();
     };
     window.addEventListener('keydown', h);
-    return () => window.removeEventListener('keydown', h);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { window.removeEventListener('keydown', h); document.body.style.overflow = prevOverflow; };
   }, [item, onClose, onPrev, onNext]);
   if (!item) return null;
+
+  const edition = editions ? editions[Math.min(ed, editions.length - 1)] : null;
+  const title = edition ? edition.title : item.title;
+  const cover = edition ? edition.image : item.image;
+  const gallery = [cover, ...((edition && edition.images) || []), ...(item.images || [])].filter(Boolean);
+  const current = gallery[Math.min(img, gallery.length - 1)];
+  const desc = item.desc && (item.desc[lang] || item.desc.en);
+  const linkLabel = item.link && ((item.link.label && (item.link.label[lang] || item.link.label.en)) || t.projectLinkDefault);
+  const cream = '#f9e6c6';
+
   return (
-    <div onClick={onClose} style={{
-      position: 'fixed', inset: 0, background: 'rgba(20,18,14,.82)', zIndex: 100,
-      display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 40,
-      animation: 'fadeIn .2s ease',
+    <div onClick={onClose} className="pv-overlay" style={{
+      position: 'fixed', inset: 0, background: 'rgba(20,18,14,.86)', zIndex: 100,
+      display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 88px',
+      animation: 'fadeIn .2s ease', overflowY: 'auto',
     }}>
-      <style>{`@keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }`}</style>
-      <button onClick={(e) => { e.stopPropagation(); onPrev(); }} style={navBtn(16)}><Icon name="arrow-left" size={20} /></button>
-      <div onClick={(e) => e.stopPropagation()} style={{ maxWidth: 720, width: '100%' }}>
-        {item.image
-          ? <img src={item.image} alt={item.title} style={{ display: 'block', width: '100%', maxHeight: '78vh', objectFit: 'contain', borderRadius: 4 }} />
-          : <PaletteTile palette={item.palette} label={item.title} sub={`${item.client} · ${item.year}`} style={{ aspectRatio: '4/5', maxHeight: '78vh' }} />}
-        <div style={{ marginTop: 16, color: '#f9e6c6', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-          <div>
-            <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 28 }}>{item.title}</div>
-            <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 11, letterSpacing: '.15em', textTransform: 'uppercase', opacity: .7, marginTop: 4 }}>{item.client} · {item.year} · {item.cat}</div>
+      <style>{`
+        @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+        @media (max-width: 820px) {
+          .pv-overlay { padding: 16px !important; align-items: flex-start !important; background: rgba(20,18,14,.97) !important; }
+          .pv-body { grid-template-columns: 1fr !important; padding-bottom: 72px; }
+          .pv-nav { top: auto !important; bottom: 16px !important; transform: none !important; }
+          .pv-main-img { max-height: 60vh !important; }
+        }
+      `}</style>
+      <button aria-label="previous" className="pv-nav" onClick={(e) => { e.stopPropagation(); onPrev(); }} style={navBtn(16)}><Icon name="arrow-left" size={20} /></button>
+
+      <div onClick={(e) => e.stopPropagation()} className="pv-body" style={{
+        width: '100%', maxWidth: 1080, display: 'grid', gridTemplateColumns: '1.35fr 1fr', gap: 40,
+        alignItems: 'start', color: cream,
+      }}>
+        {/* Images */}
+        <div>
+          {current
+            ? <img key={current} src={current} alt={title} className="pv-main-img" style={{ display: 'block', width: '100%', maxHeight: gallery.length > 1 ? 'calc(100vh - 170px)' : 'calc(100vh - 80px)', objectFit: 'contain', borderRadius: 4, animation: 'fadeIn .25s ease' }} />
+            : <PaletteTile palette={item.palette} label={title} sub={`${item.client} · ${item.year}`} style={{ aspectRatio: '4/5', maxHeight: '78vh' }} />}
+          {gallery.length > 1 && (
+            <div style={{ display: 'flex', gap: 10, marginTop: 14, flexWrap: 'wrap' }}>
+              {gallery.map((src, i) => (
+                <button key={src} onClick={() => setImg(i)} aria-label={`image ${i + 1}`} style={{
+                  width: 64, height: 64, padding: 0, borderRadius: 3, overflow: 'hidden', cursor: 'pointer',
+                  border: `2px solid ${i === img ? cream : 'transparent'}`, opacity: i === img ? 1 : .6,
+                  background: 'none', transition: 'opacity .15s',
+                }}>
+                  <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Info */}
+        <div style={{ paddingTop: 8 }}>
+          <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 11, letterSpacing: '.2em', textTransform: 'uppercase', color: RP.ochre, marginBottom: 14 }}>
+            {t[CAT_TKEY[item.cat]] || item.cat}
           </div>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', color: '#f9e6c6', cursor: 'pointer', fontFamily: 'Fraunces', fontStyle: 'italic', fontSize: 15 }}>close ✕</button>
+          <div style={{ fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 'clamp(30px, 3.4vw, 44px)', lineHeight: 1.05, marginBottom: 10 }}>{title}</div>
+          <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 11, letterSpacing: '.15em', textTransform: 'uppercase', opacity: .7 }}>{item.client} · {item.year}</div>
+
+          {editions && editions.length > 1 && (
+            <div style={{ marginTop: 26 }}>
+              <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, letterSpacing: '.2em', textTransform: 'uppercase', opacity: .6, marginBottom: 10 }}>{t.projectEditions}</div>
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                {editions.map((e, i) => (
+                  <button key={e.lang} onClick={() => { setEd(i); setImg(0); }} style={{
+                    padding: '8px 16px', borderRadius: 999, cursor: 'pointer',
+                    border: `1px solid ${i === ed ? cream : 'rgba(249,230,198,.35)'}`,
+                    background: i === ed ? cream : 'transparent', color: i === ed ? RP.ink : cream,
+                    fontFamily: 'Fraunces, Georgia, serif', fontSize: 14, fontStyle: i === ed ? 'italic' : 'normal',
+                  }}>{e.label}</button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {desc && <p style={{ fontSize: 16, lineHeight: 1.65, color: 'rgba(249,230,198,.85)', margin: '26px 0 0', maxWidth: 440 }}>{desc}</p>}
+
+          {item.link && (
+            <a href={item.link.url} target="_blank" rel="noreferrer" style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 26, padding: '11px 20px', borderRadius: 999,
+              background: RP.ochre, color: RP.ink, textDecoration: 'none', fontFamily: '"DM Serif Display", Georgia, serif', fontSize: 15,
+            }}>{linkLabel} <Icon name="arrow-right" size={14} /></a>
+          )}
+
+          <div style={{ marginTop: 34 }}>
+            <button onClick={onClose} style={{ background: 'none', border: 'none', padding: 0, color: cream, cursor: 'pointer', fontFamily: 'Fraunces', fontStyle: 'italic', fontSize: 15 }}>{t.projectClose} ✕</button>
+          </div>
         </div>
       </div>
-      <button onClick={(e) => { e.stopPropagation(); onNext(); }} style={navBtn(16, true)}><Icon name="arrow-right" size={20} /></button>
+
+      <button aria-label="next" className="pv-nav" onClick={(e) => { e.stopPropagation(); onNext(); }} style={navBtn(16, true)}><Icon name="arrow-right" size={20} /></button>
     </div>
   );
 }
@@ -150,7 +237,7 @@ function RefinedSite() {
         {pageMap[page]}
       </main>
       <RefinedFooter onNav={goTo} t={t} />
-      <Lightbox item={lb} onClose={() => setLb(null)}
+      <ProjectView item={lb} lang={lang} t={t} onClose={() => setLb(null)}
         onPrev={() => setLb(PORTFOLIO[(lbIdx - 1 + PORTFOLIO.length) % PORTFOLIO.length])}
         onNext={() => setLb(PORTFOLIO[(lbIdx + 1) % PORTFOLIO.length])} />
     </div>
